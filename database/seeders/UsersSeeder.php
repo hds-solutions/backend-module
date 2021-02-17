@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace HDSSolutions\Finpar\Seeders;
 
 use HDSSolutions\Finpar\Models\User;
 use Illuminate\Database\Seeder;
@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-class AdminsSeeder extends Seeder {
+class UsersSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
