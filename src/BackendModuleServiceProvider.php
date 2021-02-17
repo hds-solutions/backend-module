@@ -20,7 +20,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         // load routes
         $this->loadRoutesFrom( backend_path('routes/backend.php') );
         // load views
-        $this->loadViewsFrom( backend_path('views'), 'backend' );
+        $this->loadViewsFrom( backend_path('resources/views'), 'backend' );
         // load migrations
         $this->loadMigrationsFrom( backend_path('database/migrations') );
         // load seeders

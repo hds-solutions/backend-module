@@ -2,6 +2,7 @@
 
 use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
 use HDSSolutions\Finpar\Http\Controllers\BackendController;
+use HDSSolutions\Finpar\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -19,9 +20,14 @@ Route::group([
     'middleware'    => [ 'web', 'auth:'.config('backend.guard') ],
 ], function() {
     // name prefix
-    $name_prefix = [ 'as' => 'admin' ];
+    $name_prefix = [ 'as' => 'backend' ];
 
     // Backend home
-    Route::get('/',         [ BackendController::class, 'index' ])      ->name('backend');
-    Route::get('dashboard', [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
+    Route::get('/',             [ BackendController::class, 'index' ])      ->name('backend');
+    Route::get('dashboard',     [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
+
+    Route::resource('users',    UserController::class,  $name_prefix)
+        ->parameters([ 'users' => 'resource' ])
+        ->name('index', 'backend.users');
+
 });

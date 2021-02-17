@@ -13,7 +13,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "hds-solutions/laravel-modules": "dev-develop",
-        "spatie/laravel-permission": "^4.0"
+        "spatie/laravel-permission": "^4.0",
+        "yajra/laravel-datatables": "^1.5"
     },
     "autoload": {
         "psr-4": {
