@@ -1,7 +1,7 @@
 // load environment config
 const dotenvExpand = require('dotenv-expand');
 dotenvExpand(require('dotenv').config({
-    path: '../../.env'/*, debug: true*/
+    path: '../../../.env'/*, debug: true*/
 }));
 
 // load mix
@@ -12,7 +12,7 @@ require('laravel-mix-merge-manifest');
 mix.mergeManifest();
 
 // set public path
-mix.setPublicPath('../../public').mergeManifest();
+mix.setPublicPath(public = '../../../public').mergeManifest();
 
 // set assets root
 assetsRoot = process.env.ASSET_URL;
@@ -39,6 +39,10 @@ mix
      ** ****************** **/
     .js('resources/assets/js/app.js',       'backend-module/assets/js')
     .sass('resources/assets/sass/app.scss', 'backend-module/assets/css')
+
+    .copy('node_modules/pdfmake/build/vfs_fonts.js',    public+'/backend-module/vendor/pdfmake/')
+    .copy('node_modules/tinymce/themes',                public+'/backend-module/vendor/tinymce/themes')
+    .copy('node_modules/tinymce/skins',                 public+'/backend-module/vendor/tinymce/skins')
 
 // create new version only for production
 ;if (mix.inProduction()) mix.version();
