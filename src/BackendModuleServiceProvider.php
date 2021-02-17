@@ -3,20 +3,15 @@
 namespace HDSSolutions\Finpar;
 
 use HDSSolutions\Finpar\Commands\Mix;
-use Illuminate\Support\ServiceProvider;
+use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
-class BackendModuleServiceProvider extends ServiceProvider {
+class BackendModuleServiceProvider extends ModuleServiceProvider {
 
     private $commands = [
         Mix::class,
     ];
 
-    /**
-    * Publishes configuration file.
-    *
-    * @return  void
-    */
-    public function boot() {
+    public function bootEnv():void {
         // enable config override
         $this->publishes([
             backend_path('config/backend.php') => config_path('backend.php'),
@@ -28,16 +23,13 @@ class BackendModuleServiceProvider extends ServiceProvider {
         $this->loadViewsFrom( backend_path('views'), 'backend' );
         // load migrations
         $this->loadMigrationsFrom( backend_path('database/migrations') );
+        // load seeders
+        $this->loadSeedersFrom( backend_path('database/seeders') );
     }
 
-    /**
-    * Make config publishment optional by merging the config from the package.
-    *
-    * @return  void
-    */
     public function register() {
         // register helpers
-        if (file_exists($helpers = realpath(__DIR__.'/../../helpers.php')))
+        if (file_exists($helpers = realpath(__DIR__.'/helpers.php')))
             //
             require_once $helpers;
         // register singleton

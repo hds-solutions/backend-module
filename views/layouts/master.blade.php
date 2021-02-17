@@ -1,16 +1,16 @@
-@extends('layouts.app')
+@extends('backend::layouts.app')
 
 @section('app')
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('layouts.sidebar')
+        @include('backend::layouts.sidebar')
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @include('layouts.topbar')
+                @include('backend::layouts.topbar')
                 <!-- Begin Page Contents -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
@@ -40,7 +40,7 @@
             <!-- End of Main Content -->
             </div>
             <!-- Footer -->
-            @include('layouts.footer')
+            @include('backend::layouts.footer')
         <!-- End of Content Wrapper -->
         </div>
     <!-- End of Page Wrapper -->
@@ -52,5 +52,5 @@
     </a>
 
     {{-- confirm modal --}}
-    @include('layouts.modal-confirmation')
+    @include('backend::layouts.modal-confirmation')
 @endsection

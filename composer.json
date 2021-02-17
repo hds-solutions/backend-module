@@ -12,11 +12,12 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.4|^8.0",
-        "hds-solutions/laravel-modules": "dev-develop"
+        "hds-solutions/laravel-modules": "dev-develop",
+        "spatie/laravel-permission": "^4.0"
     },
     "autoload": {
         "psr-4": {
-            "HDSSolutions\\Finpar\\": "src/"
+            "HDSSolutions\\Finpar\\": [ "src/", "database/seeders/" ]
         },
         "files": [
             "src/helpers.php"

@@ -1,6 +1,6 @@
 <?php
 
-use HDSSolutions\Finpar\Blueprints\BaseBlueprint;
+use HDSSolutions\Finpar\Blueprints\BaseBlueprint as Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,19 +15,19 @@ class CreateUsersTable extends Migration {
         $schema = DB::getSchemaBuilder();
 
         // replace blueprint
-        $schema->blueprintResolver(fn($table, $callback) => new BaseBlueprint($table, $callback));
+        $schema->blueprintResolver(fn($table, $callback) => new Blueprint($table, $callback));
 
         // create table
-        $schema->create('users', function(BaseBlueprint $table) {
-            $table->bigIncrements('id');
+        $schema->create('users', function(Blueprint $table) {
+            $table->id();
             $table->string('firstname');
             $table->string('lastname')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('type', [ 'admin', 'user', 'client' ]);
-            $table->enum('status', [ 'new', 'validated', 'active' ])->default('new');
-            $table->rememberToken();
+            // $table->enum('type', [ 'admin', 'user', 'client' ]);
+            // $table->enum('status', [ 'new', 'validated', 'active' ])->default('new');
+            // $table->rememberToken();
         });
     }
 

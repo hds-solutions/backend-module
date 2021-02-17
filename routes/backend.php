@@ -1,7 +1,7 @@
 <?php
 
-use HDSSolutions\Finpar\Controllers\BackendController;
-use HDSSolutions\Finpar\Controllers\LoginController;
+use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
+use HDSSolutions\Finpar\Http\Controllers\BackendController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -22,5 +22,6 @@ Route::group([
     $name_prefix = [ 'as' => 'admin' ];
 
     // Backend home
-    Route::get('/',     [ BackendController::class, 'index' ])    ->name('backend');
+    Route::get('/',         [ BackendController::class, 'index' ])      ->name('backend');
+    Route::get('dashboard', [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
 });
