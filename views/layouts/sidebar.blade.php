@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Brand -->
     <a href="{{ route('backend.dashboard') }}" class="sidebar-brand d-flex flex-column align-items-center justify-content-center">
-        @if (true)
+        @if (false)
             <div class="sidebar-brand-icon h-100 py-1 d-flex align-items-center">
                 <img class="img-fluid h-50" src="{{ asset('assets/images/logo.png') }}">
             </div>
