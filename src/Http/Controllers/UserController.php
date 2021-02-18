@@ -3,8 +3,9 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request;
-use HDSSolutions\Finpar\Models\User;
+use HDSSolutions\Finpar\DataTables\UserDataTable;
+use HDSSolutions\Finpar\Http\Request;
+use HDSSolutions\Finpar\Models\User as Resource;
 
 class UserController extends Controller {
     /**
@@ -12,9 +13,15 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request, UserDataTable $dataTable) {
+        // load resources
+        if ($request->ajax()) return $dataTable->ajax();
+        // return view with dataTable
+        return $dataTable->render('backend::users.index', [ 'count' => Resource::count() ]);
+
+        //
         // fetch all objects
-        $resources = User::all();
+        $resources = Resource::all();
         // show a list of objects
         return view('backend::users.index', compact('resources'));
     }
@@ -37,7 +44,7 @@ class UserController extends Controller {
      */
     public function store(Request $request) {
         // create resource
-        $resource = new User( $request->input() );
+        $resource = new Resource( $request->input() );
 
         // bypass email confirmation
         $resource->fill([ 'email_confirmation' => $resource->email ]);
@@ -57,7 +64,7 @@ class UserController extends Controller {
         ]);
 
         // redirect to list
-        return redirect()->route('admin.users');
+        return redirect()->route('backend.users');
     }
 
     /**
@@ -66,9 +73,9 @@ class UserController extends Controller {
      * @param  \App\Models\User  $resource
      * @return \Illuminate\Http\Response
      */
-    public function show(User $resource) {
+    public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('admin.users');
+        return redirect()->route('backend.users');
     }
 
     /**
@@ -77,7 +84,7 @@ class UserController extends Controller {
      * @param  \App\Models\User  $resource
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $resource) {
+    public function edit(Resource $resource) {
         // show edit form
         return view('backend::users.edit', compact('resource'));
     }
@@ -89,7 +96,7 @@ class UserController extends Controller {
      * @param  \App\Models\User  $resource
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $resource) {
+    public function update(Request $request, Resource $resource) {
         // check for password change
         if ($request->has('password') && $request->input('password') == null)
             // remove password attribute from request to prevent null assignment
@@ -117,7 +124,7 @@ class UserController extends Controller {
         ]);
 
         // redirect to list
-        return redirect()->route('admin.users');
+        return redirect()->route('backend.users');
     }
 
     /**
@@ -126,12 +133,12 @@ class UserController extends Controller {
      * @param  \App\Models\User  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $resource) {
+    public function destroy(Resource $resource) {
         // check current user or root account
         if (auth()->user()->id == $resource->id || $resource->id == 1) return back();
         // delete object
         $resource->delete();
         // redirect to list
-        return redirect()->route('admin.users');
+        return redirect()->route('backend.users');
     }
 }

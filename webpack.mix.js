@@ -40,9 +40,11 @@ mix
     .js('resources/assets/js/app.js',       'backend-module/assets/js')
     .sass('resources/assets/sass/app.scss', 'backend-module/assets/css')
 
-    .copy('node_modules/pdfmake/build/vfs_fonts.js',    public+'/backend-module/vendor/pdfmake/')
-    .copy('node_modules/tinymce/themes',                public+'/backend-module/vendor/tinymce/themes')
-    .copy('node_modules/tinymce/skins',                 public+'/backend-module/vendor/tinymce/skins')
+    .copy('node_modules/pdfmake/build/vfs_fonts.js',        public+'/backend-module/vendor/pdfmake/')
+    .copy('node_modules/tinymce/themes',                    public+'/backend-module/vendor/tinymce/themes')
+    .copy('node_modules/tinymce/skins',                     public+'/backend-module/vendor/tinymce/skins')
+
+    // .copy('node_modules/datatables.net-buttons/js/dataTables.buttons.min.js', public+'/backend-module/vendor/datatables')
 
 // create new version only for production
 ;if (mix.inProduction()) mix.version();

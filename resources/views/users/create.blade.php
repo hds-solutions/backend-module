@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('backend::layouts.master')
 
-@section('page-name', 'Crear nuevo Administrador')
+@section('page-name', __('backend/user.title'))
 
 @section('content')
 
@@ -9,17 +9,17 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-user-plus"></i>
-                Añadir Administrador
+                @lang('backend/user.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                {{-- <a href="{{ route('admins.create') }}" class="btn btn-sm btn-primary">Añadir</a> --}}
+                {{-- <a href="{{ route('backend.users.create') }}" class="btn btn-sm btn-primary">@lang('backend/users.add')</a> --}}
             </div>
         </div>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.admins.store') }}">
+        <form method="POST" action="{{ route('backend.users.store') }}" enctype="multipart/form-data">
             @csrf
-            @include('admins.form')
+            @include('backend::users.form')
         </form>
     </div>
 </div>

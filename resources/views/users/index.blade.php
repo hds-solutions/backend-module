@@ -19,39 +19,19 @@
         </div>
     </div>
     <div class="card-body">
-        @if ($resources->count())
+        @if ($count)
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="w-100px">ID</th>
-                            <th>@lang('backend/user.firstname')</th>
-                            <th>@lang('backend/user.lastname')</th>
-                            <th>@lang('backend/user.email')</th>
-                            {{-- <th>Tipo</th> --}}
-                            <th class="w-100px">@lang('backend.actions.title')</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($resources as $resource)
-                        <tr>
-                            <td>{{ $resource->getKey() }}</td>
-                            <td>{{ $resource->firstname }}</td>
-                            <td>{{ $resource->lastname ?? '--' }}</td>
-                            <td>{{ $resource->email }}</td>
-                            {{-- <td>{{ $resource->type }}</td> --}}
-                            <td class="align-middle">
-                                @include('backend::components.actions', [
-                                    'resource'  => 'users',
-                                    'title'     => $resource->name,
-                                    'record'    => $resource->getKey(),
-                                    'actions'   => [ 'update', 'delete' ]
-                                ])
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                {{
+                    $dataTable->table([
+                        'class'         => 'table table-bordered',
+                        'data-route'    => route('backend.users'),
+                        'data-columns'  => $dataTable->getColumns()->map(fn($item) => [ 'data' => $item->data])->toJson(),
+                    ])
+                }}
+
+                @include('backend::components.datatable-actions', [
+                    'actions'   => [ 'update', 'delete' ]
+                ])
             </div>
         @else
             <div class="text-center m-t-30 m-b-30 p-b-10">

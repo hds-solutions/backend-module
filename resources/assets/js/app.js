@@ -1,12 +1,5 @@
 //
 require('bootstrap');
-require('datatables.net-bs4');
-// require('datatables.net-buttons/js/buttons.colVis.min.js');
-require('datatables.net-buttons/js/buttons.html5.min.js');
-require('datatables.net-buttons/js/buttons.print.min.js');
-require('pdfmake');
-// require('datatables.net-buttons/js/buttons.flash.min.js');
-require('datatables.net-buttons-bs4');
 //
 require('bootstrap-select/js/bootstrap-select.js');
 //
@@ -17,7 +10,7 @@ require('./datatables');
 require('./utils/only');
 require('./utils/thousand');
 // init TinyMCE
-// require('./tinymce');
+require('./tinymce');
 
 $(_ => { $('body>.loader').fadeOut(150); });
 
