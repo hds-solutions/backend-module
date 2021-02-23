@@ -4,8 +4,11 @@
         <i class="fa fa-bars"></i>
     </button>
 
+    {{-- current company --}}
+    <h5 class="m-0">{{ Backend::company()->name }}</h5>
+
     <!-- Topbar Search -->
-    {{-- @include('layouts.search') --}}
+    {{-- @include('backend::layouts.topbar.search') --}}
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -13,37 +16,20 @@
         {{-- @include('layouts.search-xs') --}}
 
         <!-- Nav Item - Alerts -->
-        {{-- @include('layouts.alerts') --}}
+        {{-- @include('backend::layouts.topbar.alerts') --}}
 
         <!-- Nav Item - Messages -->
-        {{-- @include('layouts.messages') --}}
+        {{-- @include('backend::layouts.topbar.messages') --}}
 
-        {{-- <div class="topbar-divider d-none d-sm-block"></div> --}}
+        <!-- Nav Item - Companies selector -->
+        @include('backend::layouts.topbar.companies')
+
+        <!-- divider -->
+        <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
-        @include('backend::layouts.user')
+        @include('backend::layouts.topbar.user')
 
     </ul>
 
 </nav>
-
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Cerrar Sesión?</h5>
-                <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Estas seguro de finalizar tu sesión?</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <a class="btn btn-primary" href="{{ route('backend.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Si, salir</a>
-                <form method="POST" action="{{ route('backend.logout') }}" class="d-none" id="logout-form">@csrf</form>
-            </div>
-        </div>
-    </div>
-</div>
