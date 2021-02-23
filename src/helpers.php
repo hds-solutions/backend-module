@@ -5,3 +5,10 @@ if (!function_exists('backend_path')) {
         return realpath(__DIR__.'/../'.$path);
     }
 }
+
+if (!function_exists('module_path')) {
+    function module_path(string $path = ''):string {
+        dd(__DIR__);
+        return realpath(__DIR__.'/../'.$path);
+    }
+}

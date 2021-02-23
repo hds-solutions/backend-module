@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar;
+namespace HDSSolutions\Finpar\Backend;
 
 class Facade extends \Illuminate\Support\Facades\Facade {
     /**
