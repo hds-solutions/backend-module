@@ -3,6 +3,7 @@
 use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
 use HDSSolutions\Finpar\Http\Controllers\BackendController;
 use HDSSolutions\Finpar\Http\Controllers\CompanyController;
+use HDSSolutions\Finpar\Http\Controllers\FileController;
 use HDSSolutions\Finpar\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +35,9 @@ Route::group([
     Route::resource('companies',    CompanyController::class,   $name_prefix)
         ->parameters([ 'companies' => 'resource' ])
         ->name('index', 'backend.companies');
+
+    Route::resource('files',        FileController::class,      $name_prefix)
+        ->parameters([ 'files' => 'resource' ])
+        ->name('index', 'backend.files');
 
 });

@@ -17,3 +17,12 @@
 // @import 'base';
 @import 'login';
 // @import 'gmap';
+
+.sidebar {
+    width: 20rem !important;
+
+    & .nav-item .nav-link {
+        width: 100% !important;
+    }
+
+}

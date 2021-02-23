@@ -22,7 +22,7 @@
         @if($item->hasChildren())
         <div id="collapse-{!! $item->id !!}" class="collapse {!! $item->isActive ? 'show' : '' !!}" aria-labelledby="heading-users" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                @include('layouts.menu.dropdown-items', [ 'items' => $item->children() ])
+                @include('backend::layouts.menu.dropdown-items', [ 'items' => $item->children() ])
             </div>
         </div>
         @endif

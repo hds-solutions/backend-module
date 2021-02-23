@@ -3,7 +3,7 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\UserDataTable;
+use HDSSolutions\Finpar\DataTables\UserDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\User as Resource;
 
@@ -13,7 +13,7 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, UserDataTable $dataTable) {
+    public function index(Request $request, DataTable $dataTable) {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable

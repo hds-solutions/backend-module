@@ -14,7 +14,7 @@
         </h6>
 
         @foreach(Backend::companies() as $company)
-            <a class="dropdown-item d-flex align-items-center" href="{{ Request::fullUrlWithQuery([ 'set' => [ 'company' => $company->getKey() ]]) }}">
+            <a class="dropdown-item d-flex align-items-center" href="{{ Request::fullUrlWithQuery([ 'set-company' => $company->getKey() ]) }}">
                 <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="{{ $company->name }}">
                     @if ($company->isCurrent)

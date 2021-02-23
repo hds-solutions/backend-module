@@ -18,7 +18,7 @@
     <hr class="sidebar-divider my-0">
 
     {{-- load menu --}}
-    @include('backend::layouts.menu', [ 'items' => Menu::get('admin')?->roots() ?? [] ])
+    @include('backend::layouts.menu', [ 'items' => Backend::menu()?->roots() ?? [] ])
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

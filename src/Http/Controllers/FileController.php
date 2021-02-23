@@ -3,11 +3,12 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\CompanyDataTable as DataTable;
+use HDSSolutions\Finpar\DataTables\FileDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Company as Resource;
+use HDSSolutions\Finpar\Models\File as Resource;
 
-class CompanyController extends Controller {
+class FileController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,12 +18,12 @@ class CompanyController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
-        return $dataTable->render('backend::companies.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('backend::files.index', [ 'count' => Resource::count() ]);
 
         // fetch all objects
-        $resources = Resource::all();
+        $images = File::images()->get();
         // show a list of objects
-        return view('backend::companies.index', compact('resources'));
+        return view('images.index', compact('images'));
     }
 
     /**
@@ -32,7 +33,7 @@ class CompanyController extends Controller {
      */
     public function create() {
         // show create form
-        return view('backend::companies.create');
+        return view('backend::files.create');
     }
 
     /**
@@ -42,8 +43,11 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        // create resource
-        $resource = new Resource( $request->input() );
+        // validate request
+        $this->validate($request, Resource::$uploadRules);
+
+        // upload file
+        $resource = Resource::upload($request, $request->file('file'), $this);
 
         // save resource
         if (!$resource->save())
@@ -53,57 +57,54 @@ class CompanyController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.companies');
+        return redirect()->route('backend.files');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $resource
+     * @param  \App\Models\Resource  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(Resource $resource) {
+    public function show(Resource $image) {
         // redirect to list
-        return redirect()->route('backend.companies');
+        return redirect()->route('backend.files');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $resource
+     * @param  \App\Models\Resource  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource) {
-        // show edit form
-        return view('backend::companies.edit', compact('resource'));
+    public function edit(Resource $image) {
+        // redirect to images
+        return redirect()->route('backend.files');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $resource
+     * @param  \App\Models\Resource  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource) {
-        // update resource with request data
-        $resource->fill( $request->input() );
-
-        // save resource
-        if (!$resource->save())
+    public function update(Request $request, Resource $image) {
+        // update object
+        if (!$image->update($request->only( Resource::updateRules($image->id, true) )))
             // redirect with errors
             return back()
-                ->withErrors($resource->errors())
+                ->withErrors($image->errors())
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.companies');
+        return redirect()->route('backend.files');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $resource
+     * @param  \App\Models\Resource  $image
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
@@ -114,11 +115,11 @@ class CompanyController extends Controller {
             // redirect with errors
             return redirect()->back();
         // redirect to list
-        return redirect()->route('backend.companies');
+        return redirect()->route('backend.files');
 
         // delete object
-        $resource->delete();
+        $image->delete();
         // redirect to list
-        return redirect()->route('backend.companies');
+        return redirect()->route('backend.images');
     }
 }
