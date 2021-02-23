@@ -58,7 +58,7 @@ class UserController extends Controller {
 
         // hash password
         $resource->update([
-            'password'              => $hashed = Hash::make($resource->password),
+            'password'              => $hashed = bcrypt($resource->password),
             // bypass confirmation validation
             'password_confirmation' => $hashed,
         ]);
@@ -118,7 +118,7 @@ class UserController extends Controller {
         // check password change
         if ($request->has('password')) $resource->update([
             // hash password
-            'password'              => $hashed = Hash::make($resource->password),
+            'password'              => $hashed = bcrypt($resource->password),
             // bypass confirmation validation
             'password_confirmation' => $hashed,
         ]);
