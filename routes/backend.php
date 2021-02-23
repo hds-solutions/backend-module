@@ -2,6 +2,7 @@
 
 use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
 use HDSSolutions\Finpar\Http\Controllers\BackendController;
+use HDSSolutions\Finpar\Http\Controllers\CompanyController;
 use HDSSolutions\Finpar\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,12 @@ Route::group([
     Route::get('/',             [ BackendController::class, 'index' ])      ->name('backend');
     Route::get('dashboard',     [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
 
-    Route::resource('users',    UserController::class,  $name_prefix)
+    Route::resource('users',        UserController::class,      $name_prefix)
         ->parameters([ 'users' => 'resource' ])
         ->name('index', 'backend.users');
+
+    Route::resource('companies',    CompanyController::class,   $name_prefix)
+        ->parameters([ 'companies' => 'resource' ])
+        ->name('index', 'backend.companies');
 
 });

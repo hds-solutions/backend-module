@@ -2,14 +2,14 @@
 
 namespace HDSSolutions\Finpar\DataTables;
 
-use HDSSolutions\Finpar\Models\User as Resource;
+use HDSSolutions\Finpar\Models\Company as Resource;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserDataTable extends DataTable {
+class CompanyDataTable extends DataTable {
     /**
      * Build DataTable class.
      *
@@ -62,9 +62,7 @@ class UserDataTable extends DataTable {
     protected function getColumns() {
         return [
             Column::make('id')->title( __('backend/user.id.0') )->hidden(),
-            Column::make('firstname')->title( __('backend/user.firstname.0') ),
-            Column::make('lastname')->title( __('backend/user.lastname.0') ),
-            Column::make('email')->title( __('backend/user.email.0') ),
+            Column::make('name')->title( __('backend/user.name.0') ),
             Column::make('actions'),
         ];
     }

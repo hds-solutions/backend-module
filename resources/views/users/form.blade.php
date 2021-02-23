@@ -1,17 +1,4 @@
-@if ($errors->any())
-<div class="row">
-    <div class="col-lg-6 mb-4">
-        <div class="card bg-danger text-white shadow">
-            <div class="card-body">
-                Error
-                @foreach ($errors->all() as $error)
-                    <div class="small">{{ $error }}</div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-@endif
+@include('backend::components.errors')
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('backend/user.firstname.0')</label>
