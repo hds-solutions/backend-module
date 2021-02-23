@@ -8,7 +8,13 @@ if (!function_exists('backend_path')) {
 
 if (!function_exists('module_path')) {
     function module_path(string $path = ''):string {
-        dd(__DIR__);
-        return realpath(__DIR__.'/../'.$path);
+        // get caller path
+        $caller = realpath(dirname(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0]['file']));
+        // get root path
+        $root = explode(DIRECTORY_SEPARATOR, $caller)[0] ?: '/';
+        // go back until composer.json is found
+        while (!file_exists($caller.DIRECTORY_SEPARATOR.'composer.json') && $caller !== $root) $caller = dirname($caller);
+        // return realpath
+        return $caller.DIRECTORY_SEPARATOR.$path;
     }
 }
