@@ -10,6 +10,6 @@ use Illuminate\Database\Eloquent\Scope;
 class CompanyScope implements Scope {
     public function apply(Builder $builder, Model $model) {
         // filter admins
-        $builder->where('company_id', Backend::company()->getKey());
+        $builder->where($model->getTable().'.company_id', Backend::company()->getKey());
     }
 }
