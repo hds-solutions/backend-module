@@ -4,6 +4,11 @@
         <i class="fa fa-bars"></i>
     </button>
 
+    <ul class="navbar-nav">
+        <!-- Nav Item - Companies selector -->
+        @include('backend::layouts.topbar.companies')
+    </ul>
+
     {{-- current company --}}
     <h5 class="m-0">{{ Backend::company()->name }}</h5>
 
@@ -20,9 +25,6 @@
 
         <!-- Nav Item - Messages -->
         {{-- @include('backend::layouts.topbar.messages') --}}
-
-        <!-- Nav Item - Companies selector -->
-        @include('backend::layouts.topbar.companies')
 
         <!-- divider -->
         <div class="topbar-divider d-none d-sm-block"></div>

@@ -1,14 +1,14 @@
 @if (Backend::companies()->count() > 1)
 <li class="nav-item dropdown no-arrow mx-1">
 
-    <button type="button" role="button"
+    <a href="#set-company" type="button" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        class="btn nav-link dropdown-toggle" id="companiesDropdown">
+        class="nav-link dropdown-toggle" id="companiesDropdown">
         <i class="fas fa-building fa-fw"></i>
         {{-- <span class="badge badge-danger badge-counter">7</span> --}}
-    </button>
+    </a>
 
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="companiesDropdown">
+    <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="companiesDropdown">
         <h6 class="dropdown-header">
             @lang('Company selector')
         </h6>
