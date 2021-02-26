@@ -56,6 +56,17 @@ class BaseBlueprint extends Blueprint {
         return $field;
     }
 
+    public function dropForeignTo(string $table, string $column) {
+        // force table name to plural
+        $table = Str::snake( Str::pluralStudly($table) );
+        // build column name in singular form
+        $column = $column !== null ? $column : Str::singular($table).'_id';
+        // remove foreign
+        $this->dropForeign($this->table.'_'.$column.'_foreign');
+        // remove column
+        $this->dropColumn($column);
+    }
+
     public function amount(string $column = null, int $total = 12, int $places = 2, $signed = false) {
         return $this->{$signed ? 'decimal' : 'unsignedDecimal'}($column ?? 'amount', $total, $places);
     }
