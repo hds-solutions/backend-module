@@ -14,7 +14,7 @@ class Backend {
 
     public function __construct() {
         // load company from session
-        $this->company = Company::find(session(self::class.'.company', null)) ?? new Company;
+        $this->company = Company::find(session(self::class.'.company', null)) ?? Company::first() ?? new Company;
     }
 
     public function setCompany(int|Company $company):void {
