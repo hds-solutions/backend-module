@@ -9,9 +9,12 @@ use Illuminate\Support\Str;
 
 class BaseBlueprint extends Blueprint {
     public function build(Connection $connection, Grammar $grammar) {
-        // always add created/updated/deleted
-        $this->timestamps();
-        $this->softDeletes();
+        // check if table is creating
+        if ($this->creating()) {
+            // add created/updated/deleted
+            $this->timestamps();
+            $this->softDeletes();
+        }
         // return parent builder
         return parent::build($connection, $grammar);
     }
