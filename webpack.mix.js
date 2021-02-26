@@ -44,6 +44,8 @@ mix
     .copy('node_modules/tinymce/themes',                    public+'/backend-module/vendor/tinymce/themes')
     .copy('node_modules/tinymce/skins',                     public+'/backend-module/vendor/tinymce/skins')
 
+    .copy('resources/assets/images',        public+'/backend-module/assets/images')
+
     // .copy('node_modules/datatables.net-buttons/js/dataTables.buttons.min.js', public+'/backend-module/vendor/datatables')
 
 // create new version only for production

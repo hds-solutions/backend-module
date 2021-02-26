@@ -1,0 +1,25 @@
+.text-decoration-underline {
+    text-decoration: underline !important;
+}
+
+.text-decoration-line-through {
+    text-decoration: line-through !important;
+}
+
+.font-style-normal {
+    font-style: normal !important;
+}
+
+.sidebar {
+    width: 20rem !important;
+
+    & .sidebar-brand {
+        padding: unset;
+        text-transform: unset;
+    }
+
+    & .nav-item .nav-link {
+        width: 100% !important;
+        padding: .75rem 1rem;
+    }
+}
