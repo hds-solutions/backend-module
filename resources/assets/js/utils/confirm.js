@@ -1,6 +1,8 @@
-export default class Confirmation {
-    constructor(ele) {
-        this.modal = $(ele);
+const modal = window.confirmationModal || '.modal#confirm-modal';
+
+class Confirmation {
+    constructor() {
+        this.modal = $(modal);
         this.buttons = [];
         this.active = new Button(this);
         this.accept = this.modal.find('.modal-footer>#accept');
@@ -21,11 +23,6 @@ export default class Confirmation {
             this.active.cancel();
             // reset active button
             this.active = new Button(this);
-        });
-        // find buttons
-        $('[data-confirm]').each((idx, ele) => {
-            // add button
-            this.button(ele);
         });
     }
 
@@ -97,3 +94,6 @@ class Button {
 
     cancel() { console.log('event cancelled'); }
 }
+
+const instance = new Confirmation;
+export default instance;

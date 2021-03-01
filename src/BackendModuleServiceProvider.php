@@ -21,6 +21,8 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->loadRoutesFrom( backend_path('routes/backend.php') );
         // load views
         $this->loadViewsFrom( backend_path('resources/views'), 'backend' );
+        // load translations
+        $this->loadTranslationsFrom( module_path('resources/lang'), 'backend' );
         // load migrations
         $this->loadMigrationsFrom( backend_path('database/migrations') );
         // load seeders
@@ -38,6 +40,8 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->commands( $this->commands );
         // merge configuration
         $this->mergeConfigFrom( backend_path('config/backend.php'), 'backend' );
+        // merge datatables configuration
+        $this->mergeConfigFrom( backend_path('config/datatables.php'), 'datatables-html' );
     }
 
 }

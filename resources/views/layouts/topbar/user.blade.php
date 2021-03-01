@@ -6,7 +6,10 @@
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
-        {{-- <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="#"
+            data-confirm="Cerrar sessión?"
+            data-text="Está seguro de finalizar su sessión?"
+            data-accept="Si, salir">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             Profile
         </a>
@@ -18,7 +21,7 @@
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
             Activity Log
         </a>
-        <div class="dropdown-divider"></div> --}}
+        <div class="dropdown-divider"></div>
 
         <a class="dropdown-item" href="{{ route('backend.logout') }}" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -28,11 +31,11 @@
 </li>
 
 {{-- Logout Modal --}}
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Cerrar Sesión?</h5>
+                <h5 class="modal-title text-white" id="logoutModalLabel">Cerrar Sesión?</h5>
                 <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

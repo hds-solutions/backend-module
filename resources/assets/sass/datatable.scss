@@ -1,0 +1,9 @@
+.table-bordered thead {
+    background-color: $light;
+
+    & th,
+    & td {
+        border-bottom: none;
+        border-top: none;
+    }
+}

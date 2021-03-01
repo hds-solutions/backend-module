@@ -1,4 +1,4 @@
-@if (Backend::companies()->count() > 1)
+@if (Backend::companies()->count() > 0)
 <li class="nav-item dropdown no-arrow mx-1">
 
     <a href="#set-company" type="button" role="button"
@@ -13,10 +13,27 @@
             @lang('Company selector')
         </h6>
 
+        <a class="dropdown-item d-flex align-items-center" href="{{ Request::fullUrlWithQuery([ 'set-company' => 'null' ]) }}">
+            <div class="dropdown-list-image rounded-circle mr-3" style="background-image: url({{ asset('backend-module/assets/images/logo.png') }})">
+                {{-- <img src="{{ asset('backend-module/assets/images/logo.png') }}"
+                    class="rounded-circle"
+                    alt="*"> --}}
+                @if (Backend::company()->getKey() == null)
+                <div class="status-indicator bg-success"></div>
+                @endif
+            </div>
+            <div @if (Backend::company()->getKey() == null) class="font-weight-bold" @endif>
+                <div class="text-truncate">*</div>
+                {{-- <div class="small text-gray-500">some text · 58m</div> --}}
+            </div>
+        </a>
+
         @foreach(Backend::companies() as $company)
             <a class="dropdown-item d-flex align-items-center" href="{{ Request::fullUrlWithQuery([ 'set-company' => $company->getKey() ]) }}">
-                <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="{{ $company->name }}">
+                <div class="dropdown-list-image rounded-circle mr-3" style="background-image: url({{ asset( $company->logo->url ?? 'backend-module/assets/images/default.jpg' ) }})">
+                    {{-- <img src="{{ asset( $company->logo->url ?? 'backend-module/assets/images/default.jpg' ) }}"
+                         class="rounded-circle mh-100px"
+                         alt="{{ $company->name }}"> --}}
                     @if ($company->isCurrent)
                     <div class="status-indicator bg-success"></div>
                     @endif

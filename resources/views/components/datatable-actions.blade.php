@@ -13,7 +13,7 @@
                 @method('PUT')
 
                 <label for="visible-:resource:"
-                    class="text-:visible: b-0 m-0 cursor-pointer">
+                    class="text-:resource.visible: b-0 m-0 cursor-pointer">
                     <i class="fas fa-eye:resource.visible:"></i>
                     <div class="spinner-border spinner-border-sm text-info d-none" role="status">
                         <span class="sr-only">Loading...</span>
@@ -33,7 +33,7 @@
 
         @case('update')
             <a href="route.edit"
-                title="Editar :label:"
+                title="Editar :resource.name:"
                 data-toggle="tooltip" data-placement="top"
                 class="text-success">
                 <i class="fas fa-pen"></i><!--
@@ -46,13 +46,13 @@
                 @method('DELETE')
 
                 <label for="delete-:resource:"
-                    title="Eliminar :label:"
+                    title="Eliminar :resource.name:"
                     data-toggle="tooltip" data-placement="top"
                     class="text-danger b-0 m-0 cursor-pointer"><i class="fas fa-trash"></i></label>
 
                 <button type="submit" id="delete-:resource:" class="d-none"
-                    data-confirm="Eliminar :label:"
-                    data-text="Esta seguro de eliminar :label:?"
+                    data-confirm="Eliminar :resource.name:"
+                    data-text="Esta seguro de eliminar :resource.name:?"
                     data-accept="Si, eliminar"></button>
             </form>
             @break

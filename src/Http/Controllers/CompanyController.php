@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\CompanyDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\Company as Resource;
+use HDSSolutions\Finpar\Models\File;
 
 class CompanyController extends Controller {
     /**
@@ -31,8 +32,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        // load images
+        $images = File::images()->get();
         // show create form
-        return view('backend::companies.create');
+        return view('backend::companies.create', compact('images'));
     }
 
     /**
@@ -44,6 +47,20 @@ class CompanyController extends Controller {
     public function store(Request $request) {
         // create resource
         $resource = new Resource( $request->input() );
+
+        // check new uploaded image
+        if ($request->hasFile('image')) {
+            // upload image
+            $image = File::upload($request, $request->file('image'), $this);
+            // save resource
+            if (!$image->save())
+                // redirect with errors
+                return back()
+                    ->withErrors($image->errors())
+                    ->withInput();
+            // set uploaded image into resource
+            $resource->logo_id = $image->id;
+        }
 
         // save resource
         if (!$resource->save())
@@ -74,8 +91,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
+        // load images
+        $images = File::images()->get();
         // show edit form
-        return view('backend::companies.edit', compact('resource'));
+        return view('backend::companies.edit', compact('resource', 'images'));
     }
 
     /**
@@ -88,6 +107,20 @@ class CompanyController extends Controller {
     public function update(Request $request, Resource $resource) {
         // update resource with request data
         $resource->fill( $request->input() );
+
+        // check new uploaded image
+        if ($request->hasFile('image')) {
+            // upload image
+            $image = File::upload($request, $request->file('image'), $this);
+            // save resource
+            if (!$image->save())
+                // redirect with errors
+                return back()
+                    ->withErrors($image->errors())
+                    ->withInput();
+            // set uploaded image into resource
+            $resource->logo_id = $image->id;
+        }
 
         // save resource
         if (!$resource->save())

@@ -14,9 +14,16 @@ require('./tinymce');
 
 $(_ => { $('body>.loader').fadeOut(150); });
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 // confirmation modal
 import Confirmation from './utils/confirm';
-let modal = new Confirmation('.modal#confirm-modal');
+// link buttons to confirmation modal
+document.querySelectorAll('[data-confirm]').forEach(button => Confirmation.button(button));
 
 // previews
 import Preview from './utils/preview';
@@ -85,7 +92,7 @@ $('[data-multiple]').each((idx, ele) => {
 
 //
 import Visibility from './utils/visibility';
-$('[data-visible]').each((idx, ele) => { new Visibility( ele ); });
+document.querySelectorAll('[data-visibility]').forEach(visible => new Visibility(visible));
 
 //
 import Random from './utils/random';
@@ -205,7 +212,7 @@ document.querySelectorAll('[data-linked-with]').forEach(ele => {
 
 document.querySelectorAll('[type="file"]').forEach(field => {
     // check if has custom label
-    if (!field.labels.length) return;
+    if (!field.labels.length || field.labels[0].dataset.showFileName !== 'true') return;
     // save original label
     field.labels[0].oText = field.labels[0].textContent;
     // capture change event

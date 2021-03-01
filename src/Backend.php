@@ -13,11 +13,25 @@ class Backend {
     private $company;
 
     public function __construct() {
-        // load company from session
-        $this->company = Company::find(session(self::class.'.company', null)) ?? Company::first() ?? new Company;
+        // load company
+        $this->loadCompany();
     }
 
-    public function setCompany(int|Company $company):void {
+    private function loadCompany():void  {
+        // load company from session
+        $this->company = Company::find(session(self::class.'.company', null)) ?? new Company;
+    }
+
+    public function setCompany(int|Company|null $company):void {
+        // check if is null
+        if ($company === null) {
+            // remove company
+            session([ self::class.'.company' => null ]);
+            // replace company
+            $this->loadCompany();
+            //
+            return;
+        }
         // save company
         $this->company = $company instanceof Company ? $company : Company::findOrFail($company);
         // save to session

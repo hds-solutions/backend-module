@@ -18,7 +18,7 @@ class CompanySelector {
         // save company from request
         if ($request->has('set-company'))
             // update selected company
-            Backend::setCompany($request->input('set-company'));
+            Backend::setCompany($request->input('set-company') !== 'null' ? $request->input('set-company') : null);
 
         //
         return $next($request);

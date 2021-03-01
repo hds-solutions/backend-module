@@ -30,8 +30,8 @@ export default class Visibility {
                     // update status
                     if (resource.visible !== undefined) this.form.dataset.visibility = resource.visible ? 'true' : 'false';
                     // update color
-                    this.icon.parentNode.classList.remove( this.form.dataset.visibility == 'true' ? 'text-gray' : 'text-info' );
-                    this.icon.parentNode.classList.add( this.form.dataset.visibility == 'true' ? 'text-info' : 'text-gray' );
+                    this.icon.parentNode.classList.remove( this.form.dataset.visibility == 'true' ? 'text-muted' : 'text-info' );
+                    this.icon.parentNode.classList.add( this.form.dataset.visibility == 'true' ? 'text-info' : 'text-muted' );
                     // update icon
                     this.icon.classList.remove( this.form.dataset.visibility == 'true' ? this.form.dataset.hidden : this.form.dataset.visible );
                     this.icon.classList.add( this.form.dataset.visibility == 'true' ? this.form.dataset.visible : this.form.dataset.hidden );

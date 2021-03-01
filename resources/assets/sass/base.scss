@@ -1,3 +1,6 @@
+@import 'bootstrap-select';
+@import 'datatable';
+
 .text-decoration-underline {
     text-decoration: underline !important;
 }
@@ -8,6 +11,25 @@
 
 .font-style-normal {
     font-style: normal !important;
+}
+
+.resize-none {
+    resize: none;
+}
+
+.resize-x {
+    resize: horizontal;
+}
+
+.resize-y {
+    resize: vertical;
+}
+
+.cursor-pointer { cursor: pointer; }
+.cursor-help { cursor: help; }
+
+.btn.disabled, .btn:disabled {
+    cursor: not-allowed;
 }
 
 .sidebar {
@@ -22,4 +44,10 @@
         width: 100% !important;
         padding: .75rem 1rem;
     }
+}
+
+.dropdown-list-image {
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

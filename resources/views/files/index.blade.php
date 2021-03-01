@@ -22,11 +22,14 @@
         @if ($count)
             <div class="table-responsive">
                 {{
+                    $dataTable->table()
+                    /*
                     $dataTable->table([
                         'class'         => 'table table-bordered',
                         'data-route'    => route('backend.files'),
                         'data-columns'  => $dataTable->getColumns()->map(fn($item) => [ 'data' => $item->data])->toJson(),
                     ])
+                    */
                 }}
 
                 @include('backend::components.datatable-actions', [
@@ -49,3 +52,7 @@
 </div>
 
 @endsection
+
+@push('config-scripts')
+{{ $dataTable->scripts() }}
+@endpush
