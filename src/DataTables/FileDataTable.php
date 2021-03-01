@@ -18,11 +18,6 @@ class FileDataTable extends Base\DataTable {
         );
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns() {
         return [
             Column::computed('id')

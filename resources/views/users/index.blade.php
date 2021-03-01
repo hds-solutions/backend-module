@@ -23,7 +23,8 @@
             <div class="table-responsive">
                 {{ $dataTable->table() }}
                 @include('backend::components.datatable-actions', [
-                    'actions'   => [ 'update', 'delete' ]
+                    'actions'   => [ 'update', 'delete' ],
+                    'label'     => '{resource.firstname}',
                 ])
             </div>
         @else

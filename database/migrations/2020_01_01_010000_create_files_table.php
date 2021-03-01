@@ -20,7 +20,7 @@ class CreateFilesTable extends Migration {
         // create table
         $schema->create('files', function(Blueprint $table) {
             $table->id();
-            $table->foreignTo('Company');
+            $table->foreignTo('Company')->nullable();
             $table->string('name');
             $table->enum('type', [ 'image', 'pdf', 'spreadsheet' ]);
             $table->string('url');

@@ -98,8 +98,22 @@ export class Container {
             });
             icon.classList = iconClassList;
         });
-        // render
-        return html.innerHTML.replaceAll(':resource.name:', resource.name ?? '');
+        // parse resource values and render
+        return this.parse(html.innerHTML, resource);
+    }
+
+    parse(html, resource, root = 'resource') {
+        // replace resource attributes
+        for (let value in resource) {
+            // check nested objects
+            if (typeof resource[value] == 'object')
+                // parse nested object
+                html = this.parse(html, resource[value], root+'.value');
+            // parse resource value
+            html = html.replaceAll('{'+root+'.'+value+'}', resource[value]);
+        }
+        // return parsed html
+        return html;
     }
 
     events() {

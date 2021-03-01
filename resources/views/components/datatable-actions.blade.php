@@ -33,7 +33,7 @@
 
         @case('update')
             <a href="route.edit"
-                title="Editar :resource.name:"
+                title="Editar {{ $label ?? 'el registro' }}"
                 data-toggle="tooltip" data-placement="top"
                 class="text-success">
                 <i class="fas fa-pen"></i><!--
@@ -46,13 +46,13 @@
                 @method('DELETE')
 
                 <label for="delete-:resource:"
-                    title="Eliminar :resource.name:"
+                    title="Eliminar {{ $label ?? 'el registro' }}"
                     data-toggle="tooltip" data-placement="top"
                     class="text-danger b-0 m-0 cursor-pointer"><i class="fas fa-trash"></i></label>
 
                 <button type="submit" id="delete-:resource:" class="d-none"
-                    data-confirm="Eliminar :resource.name:"
-                    data-text="Esta seguro de eliminar :resource.name:?"
+                    data-confirm="Eliminar {{ $label ?? 'el registro' }}"
+                    data-text="Esta seguro de eliminar {{ $label ?? 'el registro' }}?"
                     data-accept="Si, eliminar"></button>
             </form>
             @break
