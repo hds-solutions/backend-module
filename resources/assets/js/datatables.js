@@ -9,6 +9,9 @@ require('datatables.net-buttons-bs4');
 
 import { Container, byString } from './utils/datatables';
 
+let assetBasePath = document.querySelector('meta[name="assets-path"]').content ?? '';
+function asset(url) { return assetBasePath + url; }
+
 $(_ => {
     document.querySelectorAll('table[id$=-datatable]').forEach(table => {
         // check if datatables config exists
@@ -43,7 +46,7 @@ $(_ => {
                             let col = type.shift();
                             // render image
                             column.render = (data, type, row, meta) => {
-                                return '<td><img src="'+(byString(row, col) ?? 'backend-module/assets/images/default.jpg')+'" class="mh-75px"></td>';
+                                return '<td><img src="' + (byString(row, col) ?? asset('backend-module/assets/images/default.jpg')) + '" class="mh-75px"></td>';
                             }
                             break;
                         case 'variant':
