@@ -54,9 +54,19 @@ $(_ => {
             return column;
         });
         // capture draw callback
-        config.drawCallback = e => container.events();
+        config.drawCallback = e => {
+            // register events
+            container.events();
+        }
         // init datatable
         $(table).DataTable(config);
+        // find selects to apply styling
+        document.querySelectorAll('#'+table.id+'_wrapper select').forEach(select => {
+            // set class
+            select.classList.add('selectpicker');
+            // init select picker
+            $(select).selectpicker();
+        });
     });
 });
 

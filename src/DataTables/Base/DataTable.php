@@ -60,7 +60,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
                     ->addTableClass('table-bordered table-sm table-hover')
                     ->columns($this->getColumns())
                     ->minifiedAjax( $this->route )
-                    ->searchDelay(500)
+                    ->searchDelay(150)
                     // TODO: FIX: order by
                     // ->orderBy( $this->orderBy )
                     /*->buttons(
