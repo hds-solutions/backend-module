@@ -33,15 +33,24 @@ $(_ => {
                     }
                     break;
                 case column.render !== undefined:
-                    switch (column.render.split(':').shift()) {
+                    // get render type
+                    let type = column.render.split(':');
+                    switch (type.shift()) {
                         case 'image':
                             // set size
                             column.className = 'text-center align-middle w-200px';
                             // get column
-                            let col = column.render.replace('image:', '');
+                            let col = type.shift();
                             // render image
                             column.render = (data, type, row, meta) => {
                                 return '<td><img src="'+(byString(row, col) ?? 'backend-module/assets/images/default.jpg')+'" class="mh-75px"></td>';
+                            }
+                            break;
+                        case 'variant':
+                            column.render = (data, type, row, meta) => {
+                                let str = '<div class="d-flex flex-column">';
+                                row.values.forEach(value => str += '<small><b>'+value.option.name+'</b>: '+(value.option_value.value ?? '--')+'</small><br>');
+                                return str+'</div>';
                             }
                             break;
                     }
