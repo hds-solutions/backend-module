@@ -51,3 +51,8 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+#confirm-modal #accept:hover {
+    background-color: $danger;
+    border-color: $danger;
+}
