@@ -26,6 +26,7 @@ $(_ => {
                     // set class name
                     column.className = 'align-middle w-150px';
                     column.sortable = false;
+                    column.searchable = false;
                     // render actions using container
                     column.render = (data, type, row, meta) => {
                         return container.render(row);
