@@ -3,12 +3,27 @@
 namespace HDSSolutions\Finpar;
 
 use HDSSolutions\Finpar\Commands\Mix;
+use HDSSolutions\Finpar\View\Components\FormBoolean;
+use HDSSolutions\Finpar\View\Components\FormForeign;
+use HDSSolutions\Finpar\View\Components\FormNumber;
+use HDSSolutions\Finpar\View\Components\FormSelect;
+use HDSSolutions\Finpar\View\Components\FormText;
+use HDSSolutions\Finpar\View\Components\FormTextarea;
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class BackendModuleServiceProvider extends ModuleServiceProvider {
 
-    private $commands = [
+    private array $commands = [
         Mix::class,
+    ];
+
+    private array $components = [
+        FormText::class,
+        FormNumber::class,
+        FormTextarea::class,
+        FormSelect::class,
+        FormBoolean::class,
+        FormForeign::class,
     ];
 
     public function bootEnv():void {
@@ -27,6 +42,8 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->loadMigrationsFrom( backend_path('database/migrations') );
         // load seeders
         $this->loadSeedersFrom( backend_path('database/seeders') );
+        //
+        $this->loadViewComponentsAs('backend', $this->components);
     }
 
     public function register() {
