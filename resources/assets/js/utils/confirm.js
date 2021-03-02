@@ -32,7 +32,7 @@ class Confirmation {
         // set modal data
         this.modal.find('.modal-title').text(this.active.textTitle);
         this.modal.find('.modal-body>p').text(this.active.textBody);
-        this.modal.find('.modal-footer>.btn-primary').text(this.active.textAccept);
+        this.accept.text(this.active.textAccept);
         // show modal
         this.modal.modal('show');
     }
