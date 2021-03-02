@@ -14,23 +14,23 @@ class X_File extends Model {
 
     protected $fillable = [ 'name', 'type', 'url' ];
 
-    public static $uploadRules = [
+    public static array $uploadRules = [
         'file'  => [ 'required', 'image', 'mimes:jpeg,jpg,png,gif', 'max:2048' ],
     ];
 
-    protected static $createRules = [
+    protected static array $createRules = [
         'name'  => [ 'required', 'min:3' ],
         'type'  => [ 'required' ],
         'url'   => [ 'required', 'min:3' ],
     ];
 
-    protected static $updateRules = [
+    protected static array $updateRules = [
         'name'  => [ 'required', 'min:3' ],
         'type'  => [ 'required' ],
         'url'   => [ 'required', 'min:3' ],
     ];
 
-    public function getUrlAttribute() {
+    public function getUrlAttribute():?string {
         // return image path
         return $this->attributes['url'] !== null ?
             // return disk path
@@ -39,12 +39,12 @@ class X_File extends Model {
             null;
     }
 
-    public function getUrlRawAttribute() {
+    public function getUrlRawAttribute():?string {
         //
         return $this->attributes['url'];
     }
 
-    public function getPathAttribute() {
+    public function getPathAttribute():?string {
         // return file path
         return Storage::disk( config('filesystems.uploads') )->path($this->url_raw);
     }
