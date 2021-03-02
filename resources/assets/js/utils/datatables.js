@@ -103,6 +103,29 @@ export class Container {
     }
 
     parse(html, resource, root = 'resource') {
+        //
+        let matches = html.match(/\{[\w.]*\}((\?\?)\{[\w.]*\})*(\?\?)\{[\w.]*\}/g);
+        // replace optionals
+        for (let i in matches) {
+            //
+            let match = matches[i],
+                found = false;
+            // split match
+            match.split('??').map(m => m.replace('{', '').replace('}', '')).forEach(field => {
+                // check flag
+                if (found) return;
+                // split field from resource
+                let [ r, f ] = field.split('.');
+                // check if field exists and has value
+                if (resource[f] !== undefined && resource[f] !== null) {
+                    // replace match with value
+                    html = html.replaceAll(match, resource[f]);
+                    // change flag
+                    found = true;
+                }
+            });
+        }
+
         // replace resource attributes
         for (let value in resource) {
             // check nested objects
