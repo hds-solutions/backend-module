@@ -18,7 +18,9 @@
     <hr class="sidebar-divider my-0">
 
     {{-- load menu --}}
-    @include('backend::layouts.menu', [ 'items' => Backend::menu()?->roots() ?? [] ])
+    @include('backend::layouts.menu', [
+        'items' => backend()->menu()?->sortBy('priority', 'desc')->roots() ?? []
+    ])
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

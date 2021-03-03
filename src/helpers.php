@@ -1,5 +1,13 @@
 <?php
 
+use HDSSolutions\Finpar\Backend;
+
+if (!function_exists('backend')) {
+    function backend():Backend {
+        return app('backend');
+    }
+}
+
 if (!function_exists('backend_path')) {
     function backend_path(string $path = ''):string {
         return realpath(__DIR__.'/../'.$path);

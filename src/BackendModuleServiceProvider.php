@@ -2,28 +2,29 @@
 
 namespace HDSSolutions\Finpar;
 
-use HDSSolutions\Finpar\Commands\Mix;
-use HDSSolutions\Finpar\View\Components\FormBoolean;
-use HDSSolutions\Finpar\View\Components\FormForeign;
-use HDSSolutions\Finpar\View\Components\FormNumber;
-use HDSSolutions\Finpar\View\Components\FormSelect;
-use HDSSolutions\Finpar\View\Components\FormText;
-use HDSSolutions\Finpar\View\Components\FormTextarea;
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class BackendModuleServiceProvider extends ModuleServiceProvider {
 
+    protected array $middlewares = [
+        \HDSSolutions\Finpar\Http\Middleware\HttpsProtocol::class,
+        \HDSSolutions\Finpar\Http\Middleware\SetLocale::class,
+        \HDSSolutions\Finpar\Http\Middleware\SettingsLoader::class,
+        \HDSSolutions\Finpar\Http\Middleware\CompanySelector::class,
+        \HDSSolutions\Finpar\Http\Middleware\BackendMenu::class,
+    ];
+
     private array $commands = [
-        Mix::class,
+        \HDSSolutions\Finpar\Commands\Mix::class,
     ];
 
     private array $components = [
-        FormText::class,
-        FormNumber::class,
-        FormTextarea::class,
-        FormSelect::class,
-        FormBoolean::class,
-        FormForeign::class,
+        \HDSSolutions\Finpar\View\Components\FormText::class,
+        \HDSSolutions\Finpar\View\Components\FormNumber::class,
+        \HDSSolutions\Finpar\View\Components\FormTextarea::class,
+        \HDSSolutions\Finpar\View\Components\FormSelect::class,
+        \HDSSolutions\Finpar\View\Components\FormBoolean::class,
+        \HDSSolutions\Finpar\View\Components\FormForeign::class,
     ];
 
     public function bootEnv():void {
@@ -36,14 +37,14 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->loadRoutesFrom( backend_path('routes/backend.php') );
         // load views
         $this->loadViewsFrom( backend_path('resources/views'), 'backend' );
+        // load view components
+        $this->loadViewComponentsAs('backend', $this->components);
         // load translations
         $this->loadTranslationsFrom( module_path('resources/lang'), 'backend' );
         // load migrations
         $this->loadMigrationsFrom( backend_path('database/migrations') );
         // load seeders
         $this->loadSeedersFrom( backend_path('database/seeders') );
-        //
-        $this->loadViewComponentsAs('backend', $this->components);
     }
 
     public function register() {
