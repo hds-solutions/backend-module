@@ -1,4 +1,4 @@
-@if (Backend::companies()->count() > 0)
+@if (backend()->companies()->count() > 0)
 <li class="nav-item dropdown no-arrow mx-1">
 
     <a href="#set-company" type="button" role="button"
@@ -18,17 +18,17 @@
                 {{-- <img src="{{ asset('backend-module/assets/images/logo.png') }}"
                     class="rounded-circle"
                     alt="*"> --}}
-                @if (Backend::company()->getKey() == null)
+                @if (backend()->company()->getKey() == null)
                 <div class="status-indicator bg-success"></div>
                 @endif
             </div>
-            <div @if (Backend::company()->getKey() == null) class="font-weight-bold" @endif>
+            <div @if (backend()->company()->getKey() == null) class="font-weight-bold" @endif>
                 <div class="text-truncate">*</div>
                 {{-- <div class="small text-gray-500">some text · 58m</div> --}}
             </div>
         </a>
 
-        @foreach(Backend::companies() as $company)
+        @foreach(backend()->companies() as $company)
             <a class="dropdown-item d-flex align-items-center" href="{{ Request::fullUrlWithQuery([ 'set-company' => $company->getKey() ]) }}">
                 <div class="dropdown-list-image rounded-circle mr-3" style="background-image: url({{ asset( $company->logo->url ?? 'backend-module/assets/images/default.jpg' ) }})">
                     {{-- <img src="{{ asset( $company->logo->url ?? 'backend-module/assets/images/default.jpg' ) }}"

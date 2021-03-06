@@ -48,7 +48,10 @@ class BackendMenu {
         return $this
             // append items to submenu
             ->users($sub)
-            ->companies($sub);
+            ->regions($sub)
+            ->cities($sub)
+            ->companies($sub)
+            ->branches($sub);
     }
 
     private function extra() {
@@ -89,10 +92,40 @@ class BackendMenu {
         return $this;
     }
 
+    private function regions(&$menu) {
+        if (Route::has('backend.regions'))
+            $menu->add(__('backend::regions.nav'), [
+                'route'     => 'backend.regions',
+                'icon'      => 'cogs'
+            ]);
+
+        return $this;
+    }
+
+    private function cities(&$menu) {
+        if (Route::has('backend.cities'))
+            $menu->add(__('backend::cities.nav'), [
+                'route'     => 'backend.cities',
+                'icon'      => 'cogs'
+            ]);
+
+        return $this;
+    }
+
     private function companies(&$menu) {
         if (Route::has('backend.companies'))
-            $menu->add(__('backend.companies.nav'), [
+            $menu->add(__('backend::companies.nav'), [
                 'route'     => 'backend.companies',
+                'icon'      => 'cogs'
+            ]);
+
+        return $this;
+    }
+
+    private function branches(&$menu) {
+        if (Route::has('backend.branches'))
+            $menu->add(__('backend::branches.nav'), [
+                'route'     => 'backend.branches',
                 'icon'      => 'cogs'
             ]);
 
@@ -101,7 +134,7 @@ class BackendMenu {
 
     private function files(&$menu) {
         if (Route::has('backend.files'))
-            $menu->add(__('backend.files.nav'), [
+            $menu->add(__('backend::files.nav'), [
                 'route'     => 'backend.files',
                 'icon'      => 'files'
             ]);

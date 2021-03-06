@@ -19,6 +19,7 @@ class FormText extends Component {
         public ?string $placeholder = null,
         public ?string $helper = null,
         public bool $required = false,
+        public bool $fullWidth = false,
     ) {
         $this->field ??= $this->name;
     }

@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/company.title'))
-@section('description', __('backend/company.description'))
+@section('page-name', __('backend::companies.title'))
+@section('description', __('backend::companies.description'))
 
 @section('content')
 
@@ -10,11 +10,11 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('backend/company.index')
+                @lang('backend::companies.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.companies.create') }}"
-                    class="btn btn-sm btn-primary">@lang('backend/company.add')</a>
+                    class="btn btn-sm btn-primary">@lang('backend::companies.create')</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.companies.create') }}" class="text-custom">
-                        <ins>@lang('backend/company.add')</ins>
+                        <ins>@lang('backend::companies.create')</ins>
                     </a>
                 </p>
             </div>

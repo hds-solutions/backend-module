@@ -3,6 +3,7 @@
 namespace HDSSolutions\Finpar;
 
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class BackendModuleServiceProvider extends ModuleServiceProvider {
 
@@ -25,6 +26,10 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         \HDSSolutions\Finpar\View\Components\FormSelect::class,
         \HDSSolutions\Finpar\View\Components\FormBoolean::class,
         \HDSSolutions\Finpar\View\Components\FormForeign::class,
+        \HDSSolutions\Finpar\View\Components\FormHidden::class,
+        \HDSSolutions\Finpar\View\Components\FormImage::class,
+        \HDSSolutions\Finpar\View\Components\FormAmount::class,
+        \HDSSolutions\Finpar\View\Components\FormCoords::class,
     ];
 
     public function bootEnv():void {
@@ -45,6 +50,9 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->loadMigrationsFrom( backend_path('database/migrations') );
         // load seeders
         $this->loadSeedersFrom( backend_path('database/seeders') );
+
+        // register blade directives
+        Blade::directive('onlyform', fn($exp) => "<?php if (request()->has('only-form')): ?><input type=\"hidden\" name=\"only-form\" value=\"true\" /><?php endif; ?>");
     }
 
     public function register() {

@@ -18,6 +18,7 @@ class FormTextarea extends Component {
         public ?string $placeholder = null,
         public ?string $helper = null,
         public bool $required = false,
+        public bool $wysiwyg = false,
     ) {
         $this->field ??= $this->name;
     }

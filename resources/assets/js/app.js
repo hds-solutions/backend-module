@@ -99,7 +99,7 @@ import Random from './utils/random';
 $('[data-random]').each((idx, ele) => { new Random( ele ); });
 
 // // gmap on coverages
-// import GMap from './gmap';
+import GMap from './utils/gmap';
 // import Polygon from './polygon';
 // $('#gmap-layer').each((idx, ele) => {
 //     // create gmap obkect
@@ -131,29 +131,29 @@ $('[data-random]').each((idx, ele) => { new Random( ele ); });
 //     });
 // });
 
-// $('#gmap-pin').each((idx, ele) => {
-//     // get fields
-//     let latitude = $($(ele).data('latitude')),
-//         longitude = $($(ele).data('longitude'));
-//     // create gmap object
-//     let gmap = new GMap(ele);
-//     // capture move event
-//     gmap.move((lat, lng) => {
-//         // update fields
-//         latitude.val(Math.round(lat * 100000000) / 100000000);
-//         longitude.val(Math.round(lng * 100000000) / 100000000);
-//         // check covers
-//         covers(0, {
-//             lat: Math.round(lat * 100000000) / 100000000,
-//             lng: Math.round(lng * 100000000) / 100000000,
-//         }).then(covers => updateProceed(covers));
-//     });
-//     // initialize map
-//     gmap.init(true).then(e => {
-//         // set position
-//         gmap.position(latitude.val().length > 0 ? latitude.val() : -25.3, longitude.val().length > 0 ? longitude.val() : -57.6, 13);
-//     });
-// });
+$('#gmap-pin').each((idx, ele) => {
+    // get fields
+    let latitude = $($(ele).data('latitude')),
+        longitude = $($(ele).data('longitude'));
+    // create gmap object
+    let gmap = new GMap(ele);
+    // capture move event
+    gmap.move((lat, lng) => {
+        // update fields
+        latitude.val(Math.round(lat * 100000000) / 100000000);
+        longitude.val(Math.round(lng * 100000000) / 100000000);
+        // // check covers
+        // covers(0, {
+        //     lat: Math.round(lat * 100000000) / 100000000,
+        //     lng: Math.round(lng * 100000000) / 100000000,
+        // }).then(covers => updateProceed(covers));
+    });
+    // initialize map
+    gmap.init(true).then(e => {
+        // set position
+        gmap.position(latitude.val().length > 0 ? latitude.val() : -25.3, longitude.val().length > 0 ? longitude.val() : -57.6, 13);
+    });
+});
 
 $("a[data-clipboard]").click(e => {
     e.preventDefault();
@@ -228,3 +228,6 @@ document.querySelectorAll('[type="file"]').forEach(field => {
 
 // tooltips
 $('[data-toggle="tooltip"]').tooltip();
+
+import Test from './utils/test';
+document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Test(option));

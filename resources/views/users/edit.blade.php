@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/user.title'))
+@section('page-name', __('backend::users.title'))
 
 @section('content')
 
@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-user-plus"></i>
-                @lang('backend/user.edit')
+                @lang('backend::users.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <a href="{{ route('backend.users.create') }}" class="btn btn-sm btn-primary">@lang('backend/user.add')</a>
+                <a href="{{ route('backend.users.create') }}" class="btn btn-sm btn-primary">@lang('backend::users.add')</a>
             </div>
         </div>
     </div>

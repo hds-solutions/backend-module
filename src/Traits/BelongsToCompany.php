@@ -3,7 +3,6 @@
 namespace HDSSolutions\Finpar\Traits;
 
 use App\Models\Base\Model;
-use HDSSolutions\Finpar\Backend\Facade as Backend;
 use HDSSolutions\Finpar\Models\Company;
 use HDSSolutions\Finpar\Models\Scopes\CompanyScope;
 
@@ -15,7 +14,7 @@ trait BelongsToCompany {
         // capture saving event
         self::saving(function(Model $model) {
             // set company value
-            $model->company()->associate( Backend::company() );
+            $model->company()->associate( backend()->company() );
         });
     }
 

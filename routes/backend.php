@@ -2,8 +2,11 @@
 
 use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
 use HDSSolutions\Finpar\Http\Controllers\BackendController;
+use HDSSolutions\Finpar\Http\Controllers\BranchController;
+use HDSSolutions\Finpar\Http\Controllers\CityController;
 use HDSSolutions\Finpar\Http\Controllers\CompanyController;
 use HDSSolutions\Finpar\Http\Controllers\FileController;
+use HDSSolutions\Finpar\Http\Controllers\RegionController;
 use HDSSolutions\Finpar\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +35,21 @@ Route::group([
         ->parameters([ 'users' => 'resource' ])
         ->name('index', 'backend.users');
 
+    Route::resource('regions',      RegionController::class,    $name_prefix)
+        ->parameters([ 'regions' => 'resource' ])
+        ->name('index', 'backend.regions');
+
+    Route::resource('cities',       CityController::class,      $name_prefix)
+        ->parameters([ 'cities' => 'resource' ])
+        ->name('index', 'backend.cities');
+
     Route::resource('companies',    CompanyController::class,   $name_prefix)
         ->parameters([ 'companies' => 'resource' ])
         ->name('index', 'backend.companies');
+
+    Route::resource('branches',     BranchController::class,    $name_prefix)
+        ->parameters([ 'branches' => 'resource' ])
+        ->name('index', 'backend.branches');
 
     Route::resource('files',        FileController::class,      $name_prefix)
         ->parameters([ 'files' => 'resource' ])

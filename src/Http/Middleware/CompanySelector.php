@@ -3,7 +3,6 @@
 namespace HDSSolutions\Finpar\Http\Middleware;
 
 use Closure;
-use HDSSolutions\Finpar\Backend\Facade as Backend;
 use Illuminate\Http\Request;
 
 class CompanySelector {
@@ -18,7 +17,7 @@ class CompanySelector {
         // save company from request
         if ($request->has('set-company'))
             // update selected company
-            Backend::setCompany($request->input('set-company') !== 'null' ? $request->input('set-company') : null);
+            backend()->setCompany($request->input('set-company') !== 'null' ? $request->input('set-company') : null);
 
         //
         return $next($request);

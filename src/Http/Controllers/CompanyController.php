@@ -145,7 +145,7 @@ class CompanyController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return redirect()->back();
+            return back();
         // redirect to list
         return redirect()->route('backend.companies');
 

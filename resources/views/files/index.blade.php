@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/file.title'))
-@section('description', __('backend/file.description'))
+@section('page-name', __('backend::files.title'))
+@section('description', __('backend::files.description'))
 
 @section('content')
 
@@ -10,28 +10,18 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('backend/file.index')
+                @lang('backend::files.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.files.create') }}"
-                    class="btn btn-sm btn-primary">@lang('backend/file.add')</a>
+                    class="btn btn-sm btn-primary">@lang('backend::files.create')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
         @if ($count)
             <div class="table-responsive">
-                {{
-                    $dataTable->table()
-                    /*
-                    $dataTable->table([
-                        'class'         => 'table table-bordered',
-                        'data-route'    => route('backend.files'),
-                        'data-columns'  => $dataTable->getColumns()->map(fn($item) => [ 'data' => $item->data])->toJson(),
-                    ])
-                    */
-                }}
-
+                {{ $dataTable->table() }}
                 @include('backend::components.datatable-actions', [
                     'actions'   => [ 'delete' ]
                 ])
@@ -43,7 +33,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.files.create') }}" class="text-custom">
-                        <ins>@lang('backend/file.add')</ins>
+                        <ins>@lang('backend::files.create')</ins>
                     </a>
                 </p>
             </div>

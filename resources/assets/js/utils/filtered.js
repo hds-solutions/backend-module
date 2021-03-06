@@ -19,25 +19,27 @@ export default class Filtered {
         // capture change on parent
         this.parent.addEventListener('change', e => {
             // enabled options count
-            let enabled = 0;
+            let enabled = 0,
+                canAddNew = false;
             // filter element based on parent balue
-            for (var i = this.element.options.length - 1; i >= 0; i--) {
-                // get option
-                let option = this.element.options[i];
+            for (let option of this.element.options) {
                 // hide by default
                 if (option.dataset[this.using] !== undefined) option.setAttribute('hidden', true);
                 // check relation
-                if (option.dataset[this.using] == this.parent.value) {
+                if (option.dataset[this.using] == this.parent.value ||
+                    option.dataset[this.using] === '*') {
                     // enable option
                     option.removeAttribute('hidden');
                     // count enabled
                     enabled++;
                 }
+                // change flag
+                canAddNew = canAddNew || option.value === 'add::new';
             }
             // reset selection
             if (enabled == 0 || this.oldValue != this.parent.value) this.element.value = '';
             // disable element if no option was enabled
-            if (enabled == 0) this.element.setAttribute('disabled', true);
+            if (enabled == 0 || canAddNew && this.parent.value == '') this.element.setAttribute('disabled', true);
             // enable element
             else this.element.removeAttribute('disabled');
             // update value

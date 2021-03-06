@@ -1,7 +1,7 @@
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">{{ $label }}</label>
-    <div class="col-3">
-        <div class="form-check">
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
+        <div class="form-control form-check">
             <input type="hidden" name="{{ $name }}"
                 value="{{ (isset($resource) && !old($name) ? $resource->$field : old($name)) ? 'true' : 'false' }}">
             <input type="checkbox" id="{{ $field }}"

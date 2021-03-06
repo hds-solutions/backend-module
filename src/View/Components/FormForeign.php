@@ -14,12 +14,17 @@ class FormForeign extends Component {
     public function __construct(
         public $resource,
         public string $name,
-        public ?string $field = null,
         public array|Collection $values,
+        public string $foreign,
+        public ?string $foreignAddLabel = null,
+        public ?string $field = null,
         public ?string $label = null,
         public ?string $placeholder = null,
-        public ?string $helper = null,
+        public ?string $help = null,
         public bool $required = false,
+
+        public ?string $filteredBy = null,
+        public ?string $filteredUsing = null,
     ) {
         $this->field ??= $this->name;
     }

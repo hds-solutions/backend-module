@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/file.title'))
+@section('page-name', __('backend::files.title'))
 
 @section('content')
 
@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-user-plus"></i>
-                @lang('backend/file.create')
+                @lang('backend::files.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                {{-- <a href="{{ route('backend.files.create') }}" class="btn btn-sm btn-primary">@lang('backend/file.add')</a> --}}
+                {{-- <a href="{{ route('backend.files.create') }}" class="btn btn-sm btn-primary">@lang('backend::files.add')</a> --}}
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/user.title'))
-@section('description', __('backend/user.description'))
+@section('page-name', __('backend::users.title'))
+@section('description', __('backend::users.description'))
 
 @section('content')
 
@@ -10,11 +10,11 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('backend/user.index')
+                @lang('backend::users.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.users.create') }}"
-                    class="btn btn-sm btn-primary">@lang('backend/user.add')</a>
+                    class="btn btn-sm btn-primary">@lang('backend::users.create')</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.users.create') }}" class="text-custom">
-                        <ins>@lang('backend/user.add')</ins>
+                        <ins>@lang('backend::users.create')</ins>
                     </a>
                 </p>
             </div>

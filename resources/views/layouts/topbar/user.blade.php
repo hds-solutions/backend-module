@@ -6,13 +6,16 @@
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
-        {{-- <a class="dropdown-item" href="#"
-            data-confirm="Cerrar sessión?"
-            data-text="Está seguro de finalizar su sessión?"
-            data-accept="Si, salir">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
+        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery([ 'locale' => 'es' ]) }}">
+            <i class="fas fa-flag fa-sm fa-fw mr-2 text-gray-400"></i>
+            <span class="@if (app()->getLocale() == 'es') font-weight-bold @endif">Español</span>
         </a>
+        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery([ 'locale' => 'en' ]) }}">
+            <i class="fas fa-flag fa-sm fa-fw mr-2 text-gray-400"></i>
+            <span class="@if (app()->getLocale() == 'en') font-weight-bold @endif">English</span>
+        </a>
+
+        {{--
         <a class="dropdown-item" href="#">
             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
             Settings
@@ -20,20 +23,22 @@
         <a class="dropdown-item" href="#">
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
             Activity Log
-        </a>
-        <div class="dropdown-divider"></div> --}}
+        </a> --}}
+
+        <div class="dropdown-divider"></div>
 
         <form method="POST" action="{{ route('backend.logout') }}">
             @csrf
 
-            <a href="{{ route('backend.logout') }}"
+            <button type="submit"
+                href="{{ route('backend.logout') }}"
                 data-confirm="@lang('Logout')?"
                 data-text="@lang('Are you sure you want to log out')?"
                 data-accept="@lang('Yes, logout')"
                 class="dropdown-item">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 @lang('Logout')
-            </a>
+            </button>
         </form>
 
     </div>

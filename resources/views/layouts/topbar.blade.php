@@ -10,7 +10,7 @@
     </ul>
 
     {{-- current company --}}
-    <h5 class="m-0">{{ Backend::company()->name }}</h5>
+    <h5 class="m-0">{{ backend()->company()->name }}</h5>
 
     <!-- Topbar Search -->
     {{-- @include('backend::layouts.topbar.search') --}}

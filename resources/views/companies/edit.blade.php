@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('backend/company.title'))
+@section('page-name', __('backend::companies.title'))
 
 @section('content')
 
@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-company-plus"></i>
-                @lang('backend/company.edit')
+                @lang('backend::companies.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <a href="{{ route('backend.companies.create') }}" class="btn btn-sm btn-primary">@lang('backend/company.add')</a>
+                <a href="{{ route('backend.companies.create') }}" class="btn btn-sm btn-primary">@lang('backend::companies.add')</a>
             </div>
         </div>
     </div>
