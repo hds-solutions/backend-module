@@ -8,6 +8,13 @@ use HDSSolutions\Finpar\Models\Scopes\CompanyScope;
 
 trait BelongsToCompany {
 
+    protected function getArrayableItems(array $values) {
+        // hide company ID from visible attributes
+        if (!in_array('company_id', $this->hidden)) $this->hidden[] = 'company_id';
+        //
+        return parent::getArrayableItems($values);
+    }
+
     public static function bootBelongsToCompany() {
         // regiter global scope
         self::addGlobalScope(new CompanyScope);
