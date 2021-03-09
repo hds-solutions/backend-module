@@ -21,11 +21,6 @@ class BranchController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::branches.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $resourcees = Branch::all();
-        // show a list of objects
-        return view('branches.index', compact('branches'));
     }
 
     /**
@@ -136,7 +131,8 @@ class BranchController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.branches');
     }

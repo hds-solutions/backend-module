@@ -19,11 +19,6 @@ class FileController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::files.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $images = File::images()->get();
-        // show a list of objects
-        return view('images.index', compact('images'));
     }
 
     /**
@@ -113,13 +108,9 @@ class FileController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return redirect()->back();
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.files');
-
-        // delete object
-        $image->delete();
-        // redirect to list
-        return redirect()->route('backend.images');
     }
 }

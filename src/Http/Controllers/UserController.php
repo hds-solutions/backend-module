@@ -18,12 +18,6 @@ class UserController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::users.index', [ 'count' => Resource::count() ]);
-
-        //
-        // fetch all objects
-        $resources = Resource::all();
-        // show a list of objects
-        return view('backend::users.index', compact('resources'));
     }
 
     /**
@@ -133,11 +127,18 @@ class UserController extends Controller {
      * @param  \App\Models\User  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource) {
+    public function destroy($id) {
+        // find resource
+        $resource = Resource::findOrFail($id);
+
         // check current user or root account
         if (auth()->user()->id == $resource->id || $resource->id == 1) return back();
-        // delete object
-        $resource->delete();
+
+        // delete resource
+        if (!$resource->delete())
+            // redirect with errors
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.users');
     }

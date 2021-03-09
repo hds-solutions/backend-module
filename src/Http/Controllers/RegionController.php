@@ -18,11 +18,6 @@ class RegionController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::regions.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $regions = Region::ordered()->get();
-        // show a list of objects
-        return view('regions.index', compact('regions'));
     }
 
     /**
@@ -112,7 +107,8 @@ class RegionController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.regions');
     }

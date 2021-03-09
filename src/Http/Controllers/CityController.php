@@ -19,11 +19,6 @@ class CityController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::cities.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $cities = Model::with([ 'region' ])->ordered()->get();
-        // show a list of objects
-        return view('cities.index', compact('cities'));
     }
 
     /**
@@ -121,7 +116,8 @@ class CityController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.cities');
     }

@@ -19,11 +19,6 @@ class CompanyController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('backend::companies.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $resources = Resource::all();
-        // show a list of objects
-        return view('backend::companies.index', compact('resources'));
     }
 
     /**
@@ -145,12 +140,8 @@ class CompanyController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
-        // redirect to list
-        return redirect()->route('backend.companies');
-
-        // delete object
-        $resource->delete();
+            return back()
+                ->withErrors($resource->errors());
         // redirect to list
         return redirect()->route('backend.companies');
     }
