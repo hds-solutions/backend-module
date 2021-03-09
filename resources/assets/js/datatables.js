@@ -38,6 +38,9 @@ $(_ => {
                 case column.render !== undefined:
                     // get render type
                     let type = column.render.split(':');
+                    //
+                    type = [ type.shift(), type.join(':') ];
+                    //
                     switch (type.shift()) {
                         case 'image':
                             // set size
@@ -55,6 +58,21 @@ $(_ => {
                                 row.values.forEach(value => str += '<small><b>'+value.option.name+'</b>: '+(value.option_value.value ?? '--')+'</small><br>');
                                 return str+'</div>';
                             }
+                            break;
+                        case 'boolean':
+                            column.render = (data, type, row, meta) => data ? 'True' : 'False';
+                            break;
+                        case 'concat':
+                            // split fields from separator
+                            let config = type.shift().split(';'),
+                                fields = config.shift(),
+                                separator = config.shift() || ', ';
+                            column.render = (data, type, row, meta) => {
+                                // foreach fields to concat
+                                let str = '';
+                                fields.split(',').forEach(field => str += ((str.length ? separator : '') + row[field]) );
+                                return str;
+                            };
                             break;
                     }
                     break;
