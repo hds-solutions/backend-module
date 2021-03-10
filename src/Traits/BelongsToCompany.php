@@ -2,9 +2,9 @@
 
 namespace HDSSolutions\Finpar\Traits;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Models\Company;
 use HDSSolutions\Finpar\Models\Scopes\CompanyScope;
+use Illuminate\Database\Eloquent\Model;
 
 trait BelongsToCompany {
 
