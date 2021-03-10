@@ -8,7 +8,7 @@ require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
 //
 require('./datatables');
 require('./utils/only');
-require('./utils/thousand');
+// require('./utils/thousand');
 // init TinyMCE
 require('./tinymce');
 
@@ -19,6 +19,9 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+import Thousand from './utils/thousand';
+document.querySelectorAll('[thousand]').forEach(element => new Thousand(element));
 
 // confirmation modal
 import Confirmation from './utils/confirm';
@@ -231,3 +234,6 @@ $('[data-toggle="tooltip"]').tooltip();
 
 import Test from './utils/test';
 document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Test(option));
+
+import Currency from './utils/currency';
+document.querySelectorAll('[data-currency-by]').forEach(currency => new Currency(currency));

@@ -3,6 +3,8 @@
     <div class="col-12 col-md-9 mt-2 mt-xl-0 offset-md-3 offset-xl-0 col-xl-3">
         <select name="{{ $name }}"
             @if ($filteredBy) data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}" @endif
+            data-none-selected-text="{{ $placeholder }}"
+
             value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
             class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
             placeholder="{{ $placeholder }}"
@@ -40,6 +42,8 @@
     <div class="@if ($slot->isEmpty()) col-11 col-md-8 col-lg-6 col-xl-4 @else col-12 col-md-9 col-xl-3 @endif">
 
         <select name="{{ $name }}" data-live-search="true" @if ($required) required @endif
+            data-none-selected-text="{{ $placeholder }}"
+
             value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
             class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
             placeholder="{{ $placeholder }}"

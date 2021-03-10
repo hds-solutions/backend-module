@@ -1,5 +1,7 @@
 import Filtered from './filtered';
 import Preview from './preview';
+import Thousand from './thousand';
+import Currency from './currency';
 
 export default class Multiple {
     constructor(container) {
@@ -58,6 +60,8 @@ export default class Multiple {
         //
         element.filtereds();
         element.previews();
+        element.thousands();
+        element.currencies();
         // execute event
         this._fn.new( element.element.get(0) );
     }
@@ -127,6 +131,39 @@ class Element {
             ele.dataset.preview = '#p'+id;
             // init plugin
             new Preview( ele, false );
+        });
+    }
+
+    thousands() {
+        // check filtered-by
+        let thousandElements = this.element.find('[thousand]');
+        // init plugin
+        thousandElements.each((idx, ele) => {
+            // init plugin
+            new Thousand( ele );
+        });
+    }
+
+    currencies() {
+        // check filtered-by
+        let currencyElements = this.element.find('[data-currency-by]');
+        //
+        let ids = [];
+        // init plugin
+        currencyElements.each((idx, ele) => {
+            // generate a random id
+            if (ids[ele.dataset.currencyBy] === undefined) {
+                // generate new ID for currenvy
+                ids[ele.dataset.currencyBy] = this.random();
+                // get currency element
+                let currency = this.element.find( ele.dataset.currencyBy );
+                // put random id on target element
+                currency.attr('id', 'c'+ids[ele.dataset.currencyBy]);
+            }
+            // update filtered by value
+            ele.dataset.currencyBy = '#c'+ids[ele.dataset.currencyBy];
+            // init plugin
+            new Currency( ele );
         });
     }
 
