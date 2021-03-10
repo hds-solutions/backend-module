@@ -8,12 +8,19 @@ use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Str;
 
 class BaseBlueprint extends Blueprint {
+    private boolean $asPivot = false;
+
+    public function asPivot(bool $asPivot = true) {
+        $this->asPivot = $asPivot;
+    }
+
     public function build(Connection $connection, Grammar $grammar) {
         // check if table is creating
         if ($this->creating()) {
             // add created/updated/deleted
             $this->timestamps();
-            $this->softDeletes();
+            // check if asPivot wasn't set and add softDeletes
+            if (!$this->asPivot) $this->softDeletes();
         }
         // return parent builder
         return parent::build($connection, $grammar);
