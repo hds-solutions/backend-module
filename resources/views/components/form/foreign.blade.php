@@ -1,8 +1,8 @@
-@if ($filteredBy)
+@if ($secondary)
 
     <div class="col-12 col-md-9 mt-2 mt-xl-0 offset-md-3 offset-xl-0 col-xl-3">
         <select name="{{ $name }}"
-            data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}"
+            @if ($filteredBy) data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}" @endif
             value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
             class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
             placeholder="{{ $placeholder }}"
@@ -18,14 +18,16 @@
                 @else class="text-muted" @endif>{{ $placeholder }}</option>
 
             @foreach ($values as $value)
-            <option value="{{ $value->id }}" data-{{ $filteredUsing }}="{{ $value->{"{$filteredUsing}_id"} }}"
+            <option value="{{ $value->id }}"
+                @if ($filteredBy) data-{{ $filteredUsing }}="{{ $value->{"{$filteredUsing}_id"} }}" @endif
                 @if (isset($resource) && !old($name) && $resource->$field == $value->id ||
                     old($name) == $value->id) selected @endif>{{ $value->name }}</option>
             @endforeach
 
             @if ($foreign)
-            <option value="add::new" data-{{ $filteredUsing }}="*"
-                class="text-muted font-italic">{{ $foreignAddLabel ?? 'indefined' }}</option>
+            <option value="add::new"
+                @if ($filteredBy) data-{{ $filteredUsing }}="*" @endif
+                class="text-muted font-italic">{{ $foreignAddLabel ?? 'undefined' }}</option>
             @endif
 
         </select>
@@ -55,12 +57,14 @@
             @foreach ($values as $value)
             <option value="{{ $value->id }}"
                 @if (isset($resource) && !old($name) && $resource->$field == $value->id ||
-                    old($name) == $value->id) selected @endif>{{ $value->name }}</option>
+                    old($name) == $value->id ||
+                    $request && request($request) == $value->id) selected @endif
+                @foreach ($append as $appended) data-{{ $appended }}="{{ $value->{$appended.'_id'} }}" @endforeach>{{ $value->name }}</option>
             @endforeach
 
             @if ($foreign)
             <option value="add::new"
-                class="text-muted font-italic">{{ $foreignAddLabel ?? 'indefined' }}</option>
+                class="text-muted font-italic">{{ $foreignAddLabel ?? 'undefined' }}</option>
             @endif
 
         </select>

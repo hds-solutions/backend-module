@@ -4,6 +4,7 @@
         <div class="input-group">
 
             <select name="{{ $name.($multiple ? '[]' : '') }}" @if ($required) required @endif
+                @if ($filteredBy) data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}" @endif
                 @if ($multiple) multiple @else value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}" @endif
                 data-preview="#image_preview" class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
                 placeholder="{{ $placeholder }}">
@@ -15,6 +16,7 @@
 
                 @foreach($images as $image)
                 <option value="{{ $image->id }}" url="{{ $image->url }}"
+                    @if ($filteredBy) data-{{ $filteredUsing }}="{{ $image->pivot->{"{$filteredUsing}_id"} }}" @endif
                     @if (!$multiple)
                         @if ($image->id == (isset($resource) && !old($name) ? $resource->$field : old($name))) selected @endif
                     @else

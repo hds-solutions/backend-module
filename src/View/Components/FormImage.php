@@ -22,6 +22,9 @@ class FormImage extends Component {
         public ?string $helper = null,
         public bool $required = false,
         public bool $multiple = false,
+
+        public ?string $filteredBy = null,
+        public ?string $filteredUsing = null,
     ) {
         $this->field ??= $this->name;
     }

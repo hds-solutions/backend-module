@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class FormForeign extends Component {
+
+    public array $append = [];
+
     /**
      * Create a new component instance.
      *
@@ -25,8 +28,14 @@ class FormForeign extends Component {
 
         public ?string $filteredBy = null,
         public ?string $filteredUsing = null,
+
+        ?string $append = null,
+        public ?string $request = null,
+
+        public bool $secondary = false,
     ) {
         $this->field ??= $this->name;
+        $this->append = explode(',', $append);
     }
 
     /**
