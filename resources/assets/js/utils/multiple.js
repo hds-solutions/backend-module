@@ -60,8 +60,8 @@ export default class Multiple {
         //
         element.filtereds();
         element.previews();
-        element.thousands();
         element.currencies();
+        element.thousands();
         // execute event
         this._fn.new( element.element.get(0) );
     }

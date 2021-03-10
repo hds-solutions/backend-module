@@ -20,6 +20,9 @@ $.ajaxSetup({
     }
 });
 
+import Currency from './utils/currency';
+document.querySelectorAll('[data-currency-by]').forEach(currency => new Currency(currency));
+
 import Thousand from './utils/thousand';
 document.querySelectorAll('[thousand]').forEach(element => new Thousand(element));
 
@@ -234,6 +237,3 @@ $('[data-toggle="tooltip"]').tooltip();
 
 import Test from './utils/test';
 document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Test(option));
-
-import Currency from './utils/currency';
-document.querySelectorAll('[data-currency-by]').forEach(currency => new Currency(currency));
