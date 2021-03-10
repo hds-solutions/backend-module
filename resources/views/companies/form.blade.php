@@ -3,7 +3,7 @@
 <x-backend-form-text :resource="$resource ?? null" name="name" required
     label="{{ __('backend::company.name.0') }}"
     placeholder="{{ __('backend::company.name._') }}"
-    {{-- help="{{ __('backend::company.name.?') }}" --}} />
+    {{-- helper="{{ __('backend::company.name.?') }}" --}} />
 
 <x-backend-form-image :resource="$resource ?? null" :images="$images"
     name="logo_id"

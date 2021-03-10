@@ -5,12 +5,12 @@
 
     label="{{ __('backend::city.region_id.0') }}"
     placeholder="{{ __('backend::city.region_id._') }}"
-    {{-- help="{{ __('backend::city.region_id.?') }}" --}} />
+    {{-- helper="{{ __('backend::city.region_id.?') }}" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
     label="{{ __('backend::city.name.0') }}"
     placeholder="{{ __('backend::city.name._') }}"
-    {{-- help="{{ __('backend::city.name.?') }}" --}} />
+    {{-- helper="{{ __('backend::city.name.?') }}" --}} />
 
 <div class="form-row">
     <div class="offset-0 offset-md-3 col-12 col-md-9">
