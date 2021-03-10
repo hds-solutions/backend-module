@@ -15,16 +15,20 @@ export default class Thousand {
             // format number
             this._format();
         });
+        this.element.addEventListener('blur', e => {
+            // format with fixed
+            this._format(true);
+        });
         // capture form submit
         $(this.element).closest('form').submit(e => {
             // set raw value
             this.element.value = this.element.value.replace(/\,*/g, '');
         });
-        // format number
-        if (this.element.value.length > 0) this._format();
+        // format number with fixed
+        if (this.element.value.length > 0) this._format(true);
     }
 
-    _format() {
+    _format(fixed = false) {
         // get current value
         let val = this.element.value.replace(/[^0-9\.]/g,'');
         // validate empty value
@@ -32,13 +36,18 @@ export default class Thousand {
             // convert value
             let valArr = val.split('.');
             valArr[0] = (parseInt(valArr[0],10)).toLocaleString('EN');
-            if (valArr[1] && this.element.dataset.decimals) {
-                // console.debug(this.element.dataset.decimals);
+            // check if decimals are allowed
+            if (this.element.dataset.decimals) {
+                // check for decimals and append empty ones
+                if (valArr[1] === undefined) valArr[1] = '0';
+                // crop decimals to max
                 valArr[1] = valArr[1].substr(0, this.element.dataset.decimals);
-                //
+                // check for fixed and create zeroes
+                if (fixed) valArr[1] = (new Number('0.'+valArr[1])).toFixed(this.element.dataset.decimals).substr(2);
+                // remove if no decimals
                 if (valArr[1].length == 0) delete valArr[1];
             }
-            //
+            // join thousand and decimals
             val = valArr.join('.');
         }
         // remove last dot on non decimal
