@@ -41,7 +41,8 @@ class BackendMenu {
         // create a submenu
         $sub = backend()->menu()
             ->add(__('backend::configs.nav'), [
-                'icon'  => 'cogs',
+                'nickname'  => 'configs',
+                'icon'      => 'cogs',
             ])
             ->data('priority', 1800);
 
