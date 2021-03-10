@@ -8,7 +8,7 @@ use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Str;
 
 class BaseBlueprint extends Blueprint {
-    private boolean $asPivot = false;
+    private bool $asPivot = false;
 
     public function asPivot(bool $asPivot = true) {
         $this->asPivot = $asPivot;
