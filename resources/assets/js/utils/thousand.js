@@ -37,15 +37,18 @@ export default class Thousand {
             let valArr = val.split('.');
             valArr[0] = (parseInt(valArr[0],10)).toLocaleString('EN');
             // check if decimals are allowed
-            if (this.element.dataset.decimals) {
+            if (this.element.dataset.decimals > 0) {
                 // check for decimals and append empty ones
-                if (valArr[1] === undefined) valArr[1] = '0';
-                // crop decimals to max
-                valArr[1] = valArr[1].substr(0, this.element.dataset.decimals);
-                // check for fixed and create zeroes
-                if (fixed) valArr[1] = (new Number('0.'+valArr[1])).toFixed(this.element.dataset.decimals).substr(2);
-                // remove if no decimals
-                if (valArr[1].length == 0) delete valArr[1];
+                if (valArr[1] === undefined && fixed) valArr[1] = '0';
+                // check if there is decimals
+                if (valArr[1] !== undefined) {
+                    // crop decimals to max
+                    valArr[1] = valArr[1].substr(0, this.element.dataset.decimals);
+                    // check for fixed and create zeroes
+                    if (fixed) valArr[1] = (new Number('0.'+valArr[1])).toFixed(this.element.dataset.decimals).substr(2);
+                    // remove if no decimals
+                    if (valArr[1].length == 0) delete valArr[1];
+                }
             }
             // join thousand and decimals
             val = valArr.join('.');
