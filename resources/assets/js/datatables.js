@@ -9,6 +9,8 @@ require('datatables.net-buttons-bs4');
 
 import { Container, byString } from './utils/datatables';
 
+import { reduce, parse } from './utils/utilities';
+
 let assetBasePath = document.querySelector('meta[name="assets-path"]').content ?? '';
 function asset(url) { return assetBasePath + url; }
 
@@ -36,6 +38,8 @@ $(_ => {
                     }
                     break;
                 case column.render !== undefined:
+                    // ignore if already a function
+                    if (typeof column.render === 'function') return;
                     // get render type
                     let type = column.render.split(':');
                     //
@@ -72,6 +76,12 @@ $(_ => {
                                 let str = '';
                                 fields.split(',').forEach(field => str += ((str.length ? separator : '') + row[field]) );
                                 return str;
+                            };
+                            break;
+                        case 'view':
+                            column.render = (d, t, row, m) => {
+                                // parse view with object data
+                                return parse(column.data, reduce(row, type[0]));
                             };
                             break;
                     }
