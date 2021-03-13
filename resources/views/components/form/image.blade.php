@@ -16,11 +16,20 @@
 
                 @foreach($images as $image)
                 <option value="{{ $image->id }}" url="{{ $image->url }}"
+                    {{-- append filtered-by data --}}
                     @if ($filteredBy) data-{{ $filteredUsing }}="{{ $image->pivot->{"{$filteredUsing}_id"} }}" @endif
                     @if (!$multiple)
-                        @if ($image->id == (isset($resource) && !old($name) ? $resource->$field : old($name))) selected @endif
+                        {{-- select if $resource->$field contains $image->id --}}
+                        @if ($image->id == (isset($resource) && !old($name) ? $resource->$field : old($name)) && (
+                            // check filtered by and ignore if filter doesnt match
+                            !$filteredBy || $filteredBy && $image->pivot->{"{$filteredUsing}_id"} == $resource->{"{$filteredUsing}_id"}
+                        )) selected @endif
                     @else
-                        @if (isset($resource) && $resource->$field->contains($image->id)) selected @endif
+                        {{-- select if $resource->$field equals $image->id --}}
+                        @if (isset($resource) && $resource->$field->contains($image->id) && (
+                            // check filtered by and ignore if filter doesnt match
+                            !$filteredBy || $filteredBy && $image->pivot->{"{$filteredUsing}_id"} == $resource->{"{$filteredUsing}_id"}
+                        )) selected @endif
                     @endif>{{ $image->name }}</option>
                 @endforeach
             </select>
