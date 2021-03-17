@@ -9,7 +9,6 @@ const mix = require('laravel-mix');
 
 // Allow multiple Laravel Mix applications
 require('laravel-mix-merge-manifest');
-mix.mergeManifest();
 
 // set public path
 mix.setPublicPath(public = '../../../public').mergeManifest();
@@ -19,6 +18,7 @@ assetsRoot = process.env.ASSET_URL;
 assetsRoot = assetsRoot !== undefined ? assetsRoot : process.env.APP_URL;
 assetsRoot = assetsRoot !== undefined ? assetsRoot : 'https://localhost';
 mix.setResourceRoot( assetsRoot );
+
 // configure mix
 mix.options({
     fileLoaderDirs: {
