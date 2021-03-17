@@ -9,7 +9,7 @@
             @endif
 
             <input name="{{ $name }}" type="@yield('type', 'text')" @if ($required) required @endif
-                value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
+                value="{{ isset($resource) && !old($name) ? $resource->$field : old($name, $default) }}"
                 class="form-control {{ $errors->has($name) ? 'is-danger' : '' }}"
                 placeholder="{{ $placeholder }}">
         </div>

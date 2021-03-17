@@ -13,6 +13,7 @@ class FormText extends Component {
     public function __construct(
         public $resource,
         public string $name,
+        public ?string $default = null,
         public ?string $field = null,
         public ?string $label = null,
         public ?string $prepend = null,
