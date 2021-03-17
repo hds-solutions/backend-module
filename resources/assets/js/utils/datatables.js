@@ -41,7 +41,7 @@ export class Container {
         this.routes = {
             'route.index':      route,
             'route.create':     route+'/create',
-            'route.show':       route+'/:resource:/show',
+            'route.show':       route+'/:resource:',
             'route.edit':       route+'/:resource:/edit',
             'route.update':     route+'/:resource:',
             'route.destroy':    route+'/:resource:',
