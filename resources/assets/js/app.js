@@ -8,7 +8,6 @@ require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
 //
 require('./datatables');
 require('./utils/only');
-// require('./utils/thousand');
 // init TinyMCE
 require('./tinymce');
 
@@ -65,7 +64,7 @@ $('[data-multiple]').each((idx, ele) => {
                 // request current stock quantity
                 $.ajax({
                     method: 'POST',
-                    url: '/backend/inventory/stock',
+                    url: '/inventories/stock',
                     data: data,
                     // update current stock for product+variant on locator
                     success: data => element.querySelector('[name="lines[current][]"]').value = data.stock
@@ -87,7 +86,7 @@ $('[data-multiple]').each((idx, ele) => {
                 // request current price quantity
                 $.ajax({
                     method: 'POST',
-                    url: '/backend/pricechanges/price',
+                    url: '/pricechanges/price',
                     data: data,
                     // update current price for product+variant on locator
                     success: data => element.querySelector('[name="lines[current][]"]').value = data.price
