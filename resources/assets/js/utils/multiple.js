@@ -15,6 +15,13 @@ export default class Multiple {
         //
         this.container = $(container);
         this.multiple = $(this.container.data('multiple')+this.container.data('template'));
+        // find fields with selectpicker plugin
+        this.multiple.find('.selectpicker').each((idx, ele) => {
+            // reset plugin state
+            $(ele).selectpicker('destroy');
+            // keep classList
+            ele.classList.add('selectpicker-init');
+        });
         // remove template
         this.multiple.remove();
         // init existing
@@ -25,10 +32,10 @@ export default class Multiple {
 
     init() {
         this.container.find( this.container.data('multiple') ).each((idx, ele) => {
-            // load element
-            let element = $(ele);
             // init element
-            new Element( this, element );
+            let element = new Element( this, $(ele) );
+            // init plugins
+            this._plugins( element );
         });
     }
 
@@ -51,19 +58,26 @@ export default class Multiple {
         let element = new Element( this, this.multiple.clone() );
         // append cloned element to container
         this.container.append(element.element);
-        // find selectpicker
-        element.element.find('.selectpicker').each((idx, ele) => {
-            // reset
-            $(ele).selectpicker('destroy');
+        // init plugins
+        this._plugins( element );
+        // execute event
+        this._fn.new( element.element.get(0) );
+    }
+
+    _plugins(element) {
+        // init select picker
+        element.element.find('.selectpicker,.selectpicker-init').each((idx, ele) => {
+            // init select picker
             $(ele).selectpicker();
+            // invert classes
+            ele.classList.remove('selectpicker-init')
+            ele.classList.add('selectpicker');
         });
-        //
+        // init plugins on element
         element.filtereds();
         element.previews();
         element.currencies();
         element.thousands();
-        // execute event
-        this._fn.new( element.element.get(0) );
     }
 }
 
@@ -77,17 +91,17 @@ class Element {
         // check if new
         if (!this.used) this.delete.hide();
         // bind events
-        this.events();
-        //
-        this.labels();
+        this._events();
+        // link labels within container
+        this._labels();
     }
 
-    labels() {
+    _labels() {
         this.element.find('label[for]').each((idx, ele) => {
             // get target
             let target = this.element.find('#'+ele.htmlFor);
             // generate a random id
-            let id = this.random();
+            let id = this._random();
             // put random id on target
             target.attr('id', 't'+id);
             // update label for
@@ -105,7 +119,7 @@ class Element {
             // check if we need to ignore
             if (ele.dataset.filteredKeepId != 'true') {
                 // generate a random id
-                let id = this.random();
+                let id = this._random();
                 // put random id on target element
                 filteredBy.attr('id', 'f'+id);
                 // update filtered by value
@@ -124,7 +138,7 @@ class Element {
             // get preview element
             let preview = this.element.find( ele.dataset.preview );
             // generate a random id
-            let id = this.random();
+            let id = this._random();
             // put random id on target element
             preview.attr('id', 'p'+id);
             // update filtered by value
@@ -154,7 +168,7 @@ class Element {
             // generate a random id
             if (ids[ele.dataset.currencyBy] === undefined) {
                 // generate new ID for currenvy
-                ids[ele.dataset.currencyBy] = this.random();
+                ids[ele.dataset.currencyBy] = this._random();
                 // get currency element
                 let currency = this.element.find( ele.dataset.currencyBy );
                 // put random id on target element
@@ -167,13 +181,13 @@ class Element {
         });
     }
 
-    events() {
+    _events() {
         // find input and selects
         this.element.find('input,select')
             // capture change
-            .change(e => { this.fire(e) })
+            .change(e => { this._fire(e) })
             // capture keyup
-            .keyup(e => { this.fire(e) });
+            .keyup(e => { this._fire(e) });
         // capture delete
         this.delete.click(e => {
             // integration with confirm
@@ -185,11 +199,9 @@ class Element {
             // remove element
             this.element.remove();
         });
-        // init select picker
-        this.element.find('.selectpicker').selectpicker();
     }
 
-    fire(e) {
+    _fire(e) {
         // prevent adding if used
         if (this.used || e.target.value.length == 0) return;
         // change flag
@@ -200,7 +212,7 @@ class Element {
         this.delete.show();
     }
 
-    random() {
+    _random() {
         // return random string
         return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
