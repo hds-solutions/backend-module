@@ -4,6 +4,7 @@ namespace HDSSolutions\Finpar\Traits;
 
 use HDSSolutions\Finpar\Interfaces\Document;
 use HDSSolutions\Finpar\Processes\DocumentEngine;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator as Validator_Factory;
 
 trait HasDocumentActions {
@@ -71,6 +72,13 @@ trait HasDocumentActions {
     public function getDocumentError():?string {
         // return saved document error
         return $this->document_error ?? 'Unknown error';
+    }
+
+    public final function scopeStatus(Builder $query, string|array $statuses, bool $whereIn = true) {
+        // force array
+        $statuses = is_array($statuses) ? $statuses : [ $statuses ];
+        // filter statuses
+        return $query->{$whereIn ? 'whereIn' : 'whereNotIn'}('document_status', $statuses);
     }
 
     public final function isDrafted():bool {
