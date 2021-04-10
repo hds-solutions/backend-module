@@ -23,7 +23,7 @@ class FormForeign extends Component {
         public ?string $field = null,
         public ?string $label = null,
         public ?string $placeholder = null,
-        public ?string $help = null,
+        public ?string $helper = null,
         public bool $required = false,
 
         public ?string $filteredBy = null,
