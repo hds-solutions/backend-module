@@ -74,8 +74,8 @@ class BaseBlueprint extends Blueprint {
         $this->dropColumn($column);
     }
 
-    public function amount(string $column = null, int $total = 12, int $places = 2, $signed = false) {
-        return $this->{$signed ? 'decimal' : 'unsignedDecimal'}($column ?? 'amount', $total, $places);
+    public function amount(string $column = null, int $total = 20, int $decimals = 0, bool $signed = false) {
+        return $this->{$signed ? 'decimal' : 'unsignedDecimal'}($column ?? 'amount', $total, $decimals);
     }
 
     public function createdUpdatedBy() {
