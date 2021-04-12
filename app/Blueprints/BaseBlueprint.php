@@ -93,8 +93,8 @@ class BaseBlueprint extends Blueprint {
         $this->string('document_status', 2)->default('DR');
     }
 
-    public function morphable() {
-        return $this->morphs( Str::singular( $this->table ).'able' );
+    public function morphable($name = null) {
+        return $this->morphs( Str::singular( $name ?? $this->table ).'able' );
     }
 
     // @override
