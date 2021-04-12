@@ -4,6 +4,7 @@ namespace HDSSolutions\Finpar\Blueprints;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Str;
 
@@ -91,4 +92,43 @@ class BaseBlueprint extends Blueprint {
     public function asDocument() {
         $this->string('document_status', 2)->default('DR');
     }
+
+    public function morphable() {
+        return $this->morphs( Str::singular( $this->table ).'able' );
+    }
+
+    // @override
+    public function morphs($name, $indexName = null) {
+        // return lodal overrides to allow encapsulation
+        return Builder::$defaultMorphKeyType === 'uuid'
+            ? $this->uuidMorphs($name, $indexName)
+            : $this->numericMorphs($name, $indexName);
+    }
+
+    // @override
+    public function uuidMorphs($name, $indexName = null) {
+        // create fields with encapsulation
+        $fields = $this->encapsulated(
+            $this->string("{$name}_type"),
+            $this->uuid("{$name}_id"),
+        );
+        // add index
+        $this->index(["{$name}_type", "{$name}_id"], $indexName);
+        // return fields
+        return $fields;
+    }
+
+    // @override
+    public function numericMorphs($name, $indexName = null) {
+        // create fields with encapsulation
+        $fields = $this->encapsulated(
+            $this->string("{$name}_type"),
+            $this->unsignedBigInteger("{$name}_id"),
+        );
+        // add index
+        $this->index(["{$name}_type", "{$name}_id"], $indexName);
+        // return fields
+        return $fields;
+    }
+
 }
