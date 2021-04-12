@@ -4,7 +4,7 @@ namespace HDSSolutions\Finpar\Models;
 
 use App\Models\Base\Model;
 
-abstract class X_Region extends Model {
+abstract class X_Region extends Base\Model {
 
     protected $orderBy = [
         'name'      => 'ASC',

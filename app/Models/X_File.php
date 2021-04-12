@@ -6,7 +6,7 @@ use App\Models\Base\Model;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 use Illuminate\Support\Facades\Storage;
 
-class X_File extends Model {
+class X_File extends Base\Model {
     use BelongsToCompany;
 
     const IMAGES_DIRECTORY = 'images';

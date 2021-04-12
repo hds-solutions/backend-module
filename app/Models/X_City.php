@@ -4,7 +4,7 @@ namespace HDSSolutions\Finpar\Models;
 
 use App\Models\Base\Model;
 
-abstract class X_City extends Model {
+abstract class X_City extends Base\Model {
 
     protected $sortBy = 'name';
 
