@@ -66,11 +66,18 @@ $(_ => {
                         case 'boolean':
                             column.render = (data, type, row, meta) => data ? 'True' : 'False';
                             break;
+                        case 'datetime':
+                            // get datetime configuration
+                            let datetime_config = type.shift().split(';'),
+                                field = datetime_config.shift(),
+                                format = datetime_config.shift() || 'F j, Y H:i';
+                            column.render = (data, type, row, meta) => (new Date(data)).format( format );
+                            break;
                         case 'concat':
                             // split fields from separator
-                            let config = type.shift().split(';'),
-                                fields = config.shift(),
-                                separator = config.shift() || ', ';
+                            let concat_config = type.shift().split(';'),
+                                fields = concat_config.shift(),
+                                separator = concat_config.shift() || ', ';
                             column.render = (data, type, row, meta) => {
                                 // foreach fields to concat
                                 let str = '';
