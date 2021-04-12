@@ -97,7 +97,7 @@ export function parse(view, object) {
                 // check if object has amount
                 if (object[f_amount] !== undefined) {
                     // build symbol to replace
-                    let symbol_val = (f_symbol !== null ? object[f_symbol]+' ' : '');
+                    let symbol_val = (![ null, 'null' ].includes(f_symbol) ? object[f_symbol]+' ' : '');
                     // build amount to replace
                     let amount_val = amount(
                         // send amount with decimals
