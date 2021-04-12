@@ -91,13 +91,25 @@ export function parse(view, object) {
                     f_decimals = currency[2] ?? null;
                 // validate config
                 if (currency.length === 1) {
-                    f_amount = symbol;
+                    f_amount = f_symbol;
                     f_symbol = null;
                 }
                 // check if object has amount
-                if (object[f_amount] !== undefined)
+                if (object[f_amount] !== undefined) {
+                    // build symbol to replace
+                    let symbol_val = (f_symbol !== null ? object[f_symbol]+' ' : '');
+                    // build amount to replace
+                    let amount_val = amount(
+                        // send amount with decimals
+                        object[f_amount] / Math.pow(10, object[f_decimals] ?? 0),
+                        // send decimals to keep zeroes
+                        object[f_decimals] ?? 0,
+                        // keep zeroes at the end
+                        true
+                    );
                     // replace currency with formated one
-                    view = view.replace(currencies[0], (f_symbol !== 'null' ? object[f_symbol]+' ' : '')+amount(object[f_amount], object[f_decimals] ?? 0, true));
+                    view = view.replace(currencies[0], symbol_val + amount_val);
+                }
             }
 
             // replace {object.key} with value
