@@ -2,7 +2,6 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
 abstract class X_Branch extends Base\Model {

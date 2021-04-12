@@ -2,7 +2,6 @@
 
 namespace HDSSolutions\Finpar\DataTables\Base;
 
-use App\Models\Base\Model;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;

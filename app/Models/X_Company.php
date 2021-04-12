@@ -2,8 +2,6 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
-
 abstract class X_Company extends Base\Model {
 
     protected $fillable = [

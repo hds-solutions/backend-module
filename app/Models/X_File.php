@@ -2,7 +2,6 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 use Illuminate\Support\Facades\Storage;
 
