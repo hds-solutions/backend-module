@@ -7,12 +7,13 @@
                 @if ($filteredBy) data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}" @endif
                 @if ($multiple) multiple @else value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}" @endif
                 data-preview="#image_preview" class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
+                data-none-selected-text="{{ $placeholder }}"
                 placeholder="{{ $placeholder }}">
 
-                @if (!$multiple)
+                {{-- @if (!$multiple)
                 <option value="" selected
                     @if ($required) disabled hidden @endif>{{ $label }}</option>
-                @endif
+                @endif --}}
 
                 @foreach($images as $image)
                 <option value="{{ $image->id }}" url="{{ $image->url }}"
