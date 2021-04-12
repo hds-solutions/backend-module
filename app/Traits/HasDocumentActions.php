@@ -16,9 +16,9 @@ trait HasDocumentActions {
     public static function bootHasDocumentActions() {
         self::deleting(function($model) {
             // check if model is already completed
-            if ($model->isCompleted()) {
+            if ($model->isProcessed()) {
                 // save error message
-                $model->documentError('This document can\'t be deleted because is already completed');
+                $model->documentError('This document can\'t be deleted because is already processed');
                 // return false
                 return false;
             }
@@ -63,6 +63,10 @@ trait HasDocumentActions {
     }
 
     public function documentError(?string $message = null):string {
+        // prevent error message duplication
+        if (($this->document_error ?? false) !== $message)
+            // register error log, TODO: backtrace to method (?)
+            logger(class_basename(static::class).' got document error "'.($message ?? 'null').'"');
         // save error
         $this->document_error = $message;
         // return invalid document status
@@ -78,7 +82,7 @@ trait HasDocumentActions {
         // force array
         $statuses = is_array($statuses) ? $statuses : [ $statuses ];
         // filter statuses
-        return $query->{$whereIn ? 'whereIn' : 'whereNotIn'}('document_status', $statuses);
+        return $query->{$whereIn ? 'whereIn' : 'whereNotIn'}($this->getTable().'.document_status', $statuses);
     }
 
     public final function isDrafted():bool {
@@ -86,9 +90,19 @@ trait HasDocumentActions {
         return $this->document_status == Document::STATUS_Draft;
     }
 
+    public final function getIsDraftedAttribute():bool {
+        // return method result
+        return $this->isDrafted();
+    }
+
     public final function isInProgress():bool {
         // return if document is in progress
         return $this->document_status == Document::STATUS_InProgress;
+    }
+
+    public final function getIsInProgressAttribute():bool {
+        // return method result
+        return $this->isInProgress();
     }
 
     public final function isApproved():bool {
@@ -96,9 +110,19 @@ trait HasDocumentActions {
         return $this->document_status == Document::STATUS_Approved;
     }
 
+    public final function getIsApprovedAttribute():bool {
+        // return method result
+        return $this->isApproved();
+    }
+
     public final function isRejected():bool {
         // return if document is in progress
         return $this->document_status == Document::STATUS_Rejected;
+    }
+
+    public final function getIsRejectedAttribute():bool {
+        // return method result
+        return $this->isRejected();
     }
 
     public final function isInvalid():bool {
@@ -106,14 +130,60 @@ trait HasDocumentActions {
         return $this->document_status == Document::STATUS_Invalid;
     }
 
+    public final function getIsInvalidAttribute():bool {
+        // return method result
+        return $this->isInvalid();
+    }
+
     public final function isCompleted():bool {
         // return if document is completed
         return $this->document_status == Document::STATUS_Completed;
     }
 
+    public final function getIsCompletedAttribute():bool {
+        // return method result
+        return $this->isCompleted();
+    }
+
     public final function isClosed():bool {
         // return if document is closed
         return $this->document_status == Document::STATUS_Closed;
+    }
+
+    public final function getIsClosedAttribute():bool {
+        // return method result
+        return $this->isClosed();
+    }
+
+    public function scopeOpen(Builder $query) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status aren't Completed or Closed
+            [ Document::STATUS_Completed, Document::STATUS_Closed ],
+            // negation (WHERE NOT IN)
+            whereIn: false);
+    }
+
+    public final function isOpen():bool {
+        // return if document is open
+        return $this->isDrafted() || $this->isInProgress() ||
+            $this->isApproved() || $this->isRejected() ||
+            $this->isInvalid();
+    }
+
+    public final function getIsOpenAttribute():bool {
+        // return method result
+        return $this->isOpen();
+    }
+
+    public final function isProcessed():bool {
+        // return if document is already processed
+        return $this->isCompleted() || $this->isClosed();
+    }
+
+    public final function getIsProcessedAttribute():bool {
+        // return method result
+        return $this->isProcessed();
     }
 
 }

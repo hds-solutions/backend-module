@@ -22,20 +22,25 @@ final class DocumentEngine implements Document {
         $this->document_status = $this->document->document_status;
     }
 
-    public static function __(string $status, string $type = 'status'):string {
+    public static function __(string $status, string $type = 'status', $translate = true):string {
         // load constants
         if (self::$constants == []) self::$constants = (new ReflectionClass(self::class))->getConstants();
         // find status
         foreach (self::$constants as $constant => $value)
             // check on STATUS constants
             if (preg_match('/'.strtoupper($type).'_.*/', $constant) && $status == $value)
-                // return constant name
-                return __('backend::document.'.$type.'.'.preg_replace('/'.strtoupper($type).'_/', '', $constant) );
+                // check if returned value must be translated
+                return $translate
+                    // return constant translation
+                    ? __('backend::document.'.$type.'.'.preg_replace('/'.strtoupper($type).'_/', '', $constant) )
+                    // return constant name
+                    : $constant;
         // return status name
         return __( self::STATUS_Unknown );
     }
 
     public function processIt(string $action):bool {
+        $this->logger('processIt', $this->__($action, 'action', false), false);
         // validate action
         if (!$this->isValidAction($action)) return $this->documentError( 'Invalid action '.self::__($action, 'action').' for current document status' ) && false;
         // check if action is prepareIt
@@ -76,6 +81,7 @@ final class DocumentEngine implements Document {
         return $this->documentError( 'Unknown action: '.$action ) && false;
     }
 
+    // @override
     public function documentError(?string $message = null):string {
         // redirect to document
         return $this->document->documentError($message);
@@ -91,7 +97,9 @@ final class DocumentEngine implements Document {
         $actions = collect();
         // valid statuses for prepareIt
         if ($this->document->isDrafted() || $this->document->isInProgress() ||
-            $this->document->isInvalid())
+            $this->document->isInvalid() ||
+            // allow re-execution of prepareIt() when document is approved or rejected
+            $this->document->isApproved() || $this->document->isRejected())
             // enable prepareIt action
             $actions->push( Document::ACTION_Prepare );
         // valid statuses for completeIt
@@ -121,12 +129,16 @@ final class DocumentEngine implements Document {
         return $actions;
     }
 
-    protected function prepareIt():?string {
+    protected function prepareIt():?string { $this->logger('prepareIt');
+        // validate new status received from document prepareIt process
+        if (!in_array(($status = $this->document->prepareIt()), Document::STATUSES))
+            // return invalid new status
+            return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
         // prepare document, update and return status
-        return $this->document->document_status = $this->document->prepareIt();
+        return $this->document->document_status = $status;
     }
 
-    protected function approveIt():bool {
+    protected function approveIt():bool { $this->logger('approveIt');
         // approve document
         if ($approved = $this->document->approveIt())
             // update status
@@ -135,7 +147,7 @@ final class DocumentEngine implements Document {
         return $approved;
     }
 
-    protected function rejectIt():bool {
+    protected function rejectIt():bool { $this->logger('rejectIt');
         // reject document
         if ($rejected = $this->document->rejectIt())
             // update status
@@ -144,19 +156,36 @@ final class DocumentEngine implements Document {
         return $rejected;
     }
 
-    protected function completeIt():?string {
+    protected function completeIt():?string { $this->logger('completeIt');
+        // validate new status received from document completeIt process
+        if (!in_array(($status = $this->document->completeIt()), Document::STATUSES))
+            // return invalid new status
+            return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
         // complete document, update and return status
-        return $this->document->document_status = $this->document->completeIt();
+        return $this->document->document_status = $status;
     }
 
-    protected function closeIt():?string {
-        // close document, update and return status
-        return $this->document->document_status = $this->document->closeIt() ?? $this->document->document_status;
+    protected function closeIt():?string { $this->logger('closeIt');
+        // validate new status received from document closeIt process
+        if (in_array(($status = $this->document->closeIt()), Document::STATUSES))
+            // update document status
+            $this->document->document_status = $status;
+        // return document status
+        return $this->document->document_status;
     }
 
-    protected function reOpenIt():bool {
+    protected function reOpenIt():bool { $this->logger('reOpenIt');
         // reOpen document
         return $this->document->reOpenIt();
+    }
+
+    private function logger(string $action, ?string $args = null, bool $document = true) {
+        logger(__( class_basename(self::class).':::action(:args) '.($document ? 'on :document#:id' : '[:document#:id]'), [
+            'action'    => $action,
+            'args'      => $args ?? '',
+            'document'  => class_basename( get_class($this->document) ),
+            'id'        => $this->document->getKey(),
+        ]));
     }
 
 }
