@@ -13,13 +13,9 @@ class X_Setting extends Base\Model {
         'value'
     ];
 
-    protected static $createRules = [
+    protected static $rules = [
         'name'  => [ 'required' ],
         'value' => [ 'sometimes', 'nullable' ],
-    ];
-
-    protected static $updateRules = [
-        'value' => [ 'nullable' ],
     ];
 
     public function setValueAttribute($value = '') {

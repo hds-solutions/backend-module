@@ -11,12 +11,7 @@ abstract class X_City extends Base\Model {
         'name',
     ];
 
-    protected static $createRules = [
-        'region_id'     => [ 'required' ],
-        'name'          => [ 'required', 'min:4' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'region_id'     => [ 'required' ],
         'name'          => [ 'required', 'min:4' ],
     ];

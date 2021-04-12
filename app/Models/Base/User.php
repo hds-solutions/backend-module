@@ -64,19 +64,10 @@ class User extends Base\Model implements
         'email_verified_at' => 'datetime',
     ];
 
-    protected static $createRules = [
-        'firstname' => [ 'required', 'min:2' ],
-        'lastname'  => [ 'sometimes', 'nullable', 'min:2' ],
-        'email'     => [ 'required', 'email', 'confirmed', 'unique:'.self::class.',email' ],
-        'password'  => [ 'required', 'string', 'confirmed', 'min:6' ],
-        'type'      => [ 'required' ],
-        'status'    => [ 'sometimes' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'firstname' => [ 'sometimes', 'min:2' ],
         'lastname'  => [ 'sometimes', 'nullable', 'min:2' ],
-        'email'     => [ 'sometimes', 'email', 'unique:'.self::class.',email,{id}' ],
+        'email'     => [ 'sometimes', 'email', 'confirmed', 'unique:'.self::class.',email,{id}' ],
         'password'  => [ 'sometimes', 'string', 'confirmed', 'min:6' ],
         'type'      => [ 'sometimes' ],
         'status'    => [ 'sometimes' ],

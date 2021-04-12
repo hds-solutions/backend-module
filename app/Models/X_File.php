@@ -13,20 +13,14 @@ class X_File extends Base\Model {
 
     protected $fillable = [ 'name', 'type', 'url' ];
 
+    protected static array $rules = [
+        'name'  => [ 'required', 'min:3' ],
+        'type'  => [ 'required' ],
+        'url'   => [ 'required', 'min:3' ],
+    ];
+
     public static array $uploadRules = [
         'file'  => [ 'required', 'image', 'mimes:jpeg,jpg,png,gif', 'max:2048' ],
-    ];
-
-    protected static array $createRules = [
-        'name'  => [ 'required', 'min:3' ],
-        'type'  => [ 'required' ],
-        'url'   => [ 'required', 'min:3' ],
-    ];
-
-    protected static array $updateRules = [
-        'name'  => [ 'required', 'min:3' ],
-        'type'  => [ 'required' ],
-        'url'   => [ 'required', 'min:3' ],
     ];
 
     public function getUrlAttribute():?string {

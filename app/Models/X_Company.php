@@ -11,11 +11,7 @@ abstract class X_Company extends Base\Model {
     protected $nullable = [
     ];
 
-    protected static $createRules = [
-        'name'  => [ 'required' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'  => [ 'required' ],
     ];
 

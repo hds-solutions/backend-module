@@ -15,8 +15,8 @@ trait HasValidationRules {
     public static function bootHasValidationRules() {
         // capture creating
         self::creating(function($model) {
-            // create a Validator with createRules
-            $validator = Validator_Factory::make($model::getAllAttributes($model), $model::createRules());
+            // create a Validator with rules
+            $validator = Validator_Factory::make($model::getAllAttributes($model), $model::rules());
             // check if rules fails
             if ($validator->fails()) {
                 // save errors
@@ -36,7 +36,7 @@ trait HasValidationRules {
         // capture updating
         self::updating(function($model) {
             // create a Validator with updateRules
-            $validator = Validator_Factory::make($model->getAllAttributes($model), $model::updateRules($model->id));
+            $validator = Validator_Factory::make($model->getAllAttributes($model), $model::rules($model->id));
             // check if rules fails
             if ($validator->fails()) {
                 // save errors
@@ -119,16 +119,9 @@ trait HasValidationRules {
         return $attributes;
     }
 
-    private static function createRules(bool $onlykeys = false) {
+    private static function rules($id = -1, bool $onlykeys = false) {
         // get rules
-        $rules = static::$createRules ?? [];
-        // return keys or rules
-        return $onlykeys ? array_keys($rules) : $rules;
-    }
-
-    private static function updateRules($id, bool $onlykeys = false) {
-        // get rules
-        $rules = static::$updateRules ?? static::$createRules ?? [];
+        $rules = static::$rules ?? [];
         // foreach rules
         foreach ($rules as $idx => $rule)
             // check if is array of rules
