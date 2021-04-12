@@ -6,13 +6,15 @@ abstract class X_Company extends Base\Model {
 
     protected $fillable = [
         'name',
+        'logo_id',
     ];
 
     protected $nullable = [
     ];
 
     protected static $rules = [
-        'name'  => [ 'required' ],
+        'name'      => [ 'required' ],
+        'logo_id'   => [ 'sometimes', 'nullable' ],
     ];
 
     public function getIsCurrentAttribute():bool {

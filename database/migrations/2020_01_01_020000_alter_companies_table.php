@@ -19,7 +19,7 @@ class AlterCompaniesTable extends Migration {
 
         // alter table
         $schema->table('companies', function(Blueprint $table) {
-            $table->foreignTo('File', 'logo_id')->after('name');
+            $table->foreignTo('File', 'logo_id')->after('name')->nullable();
         });
     }
 

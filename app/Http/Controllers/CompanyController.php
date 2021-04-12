@@ -44,9 +44,9 @@ class CompanyController extends Controller {
         $resource = new Resource( $request->input() );
 
         // check new uploaded image
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('logo_id')) {
             // upload image
-            $image = File::upload($request, $request->file('image'), $this);
+            $image = File::upload($request, $request->file('logo_id'), $this);
             // save resource
             if (!$image->save())
                 // redirect with errors
@@ -104,9 +104,9 @@ class CompanyController extends Controller {
         $resource->fill( $request->input() );
 
         // check new uploaded image
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('logo_id')) {
             // upload image
-            $image = File::upload($request, $request->file('image'), $this);
+            $image = File::upload($request, $request->file('logo_id'), $this);
             // save resource
             if (!$image->save())
                 // redirect with errors
