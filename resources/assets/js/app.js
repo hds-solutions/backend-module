@@ -6,6 +6,7 @@ require('bootstrap-select/js/bootstrap-select.js');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
 
 //
+require('./utils/prototypes');
 require('./datatables');
 require('./utils/only');
 // init TinyMCE
