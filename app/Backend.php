@@ -14,21 +14,21 @@ class Backend {
 
     private function loadCompany():Company  {
         // load company from session
-        return $this->company = Company::find(session(self::class.'.company', null)) ?? new Company;
+        return $this->company = Company::find(session(self::class.'-company', null)) ?? new Company;
     }
 
     public function setCompany(int|Company|null $company):Company {
         // check if is null
         if ($company === null) {
             // remove company
-            session([ self::class.'.company' => null ]);
+            session([ self::class.'-company' => null ]);
             // replace company
             return $this->loadCompany();
         }
         // save company
         $this->company = $company instanceof Company ? $company : Company::findOrFail($company);
         // save to session
-        session([ self::class.'.company' => $this->company->getKey() ]);
+        session([ self::class.'-company' => $this->company->getKey() ]);
         // return company
         return $this->company;
     }
