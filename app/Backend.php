@@ -40,7 +40,7 @@ class Backend {
 
     public function companies():Collection {
         // TODO: return only companies that user has access to
-        return $this->companies ??= Company::all();
+        return $this->companies ??= Company::with([ 'logo' ])->get();
     }
 
     public function menu():MenuBuilder {
