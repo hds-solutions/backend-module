@@ -60,3 +60,7 @@
         <a href="{{ route('backend.branches') }}" class="btn btn-danger">@lang('backend::branches.cancel')</a>
     </div>
 </div>
+
+@push('pre-scripts')
+    @gmap
+@endpush

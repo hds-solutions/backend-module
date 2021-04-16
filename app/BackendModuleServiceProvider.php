@@ -56,6 +56,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
 
         // register blade directives
         Blade::directive('onlyform', fn($exp) => "<?php if (request()->has('only-form')): ?><input type=\"hidden\" name=\"only-form\" value=\"true\" /><?php endif; ?>");
+        Blade::directive('gmap', fn($exp) => "<script src=\"https://maps.googleapis.com/maps/api/js?v=3&key=".config('services.google.maps.key')."&ftype=.js\"></script>");
     }
 
     public function register() {
