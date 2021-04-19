@@ -10,7 +10,7 @@
             placeholder="{{ $placeholder }}"
 
             @if ($foreign)
-            data-foreign="{{ $foreign }}"
+            data-foreign="{{ Str::snake($foreign) }}"
             data-form="{{ route('backend.'.Str::snake($foreign).'.create', [ 'only-form' ]) }}"
             data-fetch="{{ route('backend.'.Str::snake($foreign)) }}"
             @endif>
@@ -52,7 +52,7 @@
             placeholder="{{ $placeholder }}"
 
             @if ($foreign)
-            data-foreign="{{ $foreign }}"
+            data-foreign="{{ Str::snake($foreign) }}"
             data-form="{{ route('backend.'.Str::snake($foreign).'.create', [ 'only-form' ]) }}"
             data-fetch="{{ route('backend.'.Str::snake($foreign)) }}"
             @endif>
