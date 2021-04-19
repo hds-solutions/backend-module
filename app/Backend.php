@@ -12,23 +12,18 @@ class Backend {
     private Collection $companies;
     private Company $company;
 
-    private function loadCompany():Company  {
-        // load company from session
-        return $this->company = Company::find(session(self::class.'-company', null)) ?? new Company;
-    }
-
     public function setCompany(int|Company|null $company):Company {
         // check if is null
         if ($company === null) {
             // remove company
-            session([ self::class.'-company' => null ]);
+            session()->forget( 'backend.company');
             // replace company
             return $this->loadCompany();
         }
         // save company
         $this->company = $company instanceof Company ? $company : Company::findOrFail($company);
         // save to session
-        session([ self::class.'-company' => $this->company->getKey() ]);
+        session([ 'backend.company' => $this->company->getKey() ]);
         // return company
         return $this->company;
     }
@@ -48,6 +43,11 @@ class Backend {
         if (!Menu::get(self::class)) Menu::makeOnce(self::class, function($menu) {});
         // return Laravy/Menu instance
         return Menu::get(self::class);
+    }
+
+    private function loadCompany():Company  {
+        // load company from session
+        return $this->company = Company::findOrNew( session('backend.company') );
     }
 
 }

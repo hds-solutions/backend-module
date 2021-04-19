@@ -11,10 +11,10 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         \HDSSolutions\Finpar\Http\Middleware\HttpsProtocol::class,
         \HDSSolutions\Finpar\Http\Middleware\SetLocale::class,
         \HDSSolutions\Finpar\Http\Middleware\SettingsLoader::class,
-        \HDSSolutions\Finpar\Http\Middleware\CompanySelector::class,
     ];
 
     protected array $middlewares = [
+        \HDSSolutions\Finpar\Http\Middleware\CompanySelector::class,
         \HDSSolutions\Finpar\Http\Middleware\BackendMenu::class,
     ];
 
