@@ -8,6 +8,7 @@
         @endif
 
         <input name="{{ $name }}" type="text" @if ($required) required @endif thousand
+            @if ($currency) data-currency-by="{{ $currency }}" @endif
             value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
             class="form-control {{ $errors->has($name) ? 'is-danger' : '' }}"
             placeholder="{{ $placeholder }}">
@@ -29,6 +30,7 @@
                 @endif
 
                 <input name="{{ $name }}" type="text" @if ($required) required @endif thousand
+                    @if ($currency) data-currency-by="{{ $currency }}" @endif
                     value="{{ isset($resource) && !old($name) ? $resource->$field : old($name) }}"
                     class="form-control {{ $errors->has($name) ? 'is-danger' : '' }}"
                     placeholder="{{ $placeholder }}">

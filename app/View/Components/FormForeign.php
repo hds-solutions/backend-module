@@ -18,6 +18,7 @@ class FormForeign extends Component {
         public $resource,
         public string $name,
         public array|Collection $values,
+        public ?string $default = null,
         public string $foreign,
         public ?string $foreignAddLabel = null,
         public ?string $field = null,
@@ -25,6 +26,8 @@ class FormForeign extends Component {
         public ?string $placeholder = null,
         public ?string $helper = null,
         public bool $required = false,
+
+        public string $optionTitle = 'name',
 
         public ?string $filteredBy = null,
         public ?string $filteredUsing = null,
@@ -35,7 +38,8 @@ class FormForeign extends Component {
         public bool $secondary = false,
     ) {
         $this->field ??= $this->name;
-        $this->append = explode(',', $append);
+        foreach ($this->append = explode(',', $append) as $idx => $append)
+            $this->append[$idx] = explode(':', $append);
     }
 
     /**

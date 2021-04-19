@@ -14,7 +14,12 @@ class FormControls extends Component {
         public ?string $submit = null,
         public ?string $cancel = null,
         public ?string $cancelRoute = null,
-    ) {}
+        public array $cancelRouteParams = [],
+    ) {
+        $routeParams = explode(':', $this->cancelRoute);
+        $this->cancelRoute = array_shift($routeParams);
+        $this->cancelRouteParams = $routeParams;
+    }
 
     /**
      * Get the view / contents that represent the component.

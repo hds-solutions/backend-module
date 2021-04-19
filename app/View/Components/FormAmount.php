@@ -19,7 +19,9 @@ class FormAmount extends Component {
         public ?string $placeholder = null,
         public ?string $helper = null,
         public bool $required = false,
+
         public bool $thousand = true,
+        public ?string $currency = null,
 
         public bool $secondary = false,
     ) {
