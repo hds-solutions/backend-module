@@ -26,6 +26,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
     private array $components = [
         \HDSSolutions\Finpar\View\Components\FormText::class,
         \HDSSolutions\Finpar\View\Components\FormNumber::class,
+        \HDSSolutions\Finpar\View\Components\FormEmail::class,
         \HDSSolutions\Finpar\View\Components\FormTextarea::class,
         \HDSSolutions\Finpar\View\Components\FormSelect::class,
         \HDSSolutions\Finpar\View\Components\FormBoolean::class,
@@ -34,6 +35,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         \HDSSolutions\Finpar\View\Components\FormImage::class,
         \HDSSolutions\Finpar\View\Components\FormAmount::class,
         \HDSSolutions\Finpar\View\Components\FormCoords::class,
+        \HDSSolutions\Finpar\View\Components\FormControls::class,
     ];
 
     public function bootEnv():void {
