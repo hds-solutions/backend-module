@@ -91,6 +91,10 @@ class BaseBlueprint extends Blueprint {
 
     public function asDocument() {
         $this->string('document_status', 2)->default('DR');
+        $this->timestamp('document_approved_at')->nullable();
+        $this->timestamp('document_rejected_at')->nullable();
+        $this->timestamp('document_completed_at')->nullable();
+        $this->timestamp('document_closed_at')->nullable();
     }
 
     public function morphable($name = null) {

@@ -140,18 +140,24 @@ final class DocumentEngine implements Document {
 
     protected function approveIt():bool { $this->logger('approveIt');
         // approve document
-        if ($approved = $this->document->approveIt())
+        if ($approved = $this->document->approveIt()) {
             // update status
             $this->document->document_status = Document::STATUS_Approved;
+            // set approved timestamp
+            $this->document->document_approved_at = now();
+        }
         // return status
         return $approved;
     }
 
     protected function rejectIt():bool { $this->logger('rejectIt');
         // reject document
-        if ($rejected = $this->document->rejectIt())
+        if ($rejected = $this->document->rejectIt()) {
             // update status
             $this->document->document_status = Document::STATUS_Rejected;
+            // set rejected timestamp
+            $this->document->document_rejected_at = now();
+        }
         // return status
         return $rejected;
     }
@@ -161,6 +167,8 @@ final class DocumentEngine implements Document {
         if (!in_array(($status = $this->document->completeIt()), Document::STATUSES))
             // return invalid new status
             return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
+        // set completed timestamp
+        if ($status == Document::STATUS_Completed) $this->document->document_completed_at = now();
         // complete document, update and return status
         return $this->document->document_status = $status;
     }
@@ -170,6 +178,8 @@ final class DocumentEngine implements Document {
         if (in_array(($status = $this->document->closeIt()), Document::STATUSES))
             // update document status
             $this->document->document_status = $status;
+        // set closed timestamp
+        if ($status == Document::STATUS_Closed) $this->document->document_closed_at = now();
         // return document status
         return $this->document->document_status;
     }
