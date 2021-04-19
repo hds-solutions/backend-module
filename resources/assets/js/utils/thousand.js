@@ -29,8 +29,10 @@ export default class Thousand {
     }
 
     _format(fixed = false) {
-        // get current value
-        let val = this.element.value.replace(/[^0-9\.]/g,'');
+        // get negative symbol
+        let negative = this.element.value.startsWith('-'),
+            // get current value
+            val = this.element.value.replace(/[^0-9\.]/g,'');
         // validate empty value
         if (val != '') {
             // convert value
@@ -56,7 +58,7 @@ export default class Thousand {
         // remove last dot on non decimal
         if (this.element.dataset.decimals == 0) val = val.replace(/[\.]*$/g, '');
         // override value
-        this.element.value = val;
+        this.element.value = (negative?'-':'')+val;
     }
 
 }
