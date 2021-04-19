@@ -4,11 +4,11 @@
         <select name="{{ $name }}" @if ($required) required @endif
             class="form-control selectpicker {{ $errors->has($name) ? 'is-danger' : '' }}"
             placeholder="{{ $placeholder }}">
-            <option value="" selected @if ($required) disabled hidden @endif>{{ $label }}</option>
+            <option value="" selected @if ($required || array_key_exists('', $values)) disabled hidden @endif>@lang($values[''] ?? $label)</option>
             @foreach($values as $idx => $value)
             <option value="{{ $idx }}"
                 @if (isset($resource) && !old($name) && $resource->$field == $idx ||
-                    old($name) == $idx || (!isset($resource) && !old($name) && $idx == $default)) selected @endif>{{ $value }}</option>
+                    old($name) == $idx || (!isset($resource) && !old($name) && $idx == $default)) selected @endif>@lang($value)</option>
             @endforeach
         </select>
     </div>
