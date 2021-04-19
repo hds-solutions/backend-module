@@ -14,9 +14,6 @@
     </div>
 </div>
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('backend::files.save')</button>
-        <a href="{{ route('backend.files') }}" class="btn btn-danger">@lang('backend::files.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="backend::files.save"
+    cancel="backend::files.cancel" cancel-route="backend.files" />

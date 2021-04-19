@@ -19,6 +19,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route('backend.files.store') }}" enctype="multipart/form-data">
             @csrf
+            @onlyform
             @include('backend::files.form')
         </form>
     </div>

@@ -54,12 +54,9 @@
     {{-- placeholder="{{ __('backend::branch.coords._') }}" --}}
     {{-- helper="{{ __('backend::branch.coords.?') }}" --}} />
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('backend::branches.save')</button>
-        <a href="{{ route('backend.branches') }}" class="btn btn-danger">@lang('backend::branches.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="backend::branches.save"
+    cancel="backend::branches.cancel" cancel-route="backend.branches" />
 
 @push('pre-scripts')
     @gmap

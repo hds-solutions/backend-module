@@ -10,9 +10,6 @@
     label="{{ __('backend::company.logo_id.0') }}"
     placeholder="({{ __('optional') }}) {{ __('backend::company.logo_id._') }}" />
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('backend::companies.save')</button>
-        <a href="{{ route('backend.companies') }}" class="btn btn-danger">@lang('backend::companies.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="backend::companies.save"
+    cancel="backend::companies.cancel" cancel-route="backend.companies" />

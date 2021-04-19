@@ -75,9 +75,6 @@
     {{-- <label class="col-12 control-label small">@lang('backend::user.password.confirm?')</label> --}}
 </div>
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('backend::users.save')</button>
-        <a href="{{ route('backend.users') }}" class="btn btn-danger">@lang('backend::users.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="backend::users.save"
+    cancel="backend::users.cancel" cancel-route="backend.users" />
