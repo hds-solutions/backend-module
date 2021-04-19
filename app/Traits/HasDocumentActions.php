@@ -75,7 +75,7 @@ trait HasDocumentActions {
 
     public function getDocumentError():?string {
         // return saved document error
-        return $this->document_error ?? 'Unknown error';
+        return $this->document_error ?? null;
     }
 
     public final function scopeStatus(Builder $query, string|array $statuses, bool $whereIn = true) {
@@ -83,6 +83,15 @@ trait HasDocumentActions {
         $statuses = is_array($statuses) ? $statuses : [ $statuses ];
         // filter statuses
         return $query->{$whereIn ? 'whereIn' : 'whereNotIn'}($this->getTable().'.document_status', $statuses);
+    }
+
+    public final function scopeDrafted(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Draft,
+            // redirect whereIn flag
+            whereIn: $matches);
     }
 
     public final function isDrafted():bool {
@@ -95,6 +104,15 @@ trait HasDocumentActions {
         return $this->isDrafted();
     }
 
+    public final function scopeInProgress(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_InProgress,
+            // redirect whereIn flag
+            whereIn: $matches);
+    }
+
     public final function isInProgress():bool {
         // return if document is in progress
         return $this->document_status == Document::STATUS_InProgress;
@@ -103,6 +121,15 @@ trait HasDocumentActions {
     public final function getIsInProgressAttribute():bool {
         // return method result
         return $this->isInProgress();
+    }
+
+    public final function scopeApproved(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Approved,
+            // redirect whereIn flag
+            whereIn: $matches);
     }
 
     public final function isApproved():bool {
@@ -115,6 +142,15 @@ trait HasDocumentActions {
         return $this->isApproved();
     }
 
+    public final function scopeRejected(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Rejected,
+            // redirect whereIn flag
+            whereIn: $matches);
+    }
+
     public final function isRejected():bool {
         // return if document is in progress
         return $this->document_status == Document::STATUS_Rejected;
@@ -123,6 +159,15 @@ trait HasDocumentActions {
     public final function getIsRejectedAttribute():bool {
         // return method result
         return $this->isRejected();
+    }
+
+    public final function scopeInvalid(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Invalid,
+            // redirect whereIn flag
+            whereIn: $matches);
     }
 
     public final function isInvalid():bool {
@@ -135,6 +180,15 @@ trait HasDocumentActions {
         return $this->isInvalid();
     }
 
+    public final function scopeCompleted(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Completed,
+            // redirect whereIn flag
+            whereIn: $matches);
+    }
+
     public final function isCompleted():bool {
         // return if document is completed
         return $this->document_status == Document::STATUS_Completed;
@@ -143,6 +197,15 @@ trait HasDocumentActions {
     public final function getIsCompletedAttribute():bool {
         // return method result
         return $this->isCompleted();
+    }
+
+    public final function scopeClosed(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Closed,
+            // redirect whereIn flag
+            whereIn: $matches);
     }
 
     public final function isClosed():bool {
@@ -174,6 +237,13 @@ trait HasDocumentActions {
     public final function getIsOpenAttribute():bool {
         // return method result
         return $this->isOpen();
+    }
+
+    public function scopeProcessed(Builder $query) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status are Completed or Closed
+            [ Document::STATUS_Completed, Document::STATUS_Closed ]);
     }
 
     public final function isProcessed():bool {
