@@ -29,7 +29,7 @@
     placeholder="{{ __('backend::branch.region_id.optional') }}"
     {{-- helper="{{ __('backend::branch.region_id.?') }}" --}}>
 
-    <x-backend-form-foreign :resource="$resource ?? null" name="city_id" required
+    <x-backend-form-foreign :resource="$resource ?? null" name="city_id" secondary required
         filtered-by="[name=region_id]" filtered-using="region"
         foreign="cities" :values="$regions->pluck('cities')->flatten()" foreign-add-label="{{ __('backend::cities.add') }}"
 
