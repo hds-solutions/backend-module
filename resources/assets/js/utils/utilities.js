@@ -88,7 +88,8 @@ export function parse(view, object) {
                 let currency = currencies[2].split(','),
                     f_symbol = currency[0],
                     f_amount = currency[1] ?? null,
-                    f_decimals = currency[2] ?? null;
+                    f_decimals = currency[2] ?? null,
+                    divide = currency[3] === 'true' || currency[3] === undefined;
                 // validate config
                 if (currency.length === 1) {
                     f_amount = f_symbol;
@@ -101,7 +102,7 @@ export function parse(view, object) {
                     // build amount to replace
                     let amount_val = amount(
                         // send amount with decimals
-                        object[f_amount] / Math.pow(10, object[f_decimals] ?? 0),
+                        divide ? object[f_amount] / Math.pow(10, object[f_decimals] ?? 0) : object[f_amount],
                         // send decimals to keep zeroes
                         object[f_decimals] ?? 0,
                         // keep zeroes at the end
