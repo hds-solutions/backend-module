@@ -36,6 +36,8 @@ export default class Multiple {
             let element = new Element( this, $(ele) );
             // init plugins
             this._plugins( element );
+            // execute event
+            this._fn.new( element.element.get(0) );
         });
     }
 
