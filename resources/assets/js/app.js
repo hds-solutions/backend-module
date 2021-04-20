@@ -20,6 +20,8 @@ $.ajaxSetup({
     }
 });
 
+import Event from './utils/consoleevent';
+
 import Currency from './utils/currency';
 document.querySelectorAll('[data-currency-by]').forEach(currency => new Currency(currency));
 
@@ -74,7 +76,9 @@ $('[data-multiple]').each((idx, ele) => {
         ));
 
     // extra funtionality for pricechange line
-    if ( multiple.multiple[0].classList.contains('pricechange-line-container') )
+    if ( multiple.multiple[0].classList.contains('pricechange-line-container') ) {
+        // used later
+        let blur_event = (new Event('blur'));
         // capture element creation
         multiple.new(element => element.querySelectorAll('select').forEach(
             // capture change
@@ -84,16 +88,27 @@ $('[data-multiple]').each((idx, ele) => {
                 // check if no warehouse was selected
                 if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
                 if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
+                if ((option = element.querySelector('[name="lines[currency_id][]"]').selectedOptions[0]).value) data.currency = option.value;
                 // request current price quantity
                 $.ajax({
                     method: 'POST',
                     url: '/pricechanges/price',
                     data: data,
                     // update current price for product+variant on locator
-                    success: data => element.querySelector('[name="lines[current][]"]').value = data.price
+                    success: data => {
+                        element.querySelector('[name="lines[current_cost][]"]').value = data.cost ?? null;
+                        element.querySelector('[name="lines[cost][]"]').value = data.cost ?? null;
+                        element.querySelector('[name="lines[current_price][]"]').value = data.price ?? null;
+                        element.querySelector('[name="lines[price][]"]').value = data.price ?? null;
+                        element.querySelector('[name="lines[current_limit][]"]').value = data.limit ?? null;
+                        element.querySelector('[name="lines[limit][]"]').value = data.limit ?? null;
+                        element.querySelectorAll('[name^="lines"][thousand]')
+                            .forEach(ele => blur_event.fire(ele));
+                    },
                 });
             })
         ));
+    }
 });
 
 //
@@ -172,7 +187,6 @@ $("a[data-clipboard]").click(e => {
     target.tooltip('show');
 });
 
-import Event from './utils/consoleevent';
 document.querySelectorAll('[data-linked-with]').forEach(ele => {
     // get parent element
     let parent = document.querySelector(ele.dataset.linkedWith);
