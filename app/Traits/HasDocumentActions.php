@@ -14,6 +14,9 @@ trait HasDocumentActions {
     private ?string $document_error;
 
     public static function bootHasDocumentActions() {
+        //
+        self::retrieved(fn($model) => $model->appends = $model->appends + [ 'document_status_pretty' ]);
+        //
         self::deleting(function($model) {
             // check if model is already completed
             if ($model->isProcessed()) {
@@ -44,6 +47,11 @@ trait HasDocumentActions {
     public final function getDocumentStatusAttribute():string {
         // return current document status
         return in_array($this->attributes['document_status'], Document::STATUSES) ? $this->attributes['document_status'] : Document::STATUS_Unknown;
+    }
+
+    public final function getDocumentStatusPrettyAttribute():string {
+        // return translated status
+        return DocumentEngine::__( $this->document_status );
     }
 
     public final function setDocumentStatusAttribute(string $status):void {
