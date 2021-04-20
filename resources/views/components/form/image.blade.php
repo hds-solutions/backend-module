@@ -1,5 +1,5 @@
 <div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">{{ $label }}</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mb-0">{{ $label }}</label>
     <div class="col-11 col-md-8 col-lg-6 col-xl-4">
         <div class="input-group">
 
@@ -53,7 +53,7 @@
     </div>
     @endif
 
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4 offset-md-3 d-flex justify-content-center flex-wrap">
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4 offset-md-3 offset-lg-2 d-flex justify-content-center flex-wrap">
         <img src="#" id="image_preview" class="m-1 mh-200px rounded" style="display: none;">
     </div>
 

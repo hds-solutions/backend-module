@@ -1,5 +1,5 @@
 <div class="form-row form-group align-items-center">
-    <div class="col-11 col-md-8 col-lg-6 offset-md-3">
+    <div class="col-11 col-md-8 col-lg-6 offset-md-3 offset-lg-2">
         <input type="text" name="latitude" @if ($required) required @endif
             value="{{ isset($resource) && !old('latitude') ? $resource->latitude : old('latitude') }}"
             style="color: transparent; border: none; width: calc(100% - 30px); height: 100%; display: flex; position: absolute; z-index: -1">
