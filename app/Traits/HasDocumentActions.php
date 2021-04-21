@@ -3,6 +3,7 @@
 namespace HDSSolutions\Finpar\Traits;
 
 use HDSSolutions\Finpar\Interfaces\Document;
+use HDSSolutions\Finpar\Models\DocumentLog;
 use HDSSolutions\Finpar\Processes\DocumentEngine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator as Validator_Factory;
@@ -84,6 +85,12 @@ trait HasDocumentActions {
     public function getDocumentError():?string {
         // return saved document error
         return $this->document_error ?? null;
+    }
+
+    public final function documentLogs() {
+        // return document logs
+        return $this->morphMany(DocumentLog::class, 'documentable',
+            type: 'document_loggable_type', id: 'document_loggable_id');
     }
 
     public final function scopeStatus(Builder $query, string|array $statuses, bool $whereIn = true) {

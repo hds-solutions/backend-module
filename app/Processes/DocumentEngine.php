@@ -134,6 +134,8 @@ final class DocumentEngine implements Document {
         if (!in_array(($status = $this->document->prepareIt()), Document::STATUSES))
             // return invalid new status
             return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
+        // register document status change
+        $this->logDocumentStatusChange( $status );
         // prepare document, update and return status
         return $this->document->document_status = $status;
     }
@@ -141,6 +143,8 @@ final class DocumentEngine implements Document {
     protected function approveIt():bool { $this->logger('approveIt');
         // approve document
         if ($approved = $this->document->approveIt()) {
+            // register document status change
+            $this->logDocumentStatusChange( Document::STATUS_Approved );
             // update status
             $this->document->document_status = Document::STATUS_Approved;
             // set approved timestamp
@@ -155,6 +159,8 @@ final class DocumentEngine implements Document {
     protected function rejectIt():bool { $this->logger('rejectIt');
         // reject document
         if ($rejected = $this->document->rejectIt()) {
+            // register document status change
+            $this->logDocumentStatusChange( Document::STATUS_Rejected );
             // update status
             $this->document->document_status = Document::STATUS_Rejected;
             // set rejected timestamp
@@ -171,6 +177,8 @@ final class DocumentEngine implements Document {
         if (!in_array(($status = $this->document->completeIt()), Document::STATUSES))
             // return invalid new status
             return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
+        // register document status change
+        $this->logDocumentStatusChange( $status );
         // set completed timestamp
         if ($status == Document::STATUS_Completed) $this->document->document_completed_at = now();
         // complete document, update and return status
@@ -179,9 +187,12 @@ final class DocumentEngine implements Document {
 
     protected function closeIt():?string { $this->logger('closeIt');
         // validate new status received from document closeIt process
-        if (in_array(($status = $this->document->closeIt()), Document::STATUSES))
+        if (in_array(($status = $this->document->closeIt()), Document::STATUSES)) {
+            // register document status change
+            $this->logDocumentStatusChange( $status );
             // update document status
             $this->document->document_status = $status;
+        }
         // set closed timestamp
         if ($status == Document::STATUS_Closed) $this->document->document_closed_at = now();
         // return document status
@@ -190,7 +201,26 @@ final class DocumentEngine implements Document {
 
     protected function reOpenIt():bool { $this->logger('reOpenIt');
         // reOpen document
-        return $this->document->reOpenIt();
+        if ($opened = $this->document->reOpenIt())
+            // register document status change
+            $this->logDocumentStatusChange( from_from: Document::STATUS_Closed, to_status: $this->document->document_status );
+        // return process status
+        return $opened;
+    }
+
+    private function logDocumentStatusChange(?string $to_status = null, ?string $from_status = null) {
+        // create a new DocumentLog
+        $this->document->documentLogs()->create([
+            // link document
+            'document_loggable_type'    => get_class($this->document),
+            'document_loggable_id'      => $this->document->getKey(),
+            // set status change
+            'from_status'   => $from_status ?? $this->document->document_status,
+            'to_status'     => $to_status,
+            // register user
+            'createdby'     => auth()->user()->id,
+            'updatedby'     => auth()->user()->id,
+        ]);
     }
 
     private function logger(string $action, ?string $args = null, bool $document = true) {

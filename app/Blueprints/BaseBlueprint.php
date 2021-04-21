@@ -9,10 +9,18 @@ use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Str;
 
 class BaseBlueprint extends Blueprint {
-    private bool $asPivot = false;
+    private bool $softDeletes = true;
 
     public function asPivot(bool $asPivot = true) {
-        $this->asPivot = $asPivot;
+        $this->softDeletes = $this->softDeletes && !$asPivot;
+    }
+
+    public function withSoftDeletes(bool $softDeletes = true) {
+        $this->softDeletes = $this->softDeletes && $softDeletes;
+    }
+
+    public function withoutSoftDeletes() {
+        $this->withSoftDeletes(false);
     }
 
     public function build(Connection $connection, Grammar $grammar) {
@@ -20,8 +28,8 @@ class BaseBlueprint extends Blueprint {
         if ($this->creating()) {
             // add created/updated/deleted
             $this->timestamps();
-            // check if asPivot wasn't set and add softDeletes
-            if (!$this->asPivot) $this->softDeletes();
+            // check if softDeletes flag
+            if ($this->softDeletes) $this->softDeletes();
         }
         // return parent builder
         return parent::build($connection, $grammar);
@@ -90,7 +98,7 @@ class BaseBlueprint extends Blueprint {
     }
 
     public function asDocument() {
-        $this->string('document_status', 2)->default('DR');
+        $this->char('document_status', 2)->default('DR');
         $this->timestamp('document_approved_at')->nullable();
         $this->timestamp('document_rejected_at')->nullable();
         $this->timestamp('document_completed_at')->nullable();
