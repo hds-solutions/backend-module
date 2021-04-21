@@ -230,7 +230,7 @@ trait HasDocumentActions {
         // filter documents
         return $this->scopeStatus($query,
             // where status aren't Completed or Closed
-            [ Document::STATUS_Completed, Document::STATUS_Closed ],
+            [ Document::STATUS_Rejected, Document::STATUS_Completed, Document::STATUS_Closed ],
             // negation (WHERE NOT IN)
             whereIn: false);
     }
@@ -238,7 +238,7 @@ trait HasDocumentActions {
     public final function isOpen():bool {
         // return if document is open
         return $this->isDrafted() || $this->isInProgress() ||
-            $this->isApproved() || $this->isRejected() ||
+            $this->isApproved() || /*$this->isRejected() ||*/
             $this->isInvalid();
     }
 
@@ -251,12 +251,12 @@ trait HasDocumentActions {
         // filter documents
         return $this->scopeStatus($query,
             // where status are Completed or Closed
-            [ Document::STATUS_Completed, Document::STATUS_Closed ]);
+            [ Document::STATUS_Rejected, Document::STATUS_Completed, Document::STATUS_Closed ]);
     }
 
     public final function isProcessed():bool {
         // return if document is already processed
-        return $this->isCompleted() || $this->isClosed();
+        return $this->isRejected() || $this->isCompleted() || $this->isClosed();
     }
 
     public final function getIsProcessedAttribute():bool {
