@@ -145,6 +145,8 @@ final class DocumentEngine implements Document {
             $this->document->document_status = Document::STATUS_Approved;
             // set approved timestamp
             $this->document->document_approved_at = now();
+            // remove rejected timestamp
+            $this->document->document_rejected_at = null;
         }
         // return status
         return $approved;
@@ -157,6 +159,8 @@ final class DocumentEngine implements Document {
             $this->document->document_status = Document::STATUS_Rejected;
             // set rejected timestamp
             $this->document->document_rejected_at = now();
+            // remove approved timestamp
+            $this->document->document_approved_at = null;
         }
         // return status
         return $rejected;

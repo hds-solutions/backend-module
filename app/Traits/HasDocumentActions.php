@@ -150,6 +150,16 @@ trait HasDocumentActions {
         return $this->isApproved();
     }
 
+    public final function wasApproved():bool {
+        // return if document has approved_at
+        return $this->document_approved_at !== null;
+    }
+
+    public final function getWasApprovedAttribute():bool {
+        // return method result
+        return $this->wasApproved();
+    }
+
     public final function scopeRejected(Builder $query, bool $matches = true) {
         // filter documents
         return $this->scopeStatus($query,
@@ -167,6 +177,16 @@ trait HasDocumentActions {
     public final function getIsRejectedAttribute():bool {
         // return method result
         return $this->isRejected();
+    }
+
+    public final function wasRejected():bool {
+        // return if document has rejected_at
+        return $this->document_rejected_at !== null;
+    }
+
+    public final function getWasRejectedAttribute():bool {
+        // return method result
+        return $this->wasRejected();
     }
 
     public final function scopeInvalid(Builder $query, bool $matches = true) {
