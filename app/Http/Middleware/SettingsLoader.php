@@ -4,7 +4,6 @@ namespace HDSSolutions\Finpar\Http\Middleware;
 
 use Closure;
 use HDSSolutions\Finpar\Models\Setting;
-use Illuminate\Http\Request;
 
 class SettingsLoader {
     /**
@@ -14,7 +13,7 @@ class SettingsLoader {
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next) {
+    public function handle($request, Closure $next) {
         // custom settings
         config([
             // load settings from database
