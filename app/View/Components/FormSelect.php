@@ -12,10 +12,10 @@ class FormSelect extends Component {
      * @return void
      */
     public function __construct(
-        public $resource,
         public string $name,
         public ?string $field = null,
         public array|Collection $values,
+        public $resource = null,
         public ?string $default = null,
         public ?string $label = null,
         public ?string $placeholder = null,
@@ -23,6 +23,8 @@ class FormSelect extends Component {
         public bool $required = false,
     ) {
         $this->field ??= $this->name;
+        $this->values = $this->values instanceof Collection ? $this->values : collect($this->values);
+        $this->default = $this->default === 'null' ? null : $this->default;
     }
 
     /**
