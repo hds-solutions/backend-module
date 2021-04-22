@@ -115,6 +115,8 @@ export function parse(view, object) {
 
             // replace {object.key} with value
             view = view.replace('{'+key+'}', value);
+            // TODO: route() matches {param} as missing, special case
+            view = view.replace('#'+key+'#', value);
         }
     }
     // TODO
