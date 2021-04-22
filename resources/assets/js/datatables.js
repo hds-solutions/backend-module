@@ -56,13 +56,6 @@ $(_ => {
                                 return '<td><img src="' + (byString(row, col) ?? asset('backend-module/assets/images/default.jpg')) + '" class="mh-75px"></td>';
                             }
                             break;
-                        case 'variant':
-                            column.render = (data, type, row, meta) => {
-                                let str = '<div class="d-flex flex-column">';
-                                row.values.forEach(value => str += '<small><b>'+value.option.name+'</b>: '+(value.option_value.value ?? '--')+'</small><br>');
-                                return str+'</div>';
-                            }
-                            break;
                         case 'boolean':
                             column.render = (data, type, row, meta) => data ? 'True' : 'False';
                             break;
