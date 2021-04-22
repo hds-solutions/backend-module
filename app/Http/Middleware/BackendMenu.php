@@ -59,7 +59,8 @@ class BackendMenu {
         // create a submenu
         $sub = backend()->menu()
             ->add(__('backend::extras.nav'), [
-                'icon'  => 'cogs',
+                'nickname'  => 'extras',
+                'icon'      => 'cogs',
             ]);
 
         return $this
