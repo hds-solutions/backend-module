@@ -20,10 +20,10 @@
     <option value="{{ $value->id }}"
         @if ($filteredBy) data-{{ $filteredUsing }}="{{ $value->{"{$filteredUsing}_id"} }}" @endif
         {{-- FIXME: old() > resouce > request > default --}}
-        @if (isset($resource) && !old($name) && $resource->$field == $value->id ||
-            old($name) == $value->id ||
-            $request && request($request) == $value->id ||
-            ($request && !request($request) && $value->id == $default)) selected @endif
+        @if ($value->id == old($name, isset($resource) ? $resource->$field : null) ||
+            !old($name) && !isset($resource) && $value->id == ($request !== null ? request($request) : null) ||
+            !old($name) && $request === null && $value->id == ($default !== null ? $default : null)
+            ) selected @endif
         @foreach ($append as $appended) data-{{ $appended[0] }}="{{ $value->{$appended[1] ?? $appended[0]} }}" @endforeach
         >{{ data_get($value, $show) }}</option>
     @endforeach
