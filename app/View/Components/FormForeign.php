@@ -38,7 +38,7 @@ class FormForeign extends Component {
         public bool $secondary = false,
     ) {
         $this->field ??= $this->name;
-        foreach ($this->append = explode(',', $append) as $idx => $append)
+        if ($append) foreach ($this->append = explode(',', $append) as $idx => $append)
             $this->append[$idx] = explode(':', $append);
     }
 
