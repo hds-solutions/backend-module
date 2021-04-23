@@ -7,7 +7,7 @@ export default class Multiple {
     constructor(container) {
         //
         this._fn = {
-            new: element => { this._events.new.push( element ); },
+            new: element => this._events.new.push( element ),
         };
         this._events = {
             new: []
@@ -47,12 +47,9 @@ export default class Multiple {
             // register function
             this._fn.new = typeof fn == 'function' ? fn : this._fn.new;
             // execute events
-            this._events.new.forEach( element => {
-                // remove element from list
-                this._events.new.splice(this._events.new.indexOf( element ), 1);
-                // execute event
-                this._fn.new( element )
-            });
+            this._events.new.forEach( element =>  this._fn.new( element ) );
+            // empty array
+            this._events.new = [];
             // return object to allow chaining
             return this;
         }
