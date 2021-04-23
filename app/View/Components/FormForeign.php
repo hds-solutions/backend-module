@@ -27,7 +27,7 @@ class FormForeign extends Component {
         public ?string $helper = null,
         public bool $required = false,
 
-        public string $optionTitle = 'name',
+        public string $show = 'name',
 
         public ?string $filteredBy = null,
         public ?string $filteredUsing = null,

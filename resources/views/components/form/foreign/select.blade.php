@@ -25,7 +25,7 @@
             $request && request($request) == $value->id ||
             ($request && !request($request) && $value->id == $default)) selected @endif
         @foreach ($append as $appended) data-{{ $appended[0] }}="{{ $value->{$appended[1] ?? $appended[0]} }}" @endforeach
-        >{{ data_get($value, $optionTitle) }}</option>
+        >{{ data_get($value, $show) }}</option>
     @endforeach
 
     @if ($foreign)
