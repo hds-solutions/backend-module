@@ -7,10 +7,9 @@
     <ul class="navbar-nav">
         <!-- Nav Item - Companies selector -->
         @include('backend::layouts.topbar.companies')
+        <!-- Nav Item - Currencies selector -->
+        @include('backend::layouts.topbar.currencies')
     </ul>
-
-    {{-- current company --}}
-    <h5 class="m-0">{{ backend()->company()->name }}</h5>
 
     <!-- Topbar Search -->
     {{-- @include('backend::layouts.topbar.search') --}}

@@ -3,9 +3,12 @@
 
     <a href="#set-company" type="button" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        class="nav-link dropdown-toggle" id="companiesDropdown">
-        <i class="fas fa-building fa-fw"></i>
+        class="nav-link dropdown-toggle text-dark px-1" id="companiesDropdown">
+        <i class="fas fa-building fa-fw text-primary"></i>
         {{-- <span class="badge badge-danger badge-counter">7</span> --}}
+
+        {{-- current company --}}
+        <h5 class="m-0 ml-2">{{ backend()->company()->name }}</h5>
     </a>
 
     <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="companiesDropdown">

@@ -19,6 +19,11 @@ class CompanySelector {
             // update selected company
             backend()->setCompany($request->input('set-company') !== 'null' ? $request->input('set-company') : null);
 
+        // save currency from request
+        if ($request->has('set-currency'))
+            // update selected currency
+            backend()->setCurrency($request->input('set-currency') !== 'null' ? $request->input('set-currency') : null);
+
         //
         return $next($request);
     }

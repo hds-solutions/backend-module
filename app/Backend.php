@@ -3,14 +3,25 @@
 namespace HDSSolutions\Finpar;
 
 use HDSSolutions\Finpar\Models\Company;
+use HDSSolutions\Finpar\Models\Currency;
 use Illuminate\Support\Collection;
 use Lavary\Menu\Builder as MenuBuilder;
 use Lavary\Menu\Facade as Menu;
 
 class Backend {
 
-    private Collection $companies;
     private Company $company;
+    private Collection $companies;
+
+    private Currency $currency;
+    private Collection $currencies;
+
+    public function menu():MenuBuilder {
+        // check instance
+        if (!Menu::get(self::class)) Menu::makeOnce(self::class, function($menu) {});
+        // return Laravy/Menu instance
+        return Menu::get(self::class);
+    }
 
     public function setCompany(int|Company|null $company):Company {
         // check if is null
@@ -38,16 +49,40 @@ class Backend {
         return $this->companies ??= Company::with([ 'logo' ])->get();
     }
 
-    public function menu():MenuBuilder {
-        // check instance
-        if (!Menu::get(self::class)) Menu::makeOnce(self::class, function($menu) {});
-        // return Laravy/Menu instance
-        return Menu::get(self::class);
-    }
-
     private function loadCompany():Company  {
         // load company from session
         return $this->company = Company::findOrNew( session('backend.company') );
+    }
+
+    public function setCurrency(int|Currency|null $currency):Currency {
+        // check if is null
+        if ($currency === null) {
+            // remove currency
+            session()->forget( 'backend.currency');
+            // replace currency
+            return $this->loadCurrency();
+        }
+        // save currency
+        $this->currency = $currency instanceof Currency ? $currency : Currency::findOrFail($currency);
+        // save to session
+        session([ 'backend.currency' => $this->currency->getKey() ]);
+        // return currency
+        return $this->currency;
+    }
+
+    public function currency():Currency {
+        // return current currency
+        return $this->currency ??= $this->loadCurrency();
+    }
+
+    public function currencies():Collection {
+        // return currencies
+        return $this->currencies ??= Currency::all();
+    }
+
+    private function loadCurrency():Currency  {
+        // load currency from session
+        return $this->currency = Currency::findOrNew( session('backend.currency') );
     }
 
 }
