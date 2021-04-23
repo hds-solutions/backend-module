@@ -12,4 +12,8 @@ class Company extends X_Company {
             ->withTrashed();
     }
 
+    public function branches() {
+        return $this->hasMany(Branch::class);
+    }
+
 }
