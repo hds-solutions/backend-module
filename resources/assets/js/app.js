@@ -141,12 +141,12 @@ $('[data-multiple]').each((idx, ele) => {
                     });
                 })
             );
-            element.querySelectorAll('lines[price][],lines[quantity][]').forEach(
+            element.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]').forEach(
                 input => input.addEventListener('change', e => {
                     // get total
-                    let price = element.querySelector('lines[price][]'),
-                        quantity = element.querySelector('lines[quantity][]'),
-                        total = element.querySelector('lines[total][]');
+                    let price = element.querySelector('[name="lines[price][]"]'),
+                        quantity = element.querySelector('[name="lines[quantity][]"]'),
+                        total = element.querySelector('[name="lines[total][]"]');
                     total.value = price.value * quantity.value;
                     //
                     thousands.forEach(ele => blur_event.fire(ele));
