@@ -113,21 +113,24 @@ $('[data-multiple]').each((idx, ele) => {
     // extra funtionality for pricechange line
     if ( multiple.multiple[0].classList.contains('order-line-container') ) {
         // used later
-        let blur_event = (new Event('blur'));
+        let blur_event = (new Event('blur')),
+            change_event = (new Event('change'));
         // capture element creation
-        multiple.new(element => {
+        multiple.new(orderLineContainer => {
             // get fields with thousand plugin
-            let thousands = element.querySelectorAll('[name^="lines"][thousand]');
+            let thousands = orderLineContainer.querySelectorAll('[name^="lines"][thousand]');
             //
-            element.querySelectorAll('select').forEach(
+            orderLineContainer.querySelectorAll('select')
                 // capture change
-                select => select.addEventListener('change', e => {
+                .forEach(select => select.addEventListener('change', e => {
                     // build data for the request
                     let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
                     // check if no warehouse was selected
-                    if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
-                    if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
+                    if ((option = orderLineContainer.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
+                    if ((option = orderLineContainer.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
                     if ((option = select.form.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
+                    // ignore if no product
+                    if (!data.product) return;
                     // request current price quantity
                     $.ajax({
                         method: 'POST',
@@ -135,23 +138,45 @@ $('[data-multiple]').each((idx, ele) => {
                         data: data,
                         // update current price for product+variant on locator
                         success: data => {
-                            element.querySelector('[name="lines[price][]"]').value = data.price ?? null;
-                            thousands.forEach(ele => blur_event.fire(ele));
+                            orderLineContainer.querySelector('[name="lines[price][]"]').value = data.price ?? null;
+                            let quantity = orderLineContainer.querySelector('[name="lines[quantity][]"]');
+                            quantity.value = !data.price || quantity.value.length > 0 ? quantity.value : 1;
+                            change_event.fire(quantity);
                         },
                     });
+                }));
+            // capture change on price and quantity
+            orderLineContainer.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]')
+                // capture change on input
+                .forEach(input => input.addEventListener('change', e => {
+                    // get fields
+                    let price = orderLineContainer.querySelector('[name="lines[price][]"]'),
+                        quantity = orderLineContainer.querySelector('[name="lines[quantity][]"]'),
+                        total = orderLineContainer.querySelector('[name="lines[total][]"]');
+
+                    // update total value
+                    total.value = (
+                        // convert price to integer without decimals
+                        parseInt(price.value.replace(/[^0-9\.]/g,'') * Math.pow(10, price.dataset.decimals))
+                        // multiply for quantity
+                        * parseFloat(quantity.value)
+                    // divide total for currency decimals
+                    ) / Math.pow(10, price.dataset.decimals);
+
+                    // fire thousands plugin formatter
+                    thousands.forEach(thousand => blur_event.fire(thousand));
                 })
             );
-            element.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]').forEach(
-                input => input.addEventListener('change', e => {
-                    // get total
-                    let price = element.querySelector('[name="lines[price][]"]'),
-                        quantity = element.querySelector('[name="lines[quantity][]"]'),
-                        total = element.querySelector('[name="lines[total][]"]');
-                    total.value = price.value * quantity.value;
-                    //
-                    thousands.forEach(ele => blur_event.fire(ele));
-                })
-            );
+            // get currency selector
+            document.querySelector('[name="currency_id"]')
+                // capture currency change
+                .addEventListener('change', e => {
+                    // update decimals
+                    orderLineContainer.querySelectorAll('[thousand]')
+                        .forEach(thousand => thousand.dataset.decimals = e.target.selectedOptions[0].dataset.decimals);
+                    // fire change on lines
+                    change_event.fire( orderLineContainer.querySelector('select:first-child') );
+                });
         });
     }
 });
