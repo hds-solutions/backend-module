@@ -109,6 +109,51 @@ $('[data-multiple]').each((idx, ele) => {
             })
         ));
     }
+
+    // extra funtionality for pricechange line
+    if ( multiple.multiple[0].classList.contains('order-line-container') ) {
+        // used later
+        let blur_event = (new Event('blur'));
+        // capture element creation
+        multiple.new(element => {
+            // get fields with thousand plugin
+            let thousands = element.querySelectorAll('[name^="lines"][thousand]');
+            //
+            element.querySelectorAll('select').forEach(
+                // capture change
+                select => select.addEventListener('change', e => {
+                    // build data for the request
+                    let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
+                    // check if no warehouse was selected
+                    if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
+                    if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
+                    if ((option = element.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
+                    // request current price quantity
+                    $.ajax({
+                        method: 'POST',
+                        url: '/orders/price',
+                        data: data,
+                        // update current price for product+variant on locator
+                        success: data => {
+                            element.querySelector('[name="lines[price][]"]').value = data.price ?? null;
+                            thousands.forEach(ele => blur_event.fire(ele));
+                        },
+                    });
+                })
+            );
+            element.querySelectorAll('lines[price][],lines[quantity][]').forEach(
+                input => input.addEventListener('change', e => {
+                    // get total
+                    let price = element.querySelector('lines[price][]'),
+                        quantity = element.querySelector('lines[quantity][]'),
+                        total = element.querySelector('lines[total][]');
+                    total.value = price.value * quantity.value;
+                    //
+                    thousands.forEach(ele => blur_event.fire(ele));
+                })
+            );
+        });
+    }
 });
 
 //
