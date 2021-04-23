@@ -12,7 +12,8 @@
                 @lang('backend::branches.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                {{-- <a href="{{ route('backend.branches.create') }}" class="btn btn-sm btn-primary">@lang('backend::companieies.add')</a> --}}
+                {{-- <a href="{{ route('backend.branches.create') }}"
+                    class="btn btn-sm btn-primary">@lang('backend::companieies.create')</a> --}}
             </div>
         </div>
     </div>

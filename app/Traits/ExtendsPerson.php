@@ -11,6 +11,10 @@ trait ExtendsPerson {
 
     protected static $identityClass = Person::class;
 
+    public function getFullNameAttribute():string {
+        return $this->business_name ?? ($this->lastname !== null ? $this->lastname.', ' : '').$this->firstname;
+    }
+
     public function getFirstnameAttribute() {
         return $this->identity->firstname;
     }

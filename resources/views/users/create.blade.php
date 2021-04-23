@@ -12,7 +12,8 @@
                 @lang('backend::users.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                {{-- <a href="{{ route('backend.users.create') }}" class="btn btn-sm btn-primary">@lang('backend::users.add')</a> --}}
+                {{-- <a href="{{ route('backend.users.create') }}"
+                    class="btn btn-sm btn-primary">@lang('backend::users.create')</a> --}}
             </div>
         </div>
     </div>

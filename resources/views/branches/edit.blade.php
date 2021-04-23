@@ -12,12 +12,13 @@
                 @lang('backend::branches.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <a href="{{ route('backend.branches.create') }}" class="btn btn-sm btn-primary">@lang('backend::branches.add')</a>
+                <a href="{{ route('backend.branches.create') }}"
+                    class="btn btn-sm btn-primary">@lang('backend::branches.create')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('backend.branches.update', $resource->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('backend.branches.update', $resource) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             @include('backend::branches.form')

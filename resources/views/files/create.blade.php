@@ -12,7 +12,8 @@
                 @lang('backend::files.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                {{-- <a href="{{ route('backend.files.create') }}" class="btn btn-sm btn-primary">@lang('backend::files.add')</a> --}}
+                {{-- <a href="{{ route('backend.files.create') }}"
+                    class="btn btn-sm btn-primary">@lang('backend::files.create')</a> --}}
             </div>
         </div>
     </div>

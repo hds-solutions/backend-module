@@ -12,12 +12,13 @@
                 @lang('backend::regions.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <a href="{{ route('backend.regions.create') }}" class="btn btn-sm btn-primary">@lang('backend::regions.add')</a>
+                <a href="{{ route('backend.regions.create') }}"
+                    class="btn btn-sm btn-primary">@lang('backend::regions.create')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('backend.regions.update', $resource->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('backend.regions.update', $resource) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             @include('backend::regions.form')
