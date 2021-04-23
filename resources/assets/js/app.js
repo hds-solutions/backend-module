@@ -127,7 +127,7 @@ $('[data-multiple]').each((idx, ele) => {
                     // check if no warehouse was selected
                     if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
                     if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
-                    if ((option = element.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
+                    if ((option = select.form.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
                     // request current price quantity
                     $.ajax({
                         method: 'POST',
