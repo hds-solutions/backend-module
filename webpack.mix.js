@@ -32,6 +32,9 @@ mix.autoload({
     'jquery': [ '$', 'jQuery', 'window.$', 'window.jQuery' ],
 });
 
+// disable notifications in prod
+if (mix.inProduction()) mix.disableNotifications();
+
 // execute mix
 mix
     /** ****************** **
