@@ -4,7 +4,6 @@ namespace HDSSolutions\Finpar\Seeders;
 
 use HDSSolutions\Finpar\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -28,7 +27,7 @@ class UsersSeeder extends Seeder {
             'email'             => $email = 'root@project.com.py',
             // 'email_confirmation'=> $email,
             // 'email_verified_at' => now(),
-            'password'          => $passwd = Hash::make($password),
+            'password'          => $passwd = bcrypt($password),
             // 'password_confirmation' => $passwd,
             // 'type'              => 'admin',
             // 'status'            => 'active',
