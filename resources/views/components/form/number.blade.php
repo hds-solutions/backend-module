@@ -1,2 +1,1 @@
-@extends('backend::components.form.text')
-@section('type', 'number')
+@include('backend::components.form.text', [ 'type' => 'number' ])
