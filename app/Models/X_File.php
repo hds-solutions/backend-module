@@ -5,7 +5,7 @@ namespace HDSSolutions\Finpar\Models;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 use Illuminate\Support\Facades\Storage;
 
-class X_File extends Base\Model {
+abstract class X_File extends Base\Model {
     use BelongsToCompany;
 
     const IMAGES_DIRECTORY = 'images';

@@ -2,7 +2,7 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-class X_Setting extends Base\Model {
+abstract class X_Setting extends Base\Model {
 
     protected $fillable = [
         'name',
