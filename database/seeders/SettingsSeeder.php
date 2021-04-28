@@ -12,6 +12,9 @@ class SettingsSeeder extends Seeder {
         $settings = [
             // notifications
             'notifications-email'   => 'no-reply@project.com',
+
+            // documents control
+            'pending-documents-age' => [ 'type' => 'integer' => 'value' => 30 ],
         ];
 
         // create settings
