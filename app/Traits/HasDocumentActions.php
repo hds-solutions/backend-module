@@ -71,7 +71,9 @@ trait HasDocumentActions {
         return $this->save();
     }
 
-    public function documentError(?string $message = null):string {
+    public function documentError(?string $message = null, array $data = []):string {
+        // pass message though translator
+        if ($message !== null) $message = __($message, $data);
         // prevent error message duplication
         if (($this->document_error ?? false) !== $message)
             // register error log, TODO: backtrace to method (?)
