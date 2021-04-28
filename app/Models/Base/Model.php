@@ -14,4 +14,10 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
     use HasAfterSave;
     use SoftDeletes;
     use Sortable;
+
+    public final function scopeCreatedAgo(Builder $query, int $days) {
+        // return orders from XX days old
+        return $query->where('created_at', '<=', today()->subDays( $days )->toDateString());
+    }
+
 }
