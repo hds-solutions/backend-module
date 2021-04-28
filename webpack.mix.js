@@ -54,4 +54,4 @@ mix
 // create new version only for production
 ;if (mix.inProduction()) mix.version();
 // enable browsersync
-// else mix.browserSync('laravel.templates.vanirel');
+// else mix.browserSync( process.env.APP_URL );
