@@ -2,6 +2,7 @@ import Filtered from './filtered';
 import Preview from './preview';
 import Thousand from './thousand';
 import Currency from './currency';
+import Only from './only';
 
 export default class Multiple {
     constructor(container) {
@@ -77,6 +78,7 @@ export default class Multiple {
         element.previews();
         element.currencies();
         element.thousands();
+        element.only();
     }
 }
 
@@ -178,6 +180,13 @@ class Element {
             // init plugin
             new Currency( ele );
         });
+    }
+
+    only() {
+        // find elements with plugin Only
+        this.element.get(0).querySelectorAll('[data-only]')
+            // init plugin
+            .forEach(element => new Only(element, this.element.get(0)));
     }
 
     _events() {
