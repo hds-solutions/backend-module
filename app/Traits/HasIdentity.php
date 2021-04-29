@@ -23,7 +23,7 @@ trait HasIdentity {
         // autoload identity
         if (!$this->relationLoaded('identity'))
             // load empty identity
-            $this->setRelation('identity', $this->identity()->get()->first() ?? new self::$identityClazz);
+            $this->setRelation('identity', $this->identity()->first() ?? new self::$identityClazz);
         // return identity
         return $this->relations['identity'];
     }
@@ -40,6 +40,15 @@ trait HasIdentity {
     public function save(array $options = []) {
         // create a transaction
         DB::beginTransaction();
+        // check if is new model and id is set (called from identity()->make() probably)
+        if (!$this->exists && $this->id !== null) {
+            // save current identity attributes
+            $identityAttrs = $this->identity->attributes;
+            // reload identity
+            $this->setRelation('identity', $this->identity()->first());
+            // fill identity with original attributes
+            $this->identity->fill($identityAttrs);
+        }
         // save identity
         if (!$this->identity->save($options)) return false;
         // check if is a new object and link with identity
