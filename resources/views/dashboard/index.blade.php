@@ -4,6 +4,6 @@
 
 @section('content')
 
-    {{-- content --}}
+    @include('backend::layouts.examples')
 
 @endsection
