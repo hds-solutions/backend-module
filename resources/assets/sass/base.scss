@@ -1,6 +1,14 @@
 @import 'bootstrap-select';
 @import 'datatable';
 
+body {
+    min-height: 100vh;
+}
+
+#wrapper {
+    min-height: 100vh;
+}
+
 .text-decoration-underline {
     text-decoration: underline !important;
 }
@@ -59,4 +67,9 @@
 
 .form-control.form-check {
     border-color: transparent;
+    background-color: transparent;
+}
+
+.tox.tox-tinymce {
+    width: 100%;
 }
