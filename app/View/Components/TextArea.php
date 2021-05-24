@@ -2,17 +2,16 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class FormHidden extends Component {
+class TextArea extends Component {
 
     public function __construct(
         public string $name,
-        public ?string $value = 'true',
     ) {}
 
     public function render() {
-        return view('backend::components.form.backend.hidden');
+        return view('backend::components.form.textarea');
     }
-
 }

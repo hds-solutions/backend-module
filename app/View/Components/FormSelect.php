@@ -2,37 +2,32 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\View\Component;
 
-class FormSelect extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+class FormSelect extends Select {
+
     public function __construct(
-        public string $name,
+        string $name,
+        array|Collection $values,
+        ?string $default = null,
+
+        public ?Model $resource = null,
         public ?string $field = null,
-        public array|Collection $values,
-        public $resource = null,
-        public ?string $default = null,
-        public ?string $label = null,
-        public ?string $placeholder = null,
         public ?string $helper = null,
-        public bool $required = false,
     ) {
+        parent::__construct($name, $values, $default);
+
         $this->field ??= $this->name;
-        $this->values = $this->values instanceof Collection ? $this->values : collect($this->values);
-        $this->default = $this->default === 'null' ? null : $this->default;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.select');
+        return view('backend::components.form.backend.select');
     }
+
+    public function default() {
+        // old value > resource.field > default
+        return old($this->name, $this->resource?->{$this->field} ?? $this->default);
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class FormBoolean extends Component {
@@ -11,13 +12,11 @@ class FormBoolean extends Component {
      * @return void
      */
     public function __construct(
-        public $resource,
         public string $name,
+
+        public ?Model $resource = null,
         public ?string $field = null,
-        public ?string $label = null,
-        public ?string $placeholder = null,
         public ?string $helper = null,
-        public bool $required = false,
     ) {
         $this->field ??= $this->name;
     }
@@ -28,6 +27,9 @@ class FormBoolean extends Component {
      * @return \Illuminate\Contracts\View\View|string
      */
     public function render() {
-        return view('backend::components.form.boolean');
+        return function($data) {
+            // dump($data);
+            return view('backend::components.form.backend.boolean', $data)->render();
+        };
     }
 }

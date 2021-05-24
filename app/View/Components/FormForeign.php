@@ -2,52 +2,46 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\View\Component;
 
-class FormForeign extends Component {
+class FormForeign extends Select {
 
-    public array $append = [];
-
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
     public function __construct(
-        public $resource,
-        public string $name,
-        public array|Collection $values,
-        public ?string $default = null,
-        public string $foreign,
-        public ?string $foreignAddLabel = null,
-        public ?string $field = null,
-        public ?string $label = null,
-        public ?string $placeholder = null,
+        string $name,
+        array|Collection $values,
+        ?string $default = null,
+
+        public ?Model $resource = null,
+        // protected ?string $field = null,
         public ?string $helper = null,
-        public bool $required = false,
 
-        public string $show = 'name',
+        // string $foreign,
+        // ?string $foreignAddLabel = null,
 
-        public ?string $filteredBy = null,
-        public ?string $filteredUsing = null,
+        // string $show = 'name',
 
-        ?string $append = null,
-        public ?string $request = null,
+        // ?string $filteredBy = null,
+        // ?string $filteredUsing = null,
+        // // public bool $dataFilteredKeepId = false,
+
+        // ?string $append = null,
+        // ?string $request = null,
 
         public bool $secondary = false,
     ) {
-        $this->field ??= $this->name;
-        if ($append) foreach ($this->append = explode(',', $append) as $idx => $append)
-            $this->append[$idx] = explode(':', $append);
+        parent::__construct(
+            $name, $values, $default,
+            // $resource, $field, $helper,
+            // $foreign, $foreignAddLabel,
+            // $show,
+            // $filteredBy, $filteredUsing,
+            // $append, $request
+        );
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.foreign');
+        return view('backend::components.form.backend.foreign');
     }
+
 }

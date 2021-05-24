@@ -2,38 +2,31 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class FormAmount extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        public $resource,
-        public string $name,
-        public ?string $field = null,
-        public ?string $label = null,
-        public ?string $prepend = null,
-        public ?string $placeholder = null,
-        public ?string $helper = null,
-        public bool $required = false,
 
-        public bool $thousand = true,
+    public function __construct(
+        public string $name,
+
+        public ?Model $resource = null,
+        public ?string $field = null,
+        public ?string $helper = null,
+        public ?string $default = null,
+
         public ?string $currency = null,
 
         public bool $secondary = false,
+        public bool $dataKeepId = false,
     ) {
         $this->field ??= $this->name;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.amount');
+        return function($data) {
+            // dump($data);
+            return view('backend::components.form.backend.amount', $data)->render();
+        };
     }
 }

@@ -2,6 +2,7 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class FormText extends Component {
@@ -11,15 +12,12 @@ class FormText extends Component {
      * @return void
      */
     public function __construct(
-        public $resource,
         public string $name,
+
+        public ?Model $resource = null,
         public ?string $default = null,
         public ?string $field = null,
-        public ?string $label = null,
-        public ?string $prepend = null,
-        public ?string $placeholder = null,
         public ?string $helper = null,
-        public bool $required = false,
         public bool $fullWidth = false,
     ) {
         $this->field ??= $this->name;
@@ -31,6 +29,6 @@ class FormText extends Component {
      * @return \Illuminate\Contracts\View\View|string
      */
     public function render() {
-        return view('backend::components.form.text');
+        return view('backend::components.form.backend.text');
     }
 }

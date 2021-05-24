@@ -1,21 +1,10 @@
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 col-lg-2 control-label mb-0">{{ $label }}</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
-        <div class="form-control form-check">
-            <input type="hidden" name="{{ $name }}"
-                value="{{ (isset($resource) && !old($name) ? $resource->$field : old($name)) ? 'true' : 'false' }}">
-            <input type="checkbox" id="{{ $field }}"
-                onchange="this.previousElementSibling.value = this.checked ? 'true' : 'false'"
-                @if (isset($resource) && !old($name) ? $resource->$field : old($name)) checked @endif
-                class="form-check-input {{ $errors->has($name) ? 'is-danger' : '' }}"
-                placeholder="{{ $placeholder }}">
-            <label for="{{ $field }}" class="form-check-label">{{ $placeholder }}</label>
-        </div>
-    </div>
-    @if ($helper)
-    <div class="col-1">
-        <i class="fas fa-info-circle ml-2 cursor-help" data-toggle="tooltip" data-placement="right"
-            title="{{ $helper }}"></i>
-    </div>
-    @endif
+<div {{ $attributes->class('form-check')->except([ 'value', 'type' ]) }}>
+    <input name="{{ $name }}" type="hidden"
+        value="{{ filter_var($attributes->get('value', false), FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false' }}" />
+    <input name="{{ $name }}-checkbox" type="checkbox" id="{{ $booleanId = Str::slug($name.'-'.Str::random()) }}"
+        onchange="this.previousElementSibling.value = this.checked ? 'true' : 'false'"
+        class="form-check-input @if ($attributes->has('error')) is-invalid @endif"
+        @if (filter_var($attributes->get('value', false), FILTER_VALIDATE_BOOLEAN)) checked @endif
+        {{ $attributes->except([ 'type', 'class' ]) }} />
+    <label for="{{ $booleanId }}" class="form-check-label">@lang($attributes->get('placeholder', null))</label>
 </div>

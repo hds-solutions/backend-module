@@ -24,18 +24,34 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
     ];
 
     private array $components = [
-        \HDSSolutions\Finpar\View\Components\FormText::class,
-        \HDSSolutions\Finpar\View\Components\FormNumber::class,
-        \HDSSolutions\Finpar\View\Components\FormEmail::class,
-        \HDSSolutions\Finpar\View\Components\FormTextarea::class,
-        \HDSSolutions\Finpar\View\Components\FormSelect::class,
-        \HDSSolutions\Finpar\View\Components\FormBoolean::class,
-        \HDSSolutions\Finpar\View\Components\FormForeign::class,
-        \HDSSolutions\Finpar\View\Components\FormHidden::class,
-        \HDSSolutions\Finpar\View\Components\FormImage::class,
-        \HDSSolutions\Finpar\View\Components\FormAmount::class,
-        \HDSSolutions\Finpar\View\Components\FormCoords::class,
-        \HDSSolutions\Finpar\View\Components\FormControls::class,
+        'form'      => [
+            \HDSSolutions\Finpar\View\Components\Row::class,
+            \HDSSolutions\Finpar\View\Components\RowGroup::class,
+            \HDSSolutions\Finpar\View\Components\InputGroup::class,
+            \HDSSolutions\Finpar\View\Components\Label::class,
+            \HDSSolutions\Finpar\View\Components\Input::class,
+            \HDSSolutions\Finpar\View\Components\TextArea::class,
+            \HDSSolutions\Finpar\View\Components\Boolean::class,
+            \HDSSolutions\Finpar\View\Components\Amount::class,
+            \HDSSolutions\Finpar\View\Components\Select::class,
+            \HDSSolutions\Finpar\View\Components\Foreign::class,
+        ],
+        'backend'   => [
+            \HDSSolutions\Finpar\View\Components\FormText::class,
+            \HDSSolutions\Finpar\View\Components\FormNumber::class,
+            \HDSSolutions\Finpar\View\Components\FormEmail::class,
+            \HDSSolutions\Finpar\View\Components\FormDate::class,
+            \HDSSolutions\Finpar\View\Components\FormTextarea::class,
+            \HDSSolutions\Finpar\View\Components\FormSelect::class,
+            \HDSSolutions\Finpar\View\Components\FormOptions::class,
+            \HDSSolutions\Finpar\View\Components\FormBoolean::class,
+            \HDSSolutions\Finpar\View\Components\FormForeign::class,
+            \HDSSolutions\Finpar\View\Components\FormHidden::class,
+            \HDSSolutions\Finpar\View\Components\FormImage::class,
+            \HDSSolutions\Finpar\View\Components\FormAmount::class,
+            \HDSSolutions\Finpar\View\Components\FormCoords::class,
+            \HDSSolutions\Finpar\View\Components\FormControls::class,
+        ],
     ];
 
     public function bootEnv():void {
@@ -49,7 +65,8 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         // load views
         $this->loadViewsFrom( backend_path('resources/views'), 'backend' );
         // load view components
-        $this->loadViewComponentsAs('backend', $this->components);
+        foreach ($this->components as $group => $components)
+            $this->loadViewComponentsAs($group, $components);
         // load translations
         $this->loadTranslationsFrom( module_path('resources/lang'), 'backend' );
         // load migrations

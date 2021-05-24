@@ -1,30 +1,38 @@
-@if ($secondary)
+<select name="{{ $name }}" {{ $attributes
+    ->class([
+        'form-control selectpicker',
+        'is-invalid' => $attributes->has('error')
+    ])
+    ->merge([
+        'data-show' => $show,
+    ])
+    ->except([ 'placeholder' ]) }}
+    @if ($filteredBy) data-filtered-by="{{ $filteredBy }}" data-filtered-using="{{ $filteredUsing }}" @endif
+    @if ($attributes->has('placeholder')) data-none-selected-text="@lang($attributes->get('placeholder'))" @endif
 
-    <div class="col-12 col-md-9 mt-2 mt-xl-0 offset-md-3 offset-xl-0 col-xl-3">
+    @if ($foreign)
+    data-foreign="{{ Str::snake($foreign) }}"
+    data-form="{{ route('backend.'.Str::snake($foreign).'.create', [ 'only-form' ]) }}"
+    data-fetch="{{ route('backend.'.Str::snake($foreign)) }}"
+    @endif>
 
-        @include('backend::components.form.foreign.select')
+    {{-- @if ($attributes->has('placeholder')) --}}
+    <option value="" selected
+        @if ($attributes->has('required') || $values->has('')) disabled hidden
+        @else class="text-muted" @endif>@lang($values[''] ?? $attributes->get('placeholder'))</option>
+    {{-- @endif --}}
 
-    </div>
+    @foreach ($values as $value)
+    <option value="{{ $value->id }}" @if ($title) title="{{ data_get($value, $title) }}" @endif
+        @if ($isSelected($value)) selected @endif
+        @foreach ($append as $appended) data-{{ $appended[0] }}="{{ data_get($value, $appended[1] ?? $appended[0]) }}" @endforeach
+        >{{ $parseShow($value) }}</option>
+    @endforeach
 
-@else
-
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 col-lg-2 control-label mb-0">@lang($label)</label>
-    <div class="@if ($slot->isEmpty()) col-11 col-md-8 col-lg-6 col-xl-4 @else col-12 col-md-9 col-xl-3 @endif">
-
-        @include('backend::components.form.foreign.select')
-
-    </div>
-
-    @if ($helper)
-    <div class="col-1">
-        <i class="fas fa-info-circle ml-2 cursor-help"
-            data-toggle="tooltip" data-placement="right"
-            title="@lang($helper)"></i>
-    </div>
+    @if ($foreign)
+    <option value="add::new"
+        @if ($filteredBy) data-{{ $filteredUsing }}="*" @endif
+        class="text-muted font-italic">@lang($foreignAddLabel ?? 'undefined')</option>
     @endif
 
-    @if ($slot->isNotEmpty()) {{ $slot }} @endif
-
-</div>
-@endif
+</select>

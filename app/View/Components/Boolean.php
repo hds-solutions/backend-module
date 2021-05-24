@@ -4,15 +4,13 @@ namespace HDSSolutions\Finpar\View\Components;
 
 use Illuminate\View\Component;
 
-class FormHidden extends Component {
+class Boolean extends Component {
 
     public function __construct(
         public string $name,
-        public ?string $value = 'true',
     ) {}
 
     public function render() {
-        return view('backend::components.form.backend.hidden');
+        return view('backend::components.form.boolean');
     }
-
 }

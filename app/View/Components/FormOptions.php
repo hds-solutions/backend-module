@@ -2,11 +2,10 @@
 
 namespace HDSSolutions\Finpar\View\Components;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class FormImage extends Component {
+class FormOptions extends Component {
     /**
      * Create a new component instance.
      *
@@ -14,21 +13,18 @@ class FormImage extends Component {
      */
     public function __construct(
         public string $name,
-
-        public ?Model $resource = null,
         public ?string $field = null,
-        public array|Collection $images,
-        public ?string $default = null,
+        public array|Collection $values,
+        public $resource = null,
+        public string|null $default = null,
         public ?string $label = null,
         public ?string $placeholder = null,
         public ?string $helper = null,
         public bool $required = false,
-        public bool $multiple = false,
-
-        public ?string $filteredBy = null,
-        public ?string $filteredUsing = null,
     ) {
         $this->field ??= $this->name;
+        $this->values = $this->values instanceof Collection ? $this->values : collect($this->values);
+        $this->default = $this->default === 'null' ? null : $this->default;
     }
 
     /**
@@ -37,7 +33,6 @@ class FormImage extends Component {
      * @return \Illuminate\Contracts\View\View|string
      */
     public function render() {
-        return view('backend::components.form.backend.image');
+        return view('backend::components.form.options');
     }
-
 }
