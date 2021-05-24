@@ -110,13 +110,33 @@ $('[data-multiple]').each((idx, ele) => {
         ));
     }
 
+    if ( multiple.multiple[0].classList.contains('payment-container') ) {
+        // capture element deletion
+        multiple.removed(paymentContainer => {
+            // unregister ordeline from POS
+            if (window.pos) window.pos.unregister( paymentContainer, 'payments[payment_amount][]' );
+        });
+        // capture element creation
+        multiple.new(paymentContainer => {
+            // register ordeline on POS
+            if (window.pos) window.pos.register( paymentContainer, 'payments[payment_amount][]' );
+        });
+    }
+
     // extra funtionality for pricechange line
     if ( multiple.multiple[0].classList.contains('order-line-container') ) {
         // used later
         let blur_event = (new Event('blur')),
             change_event = (new Event('change'));
+        // capture element deletion
+        multiple.removed(orderLineContainer => {
+            // unregister ordeline from POS
+            if (window.pos) window.pos.unregister( orderLineContainer );
+        });
         // capture element creation
         multiple.new(orderLineContainer => {
+            // register ordeline on POS
+            if (window.pos) window.pos.register( orderLineContainer );
             // get fields with thousand plugin
             let thousands = orderLineContainer.querySelectorAll('[name^="lines"][thousand]');
             //
@@ -165,6 +185,8 @@ $('[data-multiple]').each((idx, ele) => {
 
                     // fire thousands plugin formatter
                     thousands.forEach(thousand => blur_event.fire(thousand));
+                    // fire total change
+                    change_event.fire( total );
                 })
             );
             // get currency selector
