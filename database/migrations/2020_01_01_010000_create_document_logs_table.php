@@ -21,8 +21,10 @@ class CreateDocumentLogsTable extends Migration {
         $schema->create('document_logs', function(Blueprint $table) {
             $table->id();
             $table->morphable('document_logg');
-            $table->char('from_status');
-            $table->char('to_status');
+            $table->string('action');
+            $table->char('from_status', 2);
+            $table->char('to_status', 2);
+            $table->text('message')->nullable();
             $table->createdUpdatedBy();
         });
     }
