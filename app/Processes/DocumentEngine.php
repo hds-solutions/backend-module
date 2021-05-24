@@ -2,6 +2,7 @@
 
 namespace HDSSolutions\Finpar\Processes;
 
+use Exception;
 use HDSSolutions\Finpar\Interfaces\Document;
 use HDSSolutions\Finpar\Traits\HasDocumentActions;
 use Illuminate\Support\Collection;
@@ -16,8 +17,12 @@ final class DocumentEngine implements Document {
     private string $document_status;
 
     public function __construct(Document $document) {
-        // save document
-        $this->document = $document;
+        // check if document is persisted
+        if (!$document->exists) throw new Exception('Document is not persisted');
+
+        // save a fresh copy of the document
+        $this->document = $document->refresh();
+        $this->logger('__construct');
         // save current document status
         $this->document_status = $this->document->document_status;
     }
@@ -87,6 +92,12 @@ final class DocumentEngine implements Document {
         return $this->document->documentError($message);
     }
 
+    // @override
+    public function getDocumentError():?string {
+        // redirect to document
+        return $this->document->getDocumentError();
+    }
+
     private function isValidAction(string $action):bool {
         // check if action is valid for current document status
         return $this->getAvailableActions()->contains( $action );
@@ -129,22 +140,22 @@ final class DocumentEngine implements Document {
         return $actions;
     }
 
-    protected function prepareIt():?string { $this->logger('prepareIt');
+    protected function prepareIt():?string { $this->logger( __FUNCTION__ );
         // validate new status received from document prepareIt process
         if (!in_array(($status = $this->document->prepareIt()), Document::STATUSES))
             // return invalid new status
-            return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
+            return $this->documentError( $this->getDocumentError() ?: __('backend::document.invalid-status') );
         // register document status change
-        $this->logDocumentStatusChange( $status );
+        $this->logDocumentStatusChange( __FUNCTION__, $status );
         // prepare document, update and return status
         return $this->document->document_status = $status;
     }
 
-    protected function approveIt():bool { $this->logger('approveIt');
+    protected function approveIt():bool { $this->logger( __FUNCTION__ );
         // approve document
         if ($approved = $this->document->approveIt()) {
             // register document status change
-            $this->logDocumentStatusChange( Document::STATUS_Approved );
+            $this->logDocumentStatusChange( __FUNCTION__, Document::STATUS_Approved );
             // update status
             $this->document->document_status = Document::STATUS_Approved;
             // set approved timestamp
@@ -156,11 +167,11 @@ final class DocumentEngine implements Document {
         return $approved;
     }
 
-    protected function rejectIt():bool { $this->logger('rejectIt');
+    protected function rejectIt():bool { $this->logger( __FUNCTION__ );
         // reject document
         if ($rejected = $this->document->rejectIt()) {
             // register document status change
-            $this->logDocumentStatusChange( Document::STATUS_Rejected );
+            $this->logDocumentStatusChange( __FUNCTION__, Document::STATUS_Rejected );
             // update status
             $this->document->document_status = Document::STATUS_Rejected;
             // set rejected timestamp
@@ -172,24 +183,24 @@ final class DocumentEngine implements Document {
         return $rejected;
     }
 
-    protected function completeIt():?string { $this->logger('completeIt');
+    protected function completeIt():?string { $this->logger( __FUNCTION__ );
         // validate new status received from document completeIt process
         if (!in_array(($status = $this->document->completeIt()), Document::STATUSES))
             // return invalid new status
-            return $this->documentError( $this->document->getDocumentError() ?: __('backend::document.invalid-status') );
+            return $this->documentError( $this->getDocumentError() ?: __('backend::document.invalid-status') );
         // register document status change
-        $this->logDocumentStatusChange( $status );
+        $this->logDocumentStatusChange( __FUNCTION__, $status );
         // set completed timestamp
         if ($status == Document::STATUS_Completed) $this->document->document_completed_at = now();
         // complete document, update and return status
         return $this->document->document_status = $status;
     }
 
-    protected function closeIt():?string { $this->logger('closeIt');
+    protected function closeIt():?string { $this->logger( __FUNCTION__ );
         // validate new status received from document closeIt process
         if (in_array(($status = $this->document->closeIt()), Document::STATUSES)) {
             // register document status change
-            $this->logDocumentStatusChange( $status );
+            $this->logDocumentStatusChange( __FUNCTION__, $status );
             // update document status
             $this->document->document_status = $status;
         }
@@ -199,27 +210,30 @@ final class DocumentEngine implements Document {
         return $this->document->document_status;
     }
 
-    protected function reOpenIt():bool { $this->logger('reOpenIt');
+    protected function reOpenIt():bool { $this->logger( __FUNCTION__ );
         // reOpen document
         if ($opened = $this->document->reOpenIt())
             // register document status change
-            $this->logDocumentStatusChange( from_from: Document::STATUS_Closed, to_status: $this->document->document_status );
+            $this->logDocumentStatusChange( __FUNCTION__, from_from: Document::STATUS_Closed, to_status: $this->document->document_status );
         // return process status
         return $opened;
     }
 
-    private function logDocumentStatusChange(?string $to_status = null, ?string $from_status = null) {
+    private function logDocumentStatusChange(string $action, ?string $to_status = null, ?string $from_status = null) {
         // create a new DocumentLog
         $this->document->documentLogs()->create([
             // link document
             'document_loggable_type'    => get_class($this->document),
             'document_loggable_id'      => $this->document->getKey(),
             // set status change
+            'action'        => $action,
             'from_status'   => $from_status ?? $this->document->document_status,
             'to_status'     => $to_status,
+            // save message
+            'message'       => $this->getDocumentError(),
             // register user
-            'createdby'     => auth()->user()->id,
-            'updatedby'     => auth()->user()->id,
+            'createdby'     => auth()->user()->id ?? 1,
+            'updatedby'     => auth()->user()->id ?? 1,
         ]);
     }
 

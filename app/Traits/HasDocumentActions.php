@@ -16,7 +16,7 @@ trait HasDocumentActions {
 
     public static function bootHasDocumentActions() {
         //
-        self::retrieved(fn($model) => $model->appends = $model->appends + [ 'document_status_pretty' ]);
+        self::retrieved(fn($model) => $model->appends = [ ...$model->appends, ...[ 'document_status_pretty' ] ]);
         //
         self::deleting(function($model) {
             // check if model is already completed
@@ -63,6 +63,8 @@ trait HasDocumentActions {
     }
 
     public function processIt(string $action):bool {
+        // if document isn't persisted, try to save it
+        if (!$this->exists && !$this->save()) return $this->documentError( $this->errors()->first() ) == null;
         // check valid action
         if (!in_array($action, Document::ACTIONS)) return false;
         // process document through document engine
@@ -77,7 +79,7 @@ trait HasDocumentActions {
         // prevent error message duplication
         if (($this->document_error ?? false) !== $message)
             // register error log, TODO: backtrace to method (?)
-            logger(class_basename(static::class).' got document error "'.($message ?? 'null').'"');
+            logger(class_basename(static::class).'#'.($this->getKey() ?? 'null').' got document error "'.($message ?? 'null').'"');
         // save error
         $this->document_error = $message;
         // return invalid document status

@@ -9,8 +9,10 @@ abstract class X_DocumentLog extends Base\Model {
     ];
 
     protected $fillable = [
+        'action',
         'from_status',
         'to_status',
+        'message',
         'createdby',
         'updatedby',
     ];
