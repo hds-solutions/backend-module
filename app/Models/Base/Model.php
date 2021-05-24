@@ -6,6 +6,7 @@ use HDSSolutions\Finpar\Traits\HasAfterSave;
 use HDSSolutions\Finpar\Traits\HasValidationRules;
 use HDSSolutions\Finpar\Traits\Sortable;
 // use HDSSolutions\Laravel\DynamoDB\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 // abstract class Model extends \HDSSolutions\Laravel\DynamoDB\Eloquent\Model {
