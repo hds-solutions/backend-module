@@ -30,7 +30,9 @@ export default class Only {
             // find paid modified
             if (fieldValuePair.match(/\=/)) only.modifier = '=';
             if (fieldValuePair.match(/\</)) only.modifier = '<';
+            if (fieldValuePair.match(/\<\=/)) only.modifier = '<=';
             if (fieldValuePair.match(/\>/)) only.modifier = '>';
+            if (fieldValuePair.match(/\>\=/)) only.modifier = '>=';
             // separate field and value
             let pair = fieldValuePair.split( only.modifier );
             // save field and value
@@ -66,8 +68,10 @@ export default class Only {
             (only.modifier == '=' && only.values.indexOf(value) != -1) ||
             // lt
             (only.modifier == '<' && value < only.values[0]) ||
+            (only.modifier == '<=' && value <= only.values[0]) ||
             // gt
-            (only.modifier == '>' && value > only.values[0])) {
+            (only.modifier == '>' && value > only.values[0]) ||
+            (only.modifier == '>=' && value >= only.values[0])) {
             // show element
             this.element.classList.remove('d-none');
             // append original class names

@@ -9,9 +9,10 @@ export default class Multiple {
         //
         this._fn = {
             new: element => this._events.new.push( element ),
+            removed: element => {},
         };
         this._events = {
-            new: []
+            new: [],
         };
         //
         this.container = $(container);
@@ -62,6 +63,18 @@ export default class Multiple {
         this._plugins( element );
         // execute event
         this._fn.new( element.element.get(0) );
+    }
+
+    removed(fn) {
+        // check for function registration
+        if (typeof fn == 'function') {
+            // register function
+            this._fn.removed = fn;
+            // return object to allow chaining
+            return this;
+        } else
+            // redirect event to registered function
+            this._fn.removed( fn.element.get(0) );
     }
 
     _plugins(element) {
@@ -166,17 +179,19 @@ class Element {
         let ids = [];
         // init plugin
         currencyElements.each((idx, ele) => {
-            // generate a random id
-            if (ids[ele.dataset.currencyBy] === undefined) {
-                // generate new ID for currenvy
-                ids[ele.dataset.currencyBy] = this._random();
-                // get currency element
-                let currency = this.element.find( ele.dataset.currencyBy );
-                // put random id on target element
-                currency.attr('id', 'c'+ids[ele.dataset.currencyBy]);
+            if (ele.dataset.keepId != 'true') {
+                // generate a random id
+                if (ids[ele.dataset.currencyBy] === undefined) {
+                    // generate new ID for currenvy
+                    ids[ele.dataset.currencyBy] = this._random();
+                    // get currency element
+                    let currency = this.element.find( ele.dataset.currencyBy );
+                    // put random id on target element
+                    currency.attr('id', 'c'+ids[ele.dataset.currencyBy]);
+                }
+                // update filtered by value
+                ele.dataset.currencyBy = '#c'+ids[ele.dataset.currencyBy];
             }
-            // update filtered by value
-            ele.dataset.currencyBy = '#c'+ids[ele.dataset.currencyBy];
             // init plugin
             new Currency( ele );
         });
@@ -206,6 +221,8 @@ class Element {
                 return;
             // remove element
             this.element.remove();
+            // redirect removed element to parent container
+            this.container.removed( this );
         });
     }
 

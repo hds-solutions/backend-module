@@ -51,7 +51,9 @@ export default class Thousand {
                     // remove if no decimals
                     if (valArr[1].length == 0) delete valArr[1];
                 }
-            }
+            } else
+                // delete decimals
+                delete valArr[1];
             // join thousand and decimals
             val = valArr.join('.');
         }
