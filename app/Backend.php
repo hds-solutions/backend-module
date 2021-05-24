@@ -49,9 +49,9 @@ class Backend {
         return $this->companies ??= Company::with([ 'logo' ])->get();
     }
 
-    private function loadCompany():Company  {
+    private function loadCompany():Company {
         // load company from session
-        return $this->company = Company::findOrNew( session('backend.company') );
+        return $this->company = $this->companies()->firstWhere('id', session('backend.company')) ?? new Company;
     }
 
     public function setCurrency(int|Currency|null $currency):Currency {
@@ -80,9 +80,9 @@ class Backend {
         return $this->currencies ??= Currency::all();
     }
 
-    private function loadCurrency():Currency  {
+    private function loadCurrency():Currency {
         // load currency from session
-        return $this->currency = Currency::findOrNew( session('backend.currency') );
+        return $this->currency = $this->currencies()->firstWhere('id', session('backend.currency') ) ?? new Currency;
     }
 
 }
