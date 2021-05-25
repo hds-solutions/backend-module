@@ -43,6 +43,8 @@ class Foreign extends Select {
 
         if ($this->filteredBy)
             $this->append[] = [ $this->filteredUsing, $this->filteredUsing.'.id' ];
+
+        $this->field ??= $this->name;
     }
 
     public function render() {
