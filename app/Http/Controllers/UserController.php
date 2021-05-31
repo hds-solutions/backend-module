@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\UserDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\User as Resource;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
     /**
@@ -32,8 +34,11 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        // load roles
+        $roles = Role::all();
+
         // show create form
-        return view('backend::users.create');
+        return view('backend::users.create', compact('roles'));
     }
 
     /**
@@ -43,6 +48,9 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        // start a transaction
+        DB::beginTransaction();
+
         // create resource
         $resource = new Resource( $request->input() );
 
@@ -62,6 +70,16 @@ class UserController extends Controller {
             // bypass confirmation validation
             'password_confirmation' => $hashed,
         ]);
+
+        // sync user roles
+        $resource->syncRoles( collect( $request->input('roles') )
+            // filter empty roles
+            ->filter(fn($role) => $role !== null)
+            // get Role instance
+            ->transform(fn($role) => Role::findOrFail($role)) );
+
+        // commit changes to database
+        DB::commit();
 
         // check return type
         return $request->has('only-form') ?
@@ -89,8 +107,11 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
+        // load roles
+        $roles = Role::all();
+
         // show edit form
-        return view('backend::users.edit', compact('resource'));
+        return view('backend::users.edit', compact('roles', 'resource'));
     }
 
     /**
@@ -101,6 +122,9 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Resource $resource) {
+        // start a transaction
+        DB::beginTransaction();
+
         // check for password change
         if ($request->has('password') && $request->input('password') == null)
             // remove password attribute from request to prevent null assignment
@@ -126,6 +150,16 @@ class UserController extends Controller {
             // bypass confirmation validation
             'password_confirmation' => $hashed,
         ]);
+
+        // sync user roles
+        $resource->syncRoles( collect( $request->input('roles') )
+            // filter empty roles
+            ->filter(fn($role) => $role !== null)
+            // get Role instance
+            ->transform(fn($role) => Role::findOrFail($role)) );
+
+        // commit changes to database
+        DB::commit();
 
         // redirect to list
         return redirect()->route('backend.users');
