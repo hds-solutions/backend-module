@@ -73,3 +73,32 @@ body {
 .tox.tox-tinymce {
     width: 100%;
 }
+
+.card.borderless {
+    border: none;
+    border-radius: unset;
+}
+
+.card.borderless > .card-header {
+    border: none;
+    margin-bottom: 0;
+}
+
+[data-toggle="collapse"] .state {
+    font-family: "Font Awesome 5 Free";
+    font-weight: bold;
+    font-style: normal;
+}
+
+[data-toggle="collapse"] .state:before {
+    content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed .state:before {
+    content: "\f13a";
+}
+
+label.align-top {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}

@@ -343,3 +343,49 @@ $('[data-toggle="tooltip"]').tooltip();
 
 import Test from './utils/test';
 document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Test(option));
+
+// helper function to create nodeArrays (not collections)
+const nodeArray = (selector, parent=document) => [].slice.call(parent.querySelectorAll(selector)),
+    selector = 'input[name="permissions[]"]';
+
+// checkboxes of interest
+const allThings = nodeArray(selector);
+
+// global listener
+allThings.forEach(checkbox => checkbox.addEventListener('change', e => {
+    // get check group container
+    let check = e.target,
+        group = check.closest('.card');
+
+    // check/unchek children (includes check itself)
+    const children = nodeArray(selector, group);
+    if (e.isTrusted) children.forEach(child => {
+        child.checked = check.checked;
+        if (!check.checked) child.indeterminate = false;
+    });
+
+    // traverse up from target check
+    while (check) {
+        // find parent and sibling checkboxes (quick'n'dirty)
+        const parent = group.parentElement.closest('.card').querySelector('.card-header input[name="permissions[]"]');
+        const siblings = nodeArray(selector, parent.closest('.card').querySelector('.card-body'));
+
+        // get checked state of siblings
+        // are every or some siblings checked (using Boolean as test function)
+        const checkStatus = siblings.map(check => check.checked);
+        const every  = checkStatus.every(Boolean);
+        const some = checkStatus.some(Boolean);
+
+        // check parent if all siblings are checked
+        // set indeterminate if not all and not none are checked
+        parent.checked = every;
+        parent.indeterminate = !every && every !== some;
+
+        // prepare for next loop
+        group = parent.closest('.card');
+        check = check != parent ? parent : false;
+    }
+}));
+
+const changeEvent = new Event('change');
+allThings.forEach(checkbox => changeEvent.fire(checkbox));

@@ -92,6 +92,8 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         $this->mergeConfigFrom( backend_path('config/backend.php'), 'backend' );
         // merge datatables configuration
         $this->mergeConfigFrom( backend_path('config/datatables.php'), 'datatables-html' );
+        // merge spatie/permission configuration
+        $this->mergeConfigFrom( backend_path('config/permission.php'), 'permission' );
     }
 
 }

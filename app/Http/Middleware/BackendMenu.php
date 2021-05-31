@@ -3,16 +3,11 @@
 namespace HDSSolutions\Finpar\Http\Middleware;
 
 use Closure;
+use HDSSolutions\Finpar\Models\User;
 use Illuminate\Support\Facades\Route;
 
-class BackendMenu {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+class BackendMenu extends Base\Menu {
+
     public function handle($request, Closure $next) {
         // register menu items
         $this
@@ -48,6 +43,7 @@ class BackendMenu {
 
         return $this
             // append items to submenu
+            ->roles($sub)
             ->users($sub)
             ->regions($sub)
             ->cities($sub)
@@ -68,34 +64,30 @@ class BackendMenu {
             ->files($sub);
     }
 
+    private function roles(&$menu) {
+        if (Route::has('backend.roles') && $this->can('roles'))
+            $menu->add(__('backend::roles.nav'), [
+                // 'header'    => 'Configuraciones',
+                'route'     => 'backend.roles',
+                'icon'      => 'cogs'
+            ]);
+
+        return $this;
+    }
+
     private function users(&$menu) {
-        // add users/admins routes
-        if (Route::has('backend.admins') && Route::has('backend.users')) {
-            // add menu container
-            $menu->add(__('backend::users.nav'),  [
-                'icon'      => 'cog'
-            ])->divide();
-            // add menu subitems
-            $menu->usuarios->add(__('backend::admins.nav'), [ 'route' => 'backend.admins' ]);
-            $menu->usuarios->add(__('backend::users.nav'),  [ 'route' => 'backend.users' ]);
-        } else
-            if (Route::has('backend.admins'))
-                $menu->add(__('backend::admins.nav'), [
-                    // 'header'    => 'Configuraciones',
-                    'route'     => 'backend.admins',
-                    'icon'      => 'user-shield',
-                ]);
-            elseif (Route::has('backend.users'))
-                $menu->add(__('backend::users.nav'), [
-                    // 'header'    => 'Configuraciones',
-                    'route'     => 'backend.users',
-                ]);
+        if (Route::has('backend.users') && $this->can('users'))
+            $menu->add(__('backend::users.nav'), [
+                // 'header'    => 'Configuraciones',
+                'route'     => 'backend.users',
+                'icon'      => 'cogs'
+            ]);
 
         return $this;
     }
 
     private function regions(&$menu) {
-        if (Route::has('backend.regions'))
+        if (Route::has('backend.regions') && $this->can('regions'))
             $menu->add(__('backend::regions.nav'), [
                 'route'     => 'backend.regions',
                 'icon'      => 'cogs'
@@ -105,7 +97,7 @@ class BackendMenu {
     }
 
     private function cities(&$menu) {
-        if (Route::has('backend.cities'))
+        if (Route::has('backend.cities') && $this->can('cities'))
             $menu->add(__('backend::cities.nav'), [
                 'route'     => 'backend.cities',
                 'icon'      => 'cogs'
@@ -115,7 +107,7 @@ class BackendMenu {
     }
 
     private function companies(&$menu) {
-        if (Route::has('backend.companies'))
+        if (Route::has('backend.companies') && $this->can('companies'))
             $menu->add(__('backend::companies.nav'), [
                 'route'     => 'backend.companies',
                 'icon'      => 'cogs'
@@ -125,7 +117,7 @@ class BackendMenu {
     }
 
     private function branches(&$menu) {
-        if (Route::has('backend.branches'))
+        if (Route::has('backend.branches') && $this->can('branches'))
             $menu->add(__('backend::branches.nav'), [
                 'route'     => 'backend.branches',
                 'icon'      => 'cogs'
@@ -135,7 +127,7 @@ class BackendMenu {
     }
 
     private function files(&$menu) {
-        if (Route::has('backend.files'))
+        if (Route::has('backend.files') && $this->can('files'))
             $menu->add(__('backend::files.nav'), [
                 'route'     => 'backend.files',
                 'icon'      => 'files'

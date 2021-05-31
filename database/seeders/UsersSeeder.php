@@ -9,15 +9,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class UsersSeeder extends Seeder {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run() {
-        // Reset cached roles and permissions
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+    public function run() {
         // get a random password
         $password = Str::random(16);
 
@@ -25,12 +18,7 @@ class UsersSeeder extends Seeder {
         if (!($resource = User::create([
             'firstname'         => 'Administrator',
             'email'             => $email = 'root@project.com.py',
-            // 'email_confirmation'=> $email,
-            // 'email_verified_at' => now(),
             'password'          => $passwd = bcrypt($password),
-            // 'password_confirmation' => $passwd,
-            // 'type'              => 'admin',
-            // 'status'            => 'active',
         ]))) {
             // show error message
             $this->command->error($resource->errors());
@@ -38,10 +26,13 @@ class UsersSeeder extends Seeder {
             return;
         }
 
-        // create root role and assign root role to administrator
-        $resource->assignRole( Role::create([ 'name' => 'root' ]) );
+        // Reset cached roles and permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // assign root role to administrator
+        $resource->assignRole( Role::find(0) );
 
         // output root account data
-        $this->command->info('Created root@project.com.py account with password: '.$password);
+        $this->command->info("Created $email account with password: $password");
     }
 }

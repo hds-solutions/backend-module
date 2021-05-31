@@ -1,14 +1,17 @@
 <?php
 
-use HDSSolutions\Finpar\Http\Controllers\Auth\LoginController;
-use HDSSolutions\Finpar\Http\Controllers\BackendController;
-use HDSSolutions\Finpar\Http\Controllers\BranchController;
-use HDSSolutions\Finpar\Http\Controllers\CityController;
-use HDSSolutions\Finpar\Http\Controllers\CompanyController;
-use HDSSolutions\Finpar\Http\Controllers\FileController;
-use HDSSolutions\Finpar\Http\Controllers\RegionController;
-use HDSSolutions\Finpar\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use HDSSolutions\Finpar\Http\Controllers\{
+    Auth\LoginController,
+    BackendController,
+    BranchController,
+    CityController,
+    CompanyController,
+    FileController,
+    RegionController,
+    RoleController,
+    UserController,
+};
 
 Route::group([
     'prefix'        => config('backend.prefix'),
@@ -30,6 +33,10 @@ Route::group([
     // Backend home
     Route::get('/',             [ BackendController::class, 'index' ])      ->name('backend');
     Route::get('dashboard',     [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
+
+    Route::resource('roles',        RoleController::class,      $name_prefix)
+        ->parameters([ 'roles' => 'resource' ])
+        ->name('index', 'backend.roles');
 
     Route::resource('users',        UserController::class,      $name_prefix)
         ->parameters([ 'users' => 'resource' ])
