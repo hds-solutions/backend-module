@@ -61,13 +61,13 @@ trait HasIdentity {
         return true;
     }
 
-    public function delete() {
+    public function delete(bool $with_identity = true) {
         // create a transaction
         DB::beginTransaction();
         // delete local
-        if (!$this->delete()) return false;
+        if (!parent::delete()) return false;
         // delete identity
-        if (!$this->identity->delete()) return false;
+        if ($with_identity && !$this->identity->delete()) return false;
         // confirm transaction
         DB::commit();
         // success deletion
