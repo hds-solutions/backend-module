@@ -2,7 +2,7 @@
 
 namespace HDSSolutions\Finpar\DataTables;
 
-use Spatie\Permission\Models\Role as Resource;
+use HDSSolutions\Finpar\Models\Role as Resource;
 use Yajra\DataTables\Html\Column;
 
 class RoleDataTable extends Base\DataTable {

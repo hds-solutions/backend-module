@@ -3,9 +3,9 @@
 namespace HDSSolutions\Finpar\Seeders;
 
 use HDSSolutions\Finpar\Models\User;
+use HDSSolutions\Finpar\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class UsersSeeder extends Seeder {

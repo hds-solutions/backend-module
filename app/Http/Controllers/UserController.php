@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\UserDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\User as Resource;
+use HDSSolutions\Finpar\Models\Role;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
     /**

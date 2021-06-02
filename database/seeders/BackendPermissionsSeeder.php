@@ -2,7 +2,7 @@
 
 namespace HDSSolutions\Finpar\Seeders;
 
-use Spatie\Permission\Models\Role;
+use HDSSolutions\Finpar\Models\Role;
 
 class BackendPermissionsSeeder extends Base\PermissionsSeeder {
 

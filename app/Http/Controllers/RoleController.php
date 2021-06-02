@@ -5,8 +5,8 @@ namespace HDSSolutions\Finpar\Http\Controllers;
 use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\RoleDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
+use HDSSolutions\Finpar\Models\Role as Resource;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Role as Resource;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller {

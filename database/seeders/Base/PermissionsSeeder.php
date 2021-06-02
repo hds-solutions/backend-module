@@ -2,9 +2,9 @@
 
 namespace HDSSolutions\Finpar\Seeders\Base;
 
+use HDSSolutions\Finpar\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 

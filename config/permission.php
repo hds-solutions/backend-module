@@ -2,6 +2,14 @@
 
 return [
 
+    'models' => [
+
+        'permission' => Spatie\Permission\Models\Permission::class,
+
+        'role' => HDSSolutions\Finpar\Models\Role::class,
+
+    ],
+
     /*
      * Enable wildcard permission lookups.
      */
