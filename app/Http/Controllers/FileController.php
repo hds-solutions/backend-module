@@ -9,6 +9,11 @@ use HDSSolutions\Finpar\Models\File as Resource;
 
 class FileController extends Controller {
 
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

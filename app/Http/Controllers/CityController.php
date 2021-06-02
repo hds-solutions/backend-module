@@ -9,6 +9,12 @@ use HDSSolutions\Finpar\Models\Region;
 use HDSSolutions\Finpar\Models\City as Resource;
 
 class CityController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *
