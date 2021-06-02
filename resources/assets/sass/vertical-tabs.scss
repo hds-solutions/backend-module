@@ -1,0 +1,106 @@
+.nav-tabs {
+    &>.nav-item {
+        &>.nav-link {
+            // background-color: white;
+        }
+    }
+
+    &.tabs-left,
+    &.tabs-right {
+        flex-direction: column;
+        border-bottom: none;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+        &>.nav-item {
+            float: none;
+            margin-bottom: 2px;
+        }
+    }
+
+    &.tabs-left {
+        border-right: 1px solid #ddd;
+
+        &>.nav-item {
+            margin-right: -1px;
+
+            &>.nav-link {
+                border-top-right-radius: unset;
+                border-bottom-left-radius: 0.35rem;
+
+                &.active,
+                &.active:hover,
+                &.active:focus {
+                    border-bottom-color: #ddd;
+                    border-right-color: transparent;
+                }
+            }
+        }
+
+    }
+
+    &.tabs-right {
+        border-left: 1px solid #ddd;
+
+        &>.nav-item {
+            margin-left: -1px;
+
+            &>.nav-link {
+                border-top-left-radius: unset;
+                border-bottom-right-radius: 0.35rem;
+
+                &.active,
+                &.active:hover,
+                &.active:focus {
+                    border-bottom-color: #ddd;
+                    border-left-color: transparent;
+                }
+            }
+        }
+    }
+
+    &.sideways {
+        margin-top: 48px;
+        position: relative;
+        border: none;
+
+        &>.nav-item {
+            position: relative;
+            height: 20px;
+            width: 120px;
+            margin-bottom: 100px;
+
+            &>.nav-link {
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+                border-radius: 0.35rem 0.35rem 0 0;
+
+                &.active,
+                &:hover,
+                &:focus {
+                    border-right-color: #ddd !important;
+                    border-left-color: #ddd !important;
+                    border-bottom-color: transparent !important;
+                }
+            }
+        }
+
+        &.tabs-left {
+            // left: -50px;
+
+            &>.nav-item {
+                transform: rotate(-90deg);
+                align-self: end;
+            }
+        }
+
+        &.tabs-right {
+            // right: -50px;
+
+            &>.nav-item {
+                transform: rotate(90deg);
+                align-self: start;
+            }
+        }
+    }
+}
