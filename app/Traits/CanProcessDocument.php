@@ -3,8 +3,10 @@
 namespace HDSSolutions\Finpar\Traits;
 
 use HDSSolutions\Finpar\Interfaces\Document;
+use HDSSolutions\Finpar\Processes\DocumentEngine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 trait CanProcessDocument {
 
@@ -28,6 +30,20 @@ trait CanProcessDocument {
             return back()
                 ->withInput()
                 ->withErrors([ 'Invalid request' ]);
+
+        // build permission
+        $permission =
+            // model name in lower and separated by _
+            Str::snake(Str::pluralStudly( class_basename($resource) ))
+            // document permission container
+            .'.document.'.
+            // document action
+            ($action = strtolower(str_replace('ACTION_', '', DocumentEngine::__($action, 'action', false))).'It');
+
+        // check if user has permission
+        if (!$request->user()->can($permission))
+            // return back with error
+            return back()->withErrors( 'backend::document.'.$action.'.unauthorized' );
 
         // start a transaction
         DB::beginTransaction();
