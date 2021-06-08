@@ -24,6 +24,6 @@ class FormAmount extends Component {
     }
 
     public function render() {
-        return view('backend::components.form.backend.amount');
+        return fn($data) => view('backend::components.form.backend.amount', $data)->render();
     }
 }

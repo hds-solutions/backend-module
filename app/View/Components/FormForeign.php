@@ -41,7 +41,7 @@ class FormForeign extends Select {
     }
 
     public function render() {
-        return view('backend::components.form.backend.foreign');
+        return fn($data) => view('backend::components.form.backend.foreign', $data)->render();
     }
 
 }

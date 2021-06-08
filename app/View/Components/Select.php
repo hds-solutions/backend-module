@@ -20,7 +20,7 @@ class Select extends Component {
     }
 
     public function render() {
-        return view('backend::components.form.select');
+        return fn($data) => view('backend::components.form.select', $data)->render();
     }
 
     public function isSelected($idx):bool {

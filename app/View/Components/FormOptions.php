@@ -6,11 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class FormOptions extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+
     public function __construct(
         public string $name,
         public ?string $field = null,
@@ -27,12 +23,7 @@ class FormOptions extends Component {
         $this->default = $this->default === 'null' ? null : $this->default;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.options');
+        return fn($data) => view('backend::components.form.options', $data)->render();
     }
 }

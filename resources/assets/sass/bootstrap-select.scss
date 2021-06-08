@@ -35,3 +35,7 @@
     background: #eaecf4;
     opacity: 1;
 }
+
+.bootstrap-select.is-invalid > .dropdown-toggle.bs-placeholder {
+    color: #e74a3b;
+}

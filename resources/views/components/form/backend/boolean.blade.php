@@ -6,7 +6,7 @@
         <x-form-input-group {{ $attributes->only('prepend') }}>
             <x-form-boolean name="{{ $name }}"
                 value="{{ (isset($resource) && !old($name) ? $resource->$field : old($name)) ? 'true' : 'false' }}"
-                @if ($errors->has($name)) error @endif
+                @if ($errors->has($name)) error="{{ $errors->first($name) }}" @endif
                 class="form-control"
                 {{ $attributes->except([ 'label', 'class' ]) }} />
         </x-form-input-group>

@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class FormTextarea extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+
     public function __construct(
         public string $name,
 
@@ -21,12 +17,7 @@ class FormTextarea extends Component {
         $this->field ??= $this->name;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.backend.textarea');
+        return fn($data) => view('backend::components.form.backend.textarea', $data)->render();
     }
 }

@@ -33,11 +33,6 @@ class Foreign extends Select {
     ) {
         parent::__construct($name, $values, $default);
 
-        // FIXME: data from FormForeign is invalid
-        $this->show = $this->show !== '' ? $this->show : 'name';
-        $this->filteredBy = $this->filteredBy !== '' ? $this->filteredBy : null;
-        $this->filteredUsing = $this->filteredUsing !== '' ? $this->filteredUsing : null;
-
         if ($append) foreach ($this->append = explode(',', $append) as $idx => $append)
             $this->append[$idx] = explode(':', $append);
 
@@ -48,7 +43,7 @@ class Foreign extends Select {
     }
 
     public function render() {
-        return view('backend::components.form.foreign');
+        return fn($data) => view('backend::components.form.foreign', $data)->render();
     }
 
     public function isSelected($resource):bool {

@@ -11,6 +11,6 @@ class Boolean extends Component {
     ) {}
 
     public function render() {
-        return view('backend::components.form.boolean');
+        return fn($data) => view('backend::components.form.boolean', $data)->render();
     }
 }

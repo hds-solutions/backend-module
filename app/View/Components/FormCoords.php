@@ -5,11 +5,7 @@ namespace HDSSolutions\Finpar\View\Components;
 use Illuminate\View\Component;
 
 class FormCoords extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+
     public function __construct(
         public $resource,
         // public string $name,
@@ -24,12 +20,7 @@ class FormCoords extends Component {
         // $this->field ??= $this->name;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.coords');
+        return fn($data) => view('backend::components.form.coords', $data)->render();
     }
 }

@@ -5,7 +5,7 @@
     $product = Product::find( request('product', 3) );
 @endphp
 
-<form>
+<form class="mb-5">
 
     <h4 class="mt-4">Simple label</h4>
     <x-form-label text="label text"/>
@@ -37,6 +37,7 @@
         :values="Brand::all()"
         foreign="brands"
         show="[created_at] name"
+        error="example error"
 
         request="brand"
         {{-- default="1" --}}

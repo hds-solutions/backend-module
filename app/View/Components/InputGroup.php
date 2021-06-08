@@ -13,4 +13,5 @@ class InputGroup extends Component {
     public function render() {
         return view('backend::components.form.input-group');
     }
+
 }

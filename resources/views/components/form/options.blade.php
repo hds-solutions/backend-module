@@ -4,18 +4,18 @@
 
         <div class="form-control form-check pl-2">
 
-        @foreach($values as $idx => $value)
-        <div class="form-check form-check-inline">
-            <input name="{{ $name }}" type="radio" @if ($required) required @endif
-                value="{{ $idx }}"
-                @if ($resource !== null && !old($name) && $resource->$field == $idx ||
-                    old($name) === $idx ||
-                    $resource === null && !old($name) && $idx === $default) checked @endif
-                id="{{ $optionId = Str::slug($field.'::'.$value) }}"
-                class="form-check-input">
-            <label class="form-check-label" for="{{ $optionId }}">@lang($value)</label>
-        </div>
-        @endforeach
+            @foreach($values as $idx => $value)
+            <div class="form-check form-check-inline">
+                <input name="{{ $name }}" type="radio" @if ($required) required @endif
+                    value="{{ $idx }}"
+                    @if ($resource !== null && !old($name) && $resource->$field == $idx ||
+                        old($name) === $idx ||
+                        $resource === null && !old($name) && $idx === $default) checked @endif
+                    id="{{ $optionId = Str::slug($field.'::'.$value) }}"
+                    class="form-check-input">
+                <label class="form-check-label" for="{{ $optionId }}">@lang($value)</label>
+            </div>
+            @endforeach
 
         </div>
 

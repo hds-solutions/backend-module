@@ -12,6 +12,7 @@ class Input extends Component {
     ) {}
 
     public function render() {
-        return view('backend::components.form.input');
+        return fn($data) => view('backend::components.form.input', $data)->render();
     }
+
 }

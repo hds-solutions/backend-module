@@ -7,11 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class FormImage extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+
     public function __construct(
         public string $name,
 
@@ -31,13 +27,8 @@ class FormImage extends Component {
         $this->field ??= $this->name;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.backend.image');
+        return fn($data) => view('backend::components.form.backend.image', $data)->render();
     }
 
 }

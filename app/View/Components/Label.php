@@ -12,6 +12,7 @@ class Label extends Component {
     ) {}
 
     public function render() {
-        return view('backend::components.form.label');
+        return fn($data) => view('backend::components.form.label', $data)->render();
     }
+
 }

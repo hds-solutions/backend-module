@@ -6,7 +6,8 @@
         <x-form-input-group {{ $attributes->only('prepend') }}>
 
             <x-form-input name="{{ $name }}" type="{{ $type ?? 'text' }}"
-                value="{{ $resource->{$field} ?? null }}"
+                value="{{ old($name, $resource->{$field} ?? null) }}"
+                @if ($errors->has($name)) error="{{ $errors->first($name) }}" @endif
                 {{ $attributes->except([ 'type', 'prepend' ]) }} />
 
         </x-form-input-group>

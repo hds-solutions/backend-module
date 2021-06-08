@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class FormText extends Component {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+
     public function __construct(
         public string $name,
 
@@ -23,12 +19,7 @@ class FormText extends Component {
         $this->field ??= $this->name;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
     public function render() {
-        return view('backend::components.form.backend.text');
+        return fn($data) => view('backend::components.form.backend.text', $data)->render();
     }
 }

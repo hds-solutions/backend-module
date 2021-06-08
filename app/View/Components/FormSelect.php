@@ -22,7 +22,7 @@ class FormSelect extends Select {
     }
 
     public function render() {
-        return view('backend::components.form.backend.select');
+        return fn($data) => view('backend::components.form.backend.select', $data)->render();
     }
 
     public function default() {

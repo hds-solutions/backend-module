@@ -36,3 +36,7 @@
     @endif
 
 </select>
+
+@if ($attributes->has('error'))
+    <div class="invalid-feedback">{{ $attributes->get('error') }}</div>
+@endif
