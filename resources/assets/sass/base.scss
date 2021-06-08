@@ -106,3 +106,8 @@ label.align-top {
 .form-group:last-child {
     margin-bottom: unset;
 }
+
+[data-multiple] > .row:last-child > div,
+[data-multiple] > .form-row:last-child > div {
+    margin-bottom: 0 !important;
+}

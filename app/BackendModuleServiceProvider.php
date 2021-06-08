@@ -50,6 +50,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
             \HDSSolutions\Finpar\View\Components\FormImage::class,
             \HDSSolutions\Finpar\View\Components\FormAmount::class,
             \HDSSolutions\Finpar\View\Components\FormCoords::class,
+            \HDSSolutions\Finpar\View\Components\FormMultiple::class,
             \HDSSolutions\Finpar\View\Components\FormControls::class,
         ],
     ];
