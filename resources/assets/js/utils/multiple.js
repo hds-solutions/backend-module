@@ -16,7 +16,7 @@ export default class Multiple {
         };
         //
         this.container = $(container);
-        this.multiple = $(this.container.data('multiple')+this.container.data('template'));
+        this.multiple = this.container.find(this.container.data('multiple')+this.container.data('template'));
         // find fields with selectpicker plugin
         this.multiple.find('.selectpicker').each((idx, ele) => {
             // reset plugin state
