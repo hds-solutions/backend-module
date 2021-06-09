@@ -1,2 +1,3 @@
 <x-form-input name="{{ $name }}" type="number" thousand
-    {{ $attributes->except('type') }} />
+    @if ($attributes->has('placeholder')) placeholder="@lang($attributes->get('placeholder', null))" @endif
+    {{ $attributes->except([ 'type', 'placeholder' ]) }} />
