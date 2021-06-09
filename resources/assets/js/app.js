@@ -193,9 +193,6 @@ $('[data-multiple]').each((idx, ele) => {
             document.querySelector('[name="currency_id"]')
                 // capture currency change
                 .addEventListener('change', e => {
-                    // update decimals
-                    orderLineContainer.querySelectorAll('[thousand]')
-                        .forEach(thousand => thousand.dataset.decimals = e.target.selectedOptions[0].dataset.decimals);
                     // fire change on lines
                     change_event.fire( orderLineContainer.querySelector('select:first-child') );
                 });
