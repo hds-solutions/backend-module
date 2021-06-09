@@ -19,13 +19,17 @@ class FormMultiple extends Component {
 
         public ?string $valuesAs = null,
         public ?string $helper = null,
+
+        public ?string $card = null,
     ) {
         $this->values = $values instanceof Collection ? $values : collect($values);
         $this->selecteds = $selecteds instanceof Collection ? $selecteds : collect($selecteds);
     }
 
     public function render() {
-        return fn($data) => view('backend::components.form.backend.multiple', $data)->render();
+        return fn($data) => view('backend::components.form.backend.multiple', $data + [
+            'cardFooter'    => $data['card-footer'] ?? null
+        ])->render();
     }
 
 }

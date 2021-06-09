@@ -1,11 +1,18 @@
 <x-form-row class="{{ $attributes->get('row-class') }}">
     <x-form-label text="{{ $attributes->get('label') }}" form-label />
 
+    @if ($card !== null)
+    <div class="col card {{ $card }}">
+        <div class="card-body row py-0">
+    @endif
+
     <div data-multiple=".{{ $singular = Str::singular($name) }}-container" data-template="#new"
         {{ $attributes->class([
-            'col-11 col-md-8 col-lg-6',
-            'col-xl-4'  => $attributes->get('contents-size') !== 'xl',
-        ])->only('class') }}>
+            'col',
+            'col-md-8'  => !in_array($attributes->get('contents-size'), [ 'sm', 'md', 'lg', 'xl' ]),
+            'col-lg-6'  => !in_array($attributes->get('contents-size'), [ 'md', 'lg', 'xl' ]),
+            'col-xl-4'  => !in_array($attributes->get('contents-size'), [ 'lg', 'xl' ]),
+        ])->except([ 'grouped', 'old-filter-fields', 'contents-size', 'label' ]) }}>
 
         {{-- load old values --}}
         <?php
@@ -56,5 +63,15 @@
     </div>
 
     @include('backend::components.form.helper')
+
+    @if ($card !== null)
+        </div>
+        @if ($cardFooter !== null)
+            <div class="card-footer">
+                {{ $cardFooter }}
+            </div>
+        @endif
+    </div>
+    @endif
 
 </x-form-row>
