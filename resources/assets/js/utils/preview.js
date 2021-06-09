@@ -5,7 +5,7 @@ export default class Preview {
         this.preview = $(this.element.attr('data-preview')).clone();
         this.container = $(this.element.attr('data-preview')).parent();
         this.prepend = $(this.element.attr('data-prepend-preview'));
-        this.url_prepend = this.element.attr('data-preview-url-prepend');
+        this.url_prepend = this.element.attr('data-preview-url-prepend') ?? '';
         this.change();
     }
 
