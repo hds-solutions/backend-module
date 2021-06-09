@@ -124,19 +124,23 @@ $('[data-multiple]').each((idx, ele) => {
     }
 
     // extra funtionality for POS line
-    if ( multiple.multiple[0].classList.contains('order-line-container') || multiple.type == 'pos' ) {
+    if ( multiple.type == 'order' || multiple.type == 'pos' ) {
         // used later
         let blur_event = (new Event('blur')),
             change_event = (new Event('change'));
         // capture element deletion
         multiple.removed(orderLineContainer => {
             // unregister ordeline from POS
-            if (window.pos) window.pos.unregister( orderLineContainer );
+            if (multiple.type == 'pos' && window.pos) window.pos.unregister( orderLineContainer );
+            // unregister ordeline from Order
+            if (multiple.type == 'order' && window.order) window.order.unregister( orderLineContainer );
         });
         // capture element creation
         multiple.new(orderLineContainer => {
             // register ordeline on POS
-            if (window.pos) window.pos.register( orderLineContainer );
+            if (multiple.type == 'pos' && window.pos) window.pos.register( orderLineContainer );
+            // register ordeline on Order
+            if (multiple.type == 'order' && window.order) window.order.register( orderLineContainer );
             // get fields with thousand plugin
             let thousands = orderLineContainer.querySelectorAll('[name^="lines"][thousand]');
             //
