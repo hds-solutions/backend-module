@@ -3,6 +3,7 @@
     <x-form-foreign name="{{ $name }}"
         @if (isset($resource)) :resource="$resource" @endif
         :values="$values"
+        @if ($default) default="{{ $default }}" @endif
 
         @if ($attributes->has('foreign')) foreign="{{ $attributes->get('foreign') }}" @endif
         @if ($attributes->has('foreign-add-label')) foreign-add-label="{{ $attributes->get('foreign-add-label') }}" @endif

@@ -10,7 +10,7 @@ class FormForeign extends Select {
     public function __construct(
         string $name,
         array|Collection $values,
-        ?string $default = null,
+        public ?string $default = null,
 
         public ?Model $resource = null,
         // protected ?string $field = null,
