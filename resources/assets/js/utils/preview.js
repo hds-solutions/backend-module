@@ -96,8 +96,8 @@ export default class Preview {
 
     _getUrl(option) {
         if (option.dataset === undefined) option = option.get(0);
-        if (option.getAttribute('url') !== null) return option.getAttribute('url');
-        return option.dataset.url ?? null;
+        let url = option.getAttribute('url') !== null ? option.getAttribute('url') : (option.dataset.url ?? null);
+        return url !== null ? url.replace(new RegExp('^'+this.url_prepend), '') : null;
     }
 
 }
