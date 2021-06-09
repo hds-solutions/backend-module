@@ -123,8 +123,8 @@ $('[data-multiple]').each((idx, ele) => {
         });
     }
 
-    // extra funtionality for pricechange line
-    if ( multiple.multiple[0].classList.contains('order-line-container') ) {
+    // extra funtionality for POS line
+    if ( multiple.multiple[0].classList.contains('order-line-container') || multiple.type == 'pos' ) {
         // used later
         let blur_event = (new Event('blur')),
             change_event = (new Event('change'));
