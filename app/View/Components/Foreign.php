@@ -33,8 +33,12 @@ class Foreign extends Select {
     ) {
         parent::__construct($name, $values, $default);
 
-        if ($append) foreach ($this->append = explode(',', $append) as $idx => $append)
-            $this->append[$idx] = explode(':', $append);
+        if ($append) foreach ($this->append = explode(',', $append) as $idx => $append) {
+            $parts = explode(':', $append);
+            if (isset($parts[1]) && strpos($parts[1], '??'))
+                [ $parts[1], $parts[2] ] = explode('??', $parts[1]);
+            $this->append[$idx] = $parts;
+        }
 
         if ($this->filteredBy)
             $this->append[] = [ $this->filteredUsing, $this->filteredUsing.'.id' ];

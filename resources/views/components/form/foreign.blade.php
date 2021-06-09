@@ -25,7 +25,7 @@
     @foreach ($values as $value)
     <option value="{{ $value->id }}" @if ($title) title="{{ data_get($value, $title) }}" @endif
         @if ($isSelected($value)) selected @endif
-        @foreach ($append as $appended) data-{{ $appended[0] }}="{{ data_get($value, $appended[1] ?? $appended[0]) }}" @endforeach
+        @foreach ($append as $appended) data-{{ $appended[0] }}="{{ data_get($value, $appended[1] ?? $appended[0], $appended[2] ?? null) }}" @endforeach
         >{{ $parseShow($value) }}</option>
     @endforeach
 
