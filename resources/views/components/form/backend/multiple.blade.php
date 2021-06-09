@@ -9,9 +9,9 @@
     <div data-multiple=".{{ $singular = Str::singular($name) }}-container" data-template="#new"
         {{ $attributes->class([
             'col',
-            'col-md-8'  => !in_array($attributes->get('contents-size'), [ 'sm', 'md', 'lg', 'xl' ]),
-            'col-lg-6'  => !in_array($attributes->get('contents-size'), [ 'md', 'lg', 'xl' ]),
-            'col-xl-4'  => !in_array($attributes->get('contents-size'), [ 'lg', 'xl' ]),
+            'col-md-8'  => $attributes->get('contents-size') == 'xl',
+            'col-md-8 col-lg-6'  => $attributes->get('contents-size') == 'lg',
+            'col-md-8 col-lg-6 col-xl-4'  => $attributes->get('contents-size', 'md') == 'md',
         ])->except([ 'grouped', 'old-filter-fields', 'contents-size', 'label' ]) }}>
 
         {{-- load old values --}}
