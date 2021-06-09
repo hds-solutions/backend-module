@@ -5,6 +5,7 @@ export default class Preview {
         this.preview = $(this.element.attr('data-preview')).clone();
         this.container = $(this.element.attr('data-preview')).parent();
         this.prepend = $(this.element.attr('data-prepend-preview'));
+        this.url_prepend = this.element.attr('data-preview-url-prepend');
         this.change();
     }
 
@@ -19,11 +20,11 @@ export default class Preview {
                     // must have option with url attr
                     let option = this.element.find('>option:checked');
                     // validate url
-                    if (option.attr('url') !== undefined) {
+                    if (this._getUrl(option) !== null) {
                         // clone object
                         let preview = this.preview.clone();
                         // set url on preview
-                        preview.attr('src', option.attr('url'));
+                        preview.attr('src', this.url_prepend + this._getUrl(option));
                         // append to container
                         this.container.append(preview);
                         // show preview
@@ -38,11 +39,11 @@ export default class Preview {
                         //
                         option = $(option);
                         // validate url
-                        if (option.attr('url') === undefined) return;
+                        if (this._getUrl(option) === null) return;
                         // clone object
                         let preview = this.preview.clone();
                         // set url on preview
-                        preview.attr('src', option.attr('url'));
+                        preview.attr('src', this.url_prepend + this._getUrl(option));
                         // append to container
                         this.container.append(preview);
                         // show preview
@@ -55,11 +56,11 @@ export default class Preview {
                         //
                         option = $(option);
                         // validate url
-                        if (option.attr('url') === undefined) return;
+                        if (this._getUrl(option) === null) return;
                         // clone object
                         let preview = this.preview.clone();
                         // set url on preview
-                        preview.attr('src', option.attr('url'));
+                        preview.attr('src', this.url_prepend + this._getUrl(option));
                         // append to container
                         this.container.append(preview);
                         // show preview
@@ -92,4 +93,11 @@ export default class Preview {
         // fire change on select only
         if (this.element[0].type === 'select-one' || this.element[0].type === 'select-multiple') this.element.change();
     }
+
+    _getUrl(option) {
+        if (option.dataset === undefined) option = option.get(0);
+        if (option.getAttribute('url') !== null) return option.getAttribute('url');
+        return option.dataset.url ?? null;
+    }
+
 }
