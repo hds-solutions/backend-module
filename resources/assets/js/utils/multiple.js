@@ -3,6 +3,7 @@ import Preview from './preview';
 import Thousand from './thousand';
 import Currency from './currency';
 import Only from './only';
+import Foreign from './foreign';
 
 export default class Multiple {
     constructor(container) {
@@ -93,6 +94,7 @@ export default class Multiple {
         element.currencies();
         element.thousands();
         element.only();
+        element.foreign();
     }
 }
 
@@ -203,6 +205,13 @@ class Element {
         this.element.get(0).querySelectorAll('[data-only]')
             // init plugin
             .forEach(element => new Only(element, this.element.get(0)));
+    }
+
+    foreign() {
+        // find elements with plugin Foreign
+        this.element.get(0).querySelectorAll('select>option[value="add::new"]')
+            // init plugin
+            .forEach(option => new Foreign(option));
     }
 
     _events() {
