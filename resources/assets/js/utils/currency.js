@@ -20,8 +20,8 @@ export default class Currency {
         this.element.dataset.decimals = selected.dataset.decimals;
         // set step on field
         this.element.step = (1 / Math.pow(10, selected.dataset.decimals ?? 0)).toFixed(selected.dataset.decimals ?? 0);
-        // fire change event on element only if change event comes from parent
-        if (e !== null) (new Event('blur')).fire(this.element);
+        // fire change event on element
+        (new Event('blur')).fire(this.element);
     }
 
 }
