@@ -22,7 +22,7 @@ class MessageListener {
 // register a singleton
 const Listener = new MessageListener;
 
-export default class Test {
+export default class Foreign {
 
     constructor(element, value = 'add::new') {
         // save <select> element
