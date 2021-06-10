@@ -9,19 +9,19 @@ export default class Currency {
         this.parent = document.querySelector(this.element.dataset.currencyBy);
         // capture change on parent
         this.parent.addEventListener('change', e => { this._change(e); });
-        // fire change event on parent
-        (new Event('change')).fire(this.parent);
+        // fire change event to format existing value
+        this._change();
     }
 
-    _change(e) {
+    _change(e = null) {
         // get selected option
         let selected = this.parent.selectedOptions.item(0);
         // set decimals on field
         this.element.dataset.decimals = selected.dataset.decimals;
         // set step on field
         this.element.step = (1 / Math.pow(10, selected.dataset.decimals ?? 0)).toFixed(selected.dataset.decimals ?? 0);
-        // fire change event on element
-        (new Event('blur')).fire(this.element);
+        // fire change event on element only if change event comes from parent
+        if (e !== null) (new Event('blur')).fire(this.element);
     }
 
 }
