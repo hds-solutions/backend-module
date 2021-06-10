@@ -147,6 +147,8 @@ $('[data-multiple]').each((idx, ele) => {
             orderLineContainer.querySelectorAll('select')
                 // capture change
                 .forEach(select => select.addEventListener('change', e => {
+                    // ignore if select doesnt have form (deleted line)
+                    if (select.form === null) return;
                     // build data for the request
                     let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
                     // check if no warehouse was selected
@@ -342,8 +344,8 @@ document.querySelectorAll('[type="file"]').forEach(field => {
 // tooltips
 $('[data-toggle="tooltip"]').tooltip();
 
-import Test from './utils/test';
-document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Test(option));
+import Foreign from './utils/foreign';
+document.querySelectorAll('select>option[value="add::new"]').forEach(option => new Foreign(option));
 
 // helper function to create nodeArrays (not collections)
 const nodeArray = (selector, parent=document) => [].slice.call(parent.querySelectorAll(selector)),
