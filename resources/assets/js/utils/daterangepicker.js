@@ -23,8 +23,18 @@ export default class DateRangePicker {
             locale: {
                 cancelLabel: 'Clear',
                 format: 'DD MMMM, YYYY',
-            }
+            },
         };
+        // check if has range
+        if (this.element.hasAttribute('range'))
+            options.ranges = {
+                'Today': [ moment(), moment() ],
+                'Yesterday': [ moment().subtract(1, 'days'), moment().subtract(1, 'days') ],
+                'Last 7 Days': [ moment().subtract(6, 'days'), moment() ],
+                'Last 30 Days': [ moment().subtract(29, 'days'), moment() ],
+                'This Month': [ moment().startOf('month'), moment().endOf('month') ],
+                'Last Month': [ moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month') ],
+            };
         // check if has time selection and enable it
         if (this.type.match(/time/)) {
             options.timePicker = true;
@@ -34,7 +44,7 @@ export default class DateRangePicker {
         }
         // init jQuery plugin with options
         $(this.element).daterangepicker(options)
-            .on('showCalendar.daterangepicker', e => this._onShow())
+            .on('show.daterangepicker', e => this._onShow())
             .on('apply.daterangepicker', e => e.target.value = this.picker.startDate.format( this.picker.locale.format ) + (!this.picker.singleDatePicker ? ' - '+this.picker.endDate.format( this.picker.locale.format ) : ''))
             .on('cancel.daterangepicker', e => e.target.value = null);
         // save picker
