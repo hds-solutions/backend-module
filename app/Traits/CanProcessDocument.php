@@ -38,12 +38,12 @@ trait CanProcessDocument {
             // document permission container
             .'.document.'.
             // document action
-            ($action = strtolower(str_replace('ACTION_', '', DocumentEngine::__($action, 'action', false))).'It');
+            ($action_str = strtolower(str_replace('ACTION_', '', DocumentEngine::__($action, 'action', false))).'It');
 
         // check if user has permission
         if (!$request->user()->can($permission))
             // return back with error
-            return back()->withErrors( 'backend::document.'.$action.'.unauthorized' );
+            return back()->withErrors( "backend::document.$action_str.unauthorized" );
 
         // start a transaction
         DB::beginTransaction();
