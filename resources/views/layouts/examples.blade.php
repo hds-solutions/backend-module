@@ -18,6 +18,30 @@
     <x-form-input name="date" type="date"
         placeholder="Simple input type=date" />
 
+    <x-form-date name="date"
+        placeholder="Simple date" />
+
+    <x-form-time name="time"
+        placeholder="Simple time" />
+
+    <x-form-datetime name="datetime"
+        placeholder="Simple datetime" />
+
+    <x-form-datetime name="datetime" required
+        placeholder="Simple datetime required=true" />
+
+    <x-form-date name="daterange" range="true"
+        placeholder="Simple date range=true" />
+
+    <x-form-date name="daterangerequired" range="true" required
+        placeholder="Simple date range=true required=true" />
+
+    <x-form-datetime name="datetimerange" range="true"
+        placeholder="Simple datetime range=true" />
+
+    <x-form-datetime name="datetimerangerequired" range="true" required
+        placeholder="Simple datetime range=true required=true" />
+
     <x-form-amount name="amount"
         placeholder="Simple amount" />
 

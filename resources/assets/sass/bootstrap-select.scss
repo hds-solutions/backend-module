@@ -39,3 +39,19 @@
 .bootstrap-select.is-invalid > .dropdown-toggle.bs-placeholder {
     color: #e74a3b;
 }
+
+.daterangepicker .bootstrap-select {
+    width: unset !important;
+}
+
+.daterangepicker .bootstrap-select .btn {
+    padding: 0.2rem 0.5rem;
+}
+
+.daterangepicker .bootstrap-select:first-child {
+    margin-right: 0.15rem;
+}
+
+.daterangepicker .bootstrap-select:last-child {
+    margin-left: 0.15rem;
+}

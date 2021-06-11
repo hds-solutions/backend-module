@@ -1,8 +1,7 @@
 //
 require('bootstrap');
-//
+require('bootstrap-daterangepicker');
 require('bootstrap-select/js/bootstrap-select.js');
-//
 require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
 
 //
@@ -19,6 +18,9 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+import DateRangePicker from './utils/daterangepicker';
+document.querySelectorAll('[daterangepicker]').forEach(element => new DateRangePicker(element));
 
 import Event from './utils/consoleevent';
 

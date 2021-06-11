@@ -30,6 +30,7 @@ mix.options({
 mix.autoload({
     // autoload jQuery
     'jquery': [ '$', 'jQuery', 'window.$', 'window.jQuery' ],
+    'moment': [ 'moment' ],
 });
 
 // disable notifications in prod
