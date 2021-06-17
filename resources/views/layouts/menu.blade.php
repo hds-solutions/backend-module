@@ -1,4 +1,5 @@
 @foreach($items as $item)
+    @if (!$item->url() && !$item->hasChildren()) @continue @endif
 
     {{-- heading --}}
     @if (isset($item->attributes['header']))
