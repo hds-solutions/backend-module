@@ -11,13 +11,14 @@
     },
     "devDependencies": {
         "cross-env": "^7.0",
-        "laravel-mix": "^6.0",
+        "laravel-mix": "^5.0.9",
         "laravel-mix-merge-manifest": "^2.0",
-        "resolve-url-loader": "^3.1",
+        "resolve-url-loader": "^4.0.0",
         "sass": "^1.32",
         "sass-loader": "^8.0"
     },
     "dependencies": {
+        "@riversun/simple-date-format": "^1.1.6",
         "bootstrap-daterangepicker": "^3.1.0",
         "bootstrap-select": "^1.13",
         "bootstrap-vertical-tabs": "^1.2.2",

@@ -1,3 +1,5 @@
+import SimpleDateFormat from "@riversun/simple-date-format";
+
 /*
 |--------------------------------------------------------------------------
 | Element prototypes
@@ -55,10 +57,53 @@ if (typeof Date.addDays === 'undefined') {
 }
 
 if (typeof Date.format === 'undefined') {
+    const sdf = new SimpleDateFormat;
     Date.prototype.format = function(format) {
-        // TODO: format date
-        console.debug('TODO: format date using '+format);
-        return this.toDateString();
+        // PHP DateTime to JS DateTime
+        let replacements = {
+            'Y': 'þþ', // temp value >> yyyy
+            'y': 'µµ', // temp value >> yy
+
+            'n': '¤¤', // temp value >> M
+            'm': 'ßß', // temp value >> MM
+            'F': 'œœ', // temp value >> MMM
+            'M': 'œœ', // temp value >> MMM
+
+            'j': 'øø', // temp value >> d
+            'd': '€€', // temp value >> dd
+
+            'A': 'a',
+            'G': 'ëë', // temp value >> H
+            'H': 'ää', // temp value >> HH
+            'D': 'E',
+            'g': 'ææ', // temp value >> h
+            'h': 'öö', // temp value >> hh
+            'i': 'mm',
+            's': 'ss',
+            'v': 'SSS',
+            'O': 'Z',
+            'o': '¶¶', // temp value >> X
+            'P': 'çç', // temp value >> XXX
+
+            // replace temp values to final value
+            'þþ': 'yyyy',
+            'µµ': 'yy',
+            '¤¤': 'M',
+            'ßß': 'MM',
+            'œœ': 'MMM',
+            'øø': 'd',
+            '€€': 'dd',
+            'ëë': 'H',
+            'ää': 'HH',
+            'ææ': 'h',
+            'öö': 'hh',
+            '¶¶': 'X',
+            'çç': 'XXX',
+        }
+        // do replacements
+        for (let search in replacements) format = format.replaceAll(search, replacements[search]);
+        // format date using SimpleDateFormat
+        return sdf.formatWith(format, this);
     }
 }
 
