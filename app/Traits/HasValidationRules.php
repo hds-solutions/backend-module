@@ -2,6 +2,7 @@
 
 namespace HDSSolutions\Finpar\Traits;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator as Validator_Factory;
 use Illuminate\Support\MessageBag;
@@ -36,7 +37,7 @@ trait HasValidationRules {
         // capture updating
         self::updating(function($model) {
             // create a Validator with updateRules
-            $validator = Validator_Factory::make($model->getAllAttributes($model), $model::rules($model->id));
+            $validator = Validator_Factory::make($model->getAllAttributes($model), $model::rules($model));
             // check if rules fails
             if ($validator->fails()) {
                 // save errors
@@ -119,7 +120,7 @@ trait HasValidationRules {
         return $attributes;
     }
 
-    private static function rules($id = -1, bool $onlykeys = false) {
+    private static function rules(Model $model = null, bool $onlykeys = false) {
         // get rules
         $rules = static::$rules ?? [];
         // foreach rules
@@ -128,13 +129,23 @@ trait HasValidationRules {
             if (gettype($rule) == 'array')
                 // foreach rules array
                 foreach ($rule as $rule_idx => $rule_value)
-                    // replace {id}
-                    $rules[$idx][$rule_idx] = str_replace('{id}', $id, $rule_value);
+                    // replace fields with model values
+                    $rules[$idx][$rule_idx] = self::replaceModelValues($rule_value, $model);
             else
-                // replace {id}
-                $rules[$idx] = str_replace('{id}', $id, $rule);
+                // replace fields with model values
+                $rules[$idx] = self::replaceModelValues($rule_value, $model);
         // return keys or rules
         return $onlykeys ? array_keys($rules) : $rules;
+    }
+
+    private static function replaceModelValues(string $rule, Model $model = null) {
+        // find matches and replace with model values
+        return preg_replace_callback(
+            // find all enclosed {fields}
+            '/\{([\w\.]*)\}/',
+            // replace with model value
+            fn($matches) => $model !== null ? object_get($model, $matches[1]) : -1,
+        $rule);
     }
 
 }
