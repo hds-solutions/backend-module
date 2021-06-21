@@ -126,27 +126,31 @@ $('[data-multiple]').each((idx, ele) => {
     }
 
     // extra funtionality for POS line
-    if ( multiple.type == 'order' || multiple.type == 'pos' ) {
+    if ( multiple.type == 'order' ||  multiple.type == 'invoice' || multiple.type == 'pos' ) {
         // used later
         let blur_event = (new Event('blur')),
             change_event = (new Event('change'));
         // capture element deletion
-        multiple.removed(orderLineContainer => {
+        multiple.removed(lineContainer => {
             // unregister ordeline from POS
-            if (multiple.type == 'pos' && window.pos) window.pos.unregister( orderLineContainer );
+            if (multiple.type == 'pos' && window.pos) window.pos.unregister( lineContainer );
             // unregister ordeline from Order
-            if (multiple.type == 'order' && window.order) window.order.unregister( orderLineContainer );
+            if (multiple.type == 'order' && window.order) window.order.unregister( lineContainer );
+            // unregister ordeline from Invoice
+            if (multiple.type == 'invoice' && window.invoice) window.invoice.unregister( lineContainer );
         });
         // capture element creation
-        multiple.new(orderLineContainer => {
+        multiple.new(lineContainer => {
             // register ordeline on POS
-            if (multiple.type == 'pos' && window.pos) window.pos.register( orderLineContainer );
+            if (multiple.type == 'pos' && window.pos) window.pos.register( lineContainer );
             // register ordeline on Order
-            if (multiple.type == 'order' && window.order) window.order.register( orderLineContainer );
+            if (multiple.type == 'order' && window.order) window.order.register( lineContainer );
+            // register ordeline on Invoice
+            if (multiple.type == 'invoice' && window.invoice) window.invoice.register( lineContainer );
             // get fields with thousand plugin
-            let thousands = orderLineContainer.querySelectorAll('[name^="lines"][thousand]');
+            let thousands = lineContainer.querySelectorAll('[name^="lines"][thousand]');
             //
-            orderLineContainer.querySelectorAll('select')
+            lineContainer.querySelectorAll('select')
                 // capture change
                 .forEach(select => select.addEventListener('change', e => {
                     // ignore if select doesnt have form (deleted line)
@@ -154,8 +158,8 @@ $('[data-multiple]').each((idx, ele) => {
                     // build data for the request
                     let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
                     // check if no warehouse was selected
-                    if ((option = orderLineContainer.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
-                    if ((option = orderLineContainer.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
+                    if ((option = lineContainer.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
+                    if ((option = lineContainer.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
                     if ((option = select.form.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
                     // ignore if no product
                     if (!data.product) return;
@@ -166,21 +170,21 @@ $('[data-multiple]').each((idx, ele) => {
                         data: data,
                         // update current price for product+variant on locator
                         success: data => {
-                            orderLineContainer.querySelector('[name="lines[price][]"]').value = data.price ?? null;
-                            let quantity = orderLineContainer.querySelector('[name="lines[quantity][]"]');
+                            lineContainer.querySelector('[name="lines[price][]"]').value = data.price ?? null;
+                            let quantity = lineContainer.querySelector('[name="lines[quantity][]"]');
                             quantity.value = !data.price || quantity.value.length > 0 ? quantity.value : 1;
                             change_event.fire(quantity);
                         },
                     });
                 }));
             // capture change on price and quantity
-            orderLineContainer.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]')
+            lineContainer.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]')
                 // capture change on input
                 .forEach(input => input.addEventListener('change', e => {
                     // get fields
-                    let price = orderLineContainer.querySelector('[name="lines[price][]"]'),
-                        quantity = orderLineContainer.querySelector('[name="lines[quantity][]"]'),
-                        total = orderLineContainer.querySelector('[name="lines[total][]"]');
+                    let price = lineContainer.querySelector('[name="lines[price][]"]'),
+                        quantity = lineContainer.querySelector('[name="lines[quantity][]"]'),
+                        total = lineContainer.querySelector('[name="lines[total][]"]');
 
                     // update total value
                     total.value = (
@@ -202,7 +206,7 @@ $('[data-multiple]').each((idx, ele) => {
                 // capture currency change
                 .addEventListener('change', e => {
                     // fire change on lines
-                    change_event.fire( orderLineContainer.querySelector('select:first-child') );
+                    change_event.fire( lineContainer.querySelector('select:first-child') );
                 });
         });
     }
