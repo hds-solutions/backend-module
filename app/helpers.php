@@ -26,3 +26,10 @@ if (!function_exists('module_path')) {
         return $caller.DIRECTORY_SEPARATOR.$path;
     }
 }
+
+if (!function_exists('str_increment')) {
+    function str_increment($value):string {
+        $value = 'A_'.$value;
+        return substr(++$value, 2);
+    }
+}
