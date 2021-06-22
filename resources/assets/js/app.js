@@ -398,3 +398,20 @@ allThings.forEach(checkbox => checkbox.addEventListener('change', e => {
 
 const changeEvent = new Event('change');
 allThings.forEach(checkbox => changeEvent.fire(checkbox));
+
+//
+document.querySelectorAll('[type=submit]').forEach(button => {
+    button.addEventListener('click', e => {
+        // get form original action
+        let url = new URL(button.form.action);
+        // foreach params and add them to form action url
+        button.getAttribute('formaction-append').split('&').forEach(param => {
+            // get param/value pair
+            param = param.split('=');
+            // append it to url
+            url.searchParams.append(param[0], param[1] ?? true);
+        });
+        // replace form action
+        button.form.action = url.href;
+    });
+});
