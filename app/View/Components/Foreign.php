@@ -55,9 +55,9 @@ class Foreign extends Select {
         return $resource->getKey() == old($this->name, ($this->request ? request($this->request) : null) ?? $this->resource?->{$this->field} ?? $this->default);
     }
 
-    public function parseShow($resource):string {
+    public function parseShow($resource, string $type = 'show'):string {
         // get matches
-        preg_match_all('/(\w|\.)+/', $show = $this->show, $matches);
+        preg_match_all('/(\w|\.)+/', $show = $this->$type, $matches);
         // replace matches with resource data
         foreach ($matches[0] as $match) $show = str_replace($match, data_get($resource, $match) ?? $match, $show);
         // return build
