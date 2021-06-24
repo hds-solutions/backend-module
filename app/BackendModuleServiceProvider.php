@@ -38,6 +38,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
             \HDSSolutions\Finpar\View\Components\Amount::class,
             \HDSSolutions\Finpar\View\Components\Select::class,
             \HDSSolutions\Finpar\View\Components\Foreign::class,
+            \HDSSolutions\Finpar\View\Components\Multiple::class,
         ],
         'backend'   => [
             \HDSSolutions\Finpar\View\Components\FormText::class,
