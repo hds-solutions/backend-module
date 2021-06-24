@@ -1,17 +1,23 @@
-<x-form-row>
+<x-form-row class="{{ $attributes->get('row-class') ?? null }}">
     <x-form-label text="{{ $attributes->get('label') }}" form-label />
 
-    <x-form-row-group>
+    <x-form-row-group count="{{ $slot->isNotEmpty() ? 2 : 1 }}" class="{{ $attributes->get('group-class') ?? null }}">
 
         <x-form-input-group {{ $attributes->only('prepend') }}>
 
             <x-form-select name="{{ $name }}" :values="$values"
                 default="{{ $default() }}" {{ $attributes
-                ->except([ 'label', 'default' , 'prepend' ]) }} />
+                ->except([ 'label', 'default' , 'prepend', 'row-class', 'group-class' ]) }} />
 
         </x-form-input-group>
 
     </x-form-row-group>
+
+    @if ($slot->isNotEmpty())
+    <x-form-row-group count="2" class="offset-md-3 offset-lg-2 offset-xl-0 mt-2 mt-xl-0">
+        {{ $slot }}
+    </x-form-row-group>
+    @endif
 
     @include('backend::components.form.helper')
 
