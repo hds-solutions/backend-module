@@ -1,9 +1,12 @@
 <x-form-row class="{{ $attributes->get('row-class') }}">
     <x-form-label text="{{ $attributes->get('label') }}" form-label />
+    <div class="col">
 
     @if ($card !== null)
-    <div class="col card {{ $card }}">
+    <div class="card {{ $card }}">
         <div class="card-body row py-0">
+    @else
+    <div class="row">
     @endif
 
     <div data-multiple=".{{ $singular = Str::singular($name) }}-container" data-template="#new"
@@ -71,7 +74,8 @@
                 {{ $cardFooter }}
             </div>
         @endif
-    </div>
     @endif
+    </div>
+    </div>
 
 </x-form-row>
