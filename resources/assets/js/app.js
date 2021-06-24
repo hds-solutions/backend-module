@@ -19,6 +19,8 @@ $.ajaxSetup({
     }
 });
 
+import Application from './resources/Application';
+
 import DateRangePicker from './utils/daterangepicker';
 document.querySelectorAll('[daterangepicker]').forEach(element => new DateRangePicker(element));
 
@@ -49,167 +51,18 @@ $('[data-filtered-by]').each((idx, ele) => {
 
 //
 import Multiple from './utils/multiple';
-$('[data-multiple]').each((idx, ele) => {
+document.querySelectorAll('[data-multiple]').forEach(ele => {
     let multiple = new Multiple( ele );
 
-    // extra funtionality for intentory line
-    if ( multiple.multiple[0].classList.contains('inventory-line-container') )
-        // capture element creation
-        multiple.new(element => element.querySelectorAll('select').forEach(
-            // capture change
-            select => select.addEventListener('change', e => {
-                // build data for the request
-                let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
-                data.warehouse = document.querySelector('[name="warehouse_id"]').selectedOptions[0].value;
-                // check if no warehouse was selected
-                if (!data.warehouse) return;
-                if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
-                if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
-                if ((option = element.querySelector('[name="lines[locator_id][]"]').selectedOptions[0]).value) data.locator = option.value;
-                // request current stock quantity
-                $.ajax({
-                    method: 'POST',
-                    url: '/inventories/stock',
-                    data: data,
-                    // update current stock for product+variant on locator
-                    success: data => element.querySelector('[name="lines[current][]"]').value = data.stock
-                });
-            })
-        ));
-
-    // extra funtionality for pricechange line
-    if ( multiple.multiple[0].classList.contains('pricechange-line-container') ) {
-        // used later
-        let blur_event = (new Event('blur'));
-        // capture element creation
-        multiple.new(element => element.querySelectorAll('select').forEach(
-            // capture change
-            select => select.addEventListener('change', e => {
-                // build data for the request
-                let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
-                // check if no warehouse was selected
-                if ((option = element.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
-                if ((option = element.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
-                if ((option = element.querySelector('[name="lines[currency_id][]"]').selectedOptions[0]).value) data.currency = option.value;
-                // request current price quantity
-                $.ajax({
-                    method: 'POST',
-                    url: '/pricechanges/price',
-                    data: data,
-                    // update current price for product+variant on locator
-                    success: data => {
-                        element.querySelector('[name="lines[current_cost][]"]').value = data.cost ?? null;
-                        element.querySelector('[name="lines[cost][]"]').value = data.cost ?? null;
-                        element.querySelector('[name="lines[current_price][]"]').value = data.price ?? null;
-                        element.querySelector('[name="lines[price][]"]').value = data.price ?? null;
-                        element.querySelector('[name="lines[current_limit][]"]').value = data.limit ?? null;
-                        element.querySelector('[name="lines[limit][]"]').value = data.limit ?? null;
-                        element.querySelectorAll('[name^="lines"][thousand]')
-                            .forEach(ele => blur_event.fire(ele));
-                    },
-                });
-            })
-        ));
-    }
-
-    if ( multiple.multiple[0].classList.contains('payment-container') ) {
-        // capture element deletion
-        multiple.removed(paymentContainer => {
-            // unregister ordeline from POS
-            if (window.pos) window.pos.unregister( paymentContainer, 'payments[payment_amount][]' );
-        });
-        // capture element creation
-        multiple.new(paymentContainer => {
-            // register ordeline on POS
-            if (window.pos) window.pos.register( paymentContainer, 'payments[payment_amount][]' );
-        });
-    }
-
-    // extra funtionality for POS line
-    if ( multiple.type == 'order' ||  multiple.type == 'invoice' || multiple.type == 'pos' ) {
-        // used later
-        let blur_event = (new Event('blur')),
-            change_event = (new Event('change'));
-        // capture element deletion
-        multiple.removed(lineContainer => {
-            // unregister ordeline from POS
-            if (multiple.type == 'pos' && window.pos) window.pos.unregister( lineContainer );
-            // unregister ordeline from Order
-            if (multiple.type == 'order' && window.order) window.order.unregister( lineContainer );
-            // unregister ordeline from Invoice
-            if (multiple.type == 'invoice' && window.invoice) window.invoice.unregister( lineContainer );
-        });
-        // capture element creation
-        multiple.new(lineContainer => {
-            // register ordeline on POS
-            if (multiple.type == 'pos' && window.pos) window.pos.register( lineContainer );
-            // register ordeline on Order
-            if (multiple.type == 'order' && window.order) window.order.register( lineContainer );
-            // register ordeline on Invoice
-            if (multiple.type == 'invoice' && window.invoice) window.invoice.register( lineContainer );
-            // get fields with thousand plugin
-            let thousands = lineContainer.querySelectorAll('[name^="lines"][thousand]');
-            //
-            lineContainer.querySelectorAll('select')
-                // capture change
-                .forEach(select => select.addEventListener('change', e => {
-                    // ignore if select doesnt have form (deleted line)
-                    if (select.form === null) return;
-                    // build data for the request
-                    let data = { _token: document.querySelector('[name="csrf-token"]').getAttribute('content') }, option;
-                    // check if no warehouse was selected
-                    if ((option = lineContainer.querySelector('[name="lines[product_id][]"]').selectedOptions[0]).value) data.product = option.value;
-                    if ((option = lineContainer.querySelector('[name="lines[variant_id][]"]').selectedOptions[0]).value) data.variant = option.value;
-                    if ((option = select.form.querySelector('[name="currency_id"]').selectedOptions[0]).value) data.currency = option.value;
-                    // ignore if no product
-                    if (!data.product) return;
-                    // request current price quantity
-                    $.ajax({
-                        method: 'POST',
-                        url: '/orders/price',
-                        data: data,
-                        // update current price for product+variant on locator
-                        success: data => {
-                            lineContainer.querySelector('[name="lines[price][]"]').value = data.price ?? null;
-                            let quantity = lineContainer.querySelector('[name="lines[quantity][]"]');
-                            quantity.value = !data.price || quantity.value.length > 0 ? quantity.value : 1;
-                            change_event.fire(quantity);
-                        },
-                    });
-                }));
-            // capture change on price and quantity
-            lineContainer.querySelectorAll('[name="lines[price][]"],[name="lines[quantity][]"]')
-                // capture change on input
-                .forEach(input => input.addEventListener('change', e => {
-                    // get fields
-                    let price = lineContainer.querySelector('[name="lines[price][]"]'),
-                        quantity = lineContainer.querySelector('[name="lines[quantity][]"]'),
-                        total = lineContainer.querySelector('[name="lines[total][]"]');
-
-                    // update total value
-                    total.value = (
-                        // convert price to integer without decimals
-                        parseInt(price.value.replace(/[^0-9\.]/g,'') * Math.pow(10, price.dataset.decimals))
-                        // multiply for quantity
-                        * parseFloat(quantity.value)
-                    // divide total for currency decimals
-                    ) / Math.pow(10, price.dataset.decimals);
-
-                    // fire thousands plugin formatter
-                    thousands.forEach(thousand => blur_event.fire(thousand));
-                    // fire total change
-                    change_event.fire( total );
-                })
-            );
-            // get currency selector
-            document.querySelector('[name="currency_id"]')
-                // capture currency change
-                .addEventListener('change', e => {
-                    // fire change on lines
-                    change_event.fire( lineContainer.querySelector('select:first-child') );
-                });
-        });
-    }
+    // capture element deletion
+    multiple.removed(lineContainer =>
+        // register line deletion
+        Application.instance(multiple.type) && Application.instance(multiple.type).unregister( lineContainer ));
+    // capture element creation
+    multiple.new(lineContainer => {
+        // register line creation
+        if (Application.instance(multiple.type)) Application.instance(multiple.type).register( lineContainer );
+    });
 });
 
 //
@@ -400,7 +253,7 @@ const changeEvent = new Event('change');
 allThings.forEach(checkbox => changeEvent.fire(checkbox));
 
 //
-document.querySelectorAll('[type=submit]').forEach(button => {
+document.querySelectorAll('[type=submit][formaction-append]').forEach(button => {
     button.addEventListener('click', e => {
         // get form original action
         let url = new URL(button.form.action);
