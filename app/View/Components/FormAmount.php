@@ -18,7 +18,7 @@ class FormAmount extends Component {
         public ?string $currency = null,
 
         public bool $secondary = false,
-        public bool $dataKeepId = false,
+        // public bool $dataKeepId = false,
     ) {
         $this->field ??= $this->name;
     }
