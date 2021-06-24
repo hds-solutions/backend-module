@@ -182,7 +182,7 @@ class Element {
         let ids = [];
         // init plugin
         currencyElements.each((idx, ele) => {
-            if (ele.dataset.keepId != 'true') {
+            if (ele.dataset.keepId === undefined || ele.dataset.keepId == 'false') {
                 // generate a random id
                 if (ids[ele.dataset.currencyBy] === undefined) {
                     // generate new ID for currenvy
