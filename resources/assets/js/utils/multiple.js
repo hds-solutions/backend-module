@@ -1,3 +1,4 @@
+import DateRangePicker from './daterangepicker';
 import Filtered from './filtered';
 import Preview from './preview';
 import Thousand from './thousand';
@@ -88,6 +89,8 @@ export default class Multiple {
             ele.classList.remove('selectpicker-init')
             ele.classList.add('selectpicker');
         });
+        // init datetimepicker
+        element.element.get(0).querySelectorAll('[daterangepicker]').forEach(element => new DateRangePicker(element));
         // init plugins on element
         element.filtereds();
         element.previews();
@@ -134,7 +137,7 @@ class Element {
             // get filtered by element
             let filteredBy = this.element.find( ele.dataset.filteredBy );
             // check if we need to ignore
-            if (ele.dataset.filteredKeepId != 'true') {
+            if (ele.dataset.filteredKeepId === undefined || ele.dataset.filteredKeepId == 'false') {
                 // generate a random id
                 let id = this._random();
                 // put random id on target element
