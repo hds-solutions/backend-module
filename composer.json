@@ -12,6 +12,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0",
+        "ajcastro/eager-load-pivot-relations": "^0.2",
         "hds-solutions/laravel-modules": "dev-develop",
         "spatie/laravel-permission": "^4.0",
         "yajra/laravel-datatables": "^1.5"
