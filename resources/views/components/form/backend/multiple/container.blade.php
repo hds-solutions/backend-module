@@ -2,7 +2,7 @@
 
     @include($contentsView, [
         $valuesAs ?? $name  => $values,
-        $extraAs ?? $name   => $extra,
+        $extraAs ?? 'extra' => $extra ?? null,
         'selected'          => $selected,
         'old'               => $old,
     ])
