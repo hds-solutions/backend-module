@@ -2,6 +2,8 @@
 
 namespace HDSSolutions\Finpar\Models\Base;
 
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+
 use HDSSolutions\Finpar\Traits\HasAfterSave;
 use HDSSolutions\Finpar\Traits\HasValidationRules;
 use HDSSolutions\Finpar\Traits\Sortable;
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 // abstract class Model extends \HDSSolutions\Laravel\DynamoDB\Eloquent\Model {
 abstract class Model extends \Illuminate\Database\Eloquent\Model {
+    use EagerLoadPivotTrait;
+
     use HasValidationRules;
     use HasAfterSave;
     use SoftDeletes;
