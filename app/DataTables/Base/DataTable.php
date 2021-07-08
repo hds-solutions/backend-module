@@ -47,8 +47,10 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
 
     public final function query():Builder {
         // return new query for current eloquent model
-        $query = (new $this->resource)->newQuery();
-        // append with to query builder
+        $query = ($resource = new $this->resource)->newQuery()
+            // select only resource table data (custom joins breaks data)
+            ->select("{$resource->getTable()}.*");
+        // append with's to query builder
         if (count($this->with) > 0) $query->with( $this->with );
         // return query
         return $query;
