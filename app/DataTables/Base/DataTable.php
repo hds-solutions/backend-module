@@ -16,6 +16,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
 
     protected array $orderBy = [];
 
+    private array $filters = [];
+
     public function __construct(
         protected string $resource,
         protected string $route,
@@ -24,6 +26,10 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         if (request()->has('order'))
             // prepend request order columns before default order
             $this->orderBy = $this->getRequestOrder() + $this->orderBy;
+        // check if request has filters
+        if (request()->has('filters'))
+            // save filters
+            $this->filters = request('filters');
     }
 
     public final function dataTable($query) {
@@ -40,6 +46,21 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             // register custom search method for column
             $datatable->filterColumn($column['name'], fn($query, $value) => $this->$searchMethod($query, $value));
         }
+        // custom filters
+        $datatable->filter(function($query) {
+            // foreach filters
+            foreach ($this->filters as $filter => $value) {
+                // get filter method name for current filter
+                $filterMethod = $this->filterMethod( $filter );
+                // check if method exists
+                if (method_exists($this, $filterMethod))
+                    // execure custom method and return
+                    $query = $this->$filterMethod($query, $value);
+            }
+            // return filtered query
+            return $query;
+        // register global filtering
+        }, true);
 
         // return configured datatable
         return $datatable;
@@ -63,7 +84,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             ->autoWidth(false)
             ->addTableClass('table-bordered table-sm table-hover')
             ->columns( $this->getColumns() )
-            ->ajax( $this->route )
+            ->minifiedAjax( $this->route )
             ->searchDelay(150);
 
         // load registered columns
@@ -131,6 +152,11 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         return $this->searchDocumentStatus($query, $value);
     }
 
+    protected final function filterDocumentStatus(Builder $query, $status):Builder {
+        // filter only with document status
+        return $query->where('document_status', $status);
+    }
+
     private function getRequestOrder():array {
         // get registered columns
         $columns = $this->getColumns();
@@ -190,6 +216,11 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
     private function searchMethod(string $columnName):string {
         // return method name for ordering
         return $this->columnMethod($columnName, 'search');
+    }
+
+    private function filterMethod(string $columnName):string {
+        // return method name for ordering
+        return $this->columnMethod($columnName, 'filter');
     }
 
 }

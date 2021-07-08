@@ -97,8 +97,12 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
     });
     // capture draw callback to register events
     config.drawCallback = e => container.events();
+    // get filters form
+    const filters = document.querySelector('#filters form');
+    // add filters from form to ajax request
+    if (filters) config.ajax.data = data => ({...data, ...getFormValues( filters, false ) });
     // init datatable
-    $(table).DataTable(config);
+    const datatable = $(table).DataTable(config);
     // find selects to apply styling
     document.querySelectorAll('#'+table.id+'_wrapper select').forEach(select => {
         // set class
@@ -106,4 +110,78 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
         // init select picker
         $(select).selectpicker();
     });
+    // capture form submit
+    if (filters) filters.addEventListener('submit', e => { e.preventDefault();
+        // execute ajax to refresh data
+        datatable.ajax.reload();
+    });
+    if (filters) filters.addEventListener('reset', e => {
+        // set all form values to empty
+        Array.from(filters.elements).forEach(filter => {
+            // ignore if isn't a filter field
+            if (!filter.name.match(/^filter/)) return;
+            // reset filter value
+            filter.value = null;
+            // reset selected value if is a select
+            if (filter.type.match(/^select/)) {
+                // reset selected options
+                Array.from(filter.options).forEach(option => option.removeAttribute('selected'));
+                // fire change if selectpicker
+                if (filter.classList.contains('selectpicker')) $(filter).selectpicker('refresh');
+            }
+        });
+        // execite ajax to refresh data
+        datatable.ajax.reload();
+    });
 });
+
+
+/**
+ * Get the values from a form
+ * @param formId ( ID without the # )
+ * @returns {object}
+ */
+function getFormValues( form, withempty = true ) {
+    let postData = {};
+    let formData = new FormData( form );
+
+    for (const value of formData.entries()) {
+        let container = postData;
+        let key = value[0];
+        // Check for any arrays
+        let arrayKeys = key.match( /\[[\w\-]*\]/g );
+
+        if (arrayKeys !== null) {
+            // prepend the first key to the list
+            arrayKeys.unshift( key.substr( 0, key.search( /\[/ ) ) );
+            for ( let i = 0, count = arrayKeys.length, lastRun = count - 1; i < count; i++ ) {
+                let _key = arrayKeys[i];
+                _key = _key.replace( "[", '' ).replace( "]", '' ); // Remove the brackets []
+                if ( _key === '' ) {
+                    if ( ! Array.isArray( container ) )
+                        container = [];
+
+                    _key = container.length;
+                }
+
+                // Create an object for the key if it doesn't exist
+                if ( ! (_key in container) ) {
+                    if ( i !== lastRun && arrayKeys[i + 1] === '[]' )
+                        container[_key] = [];
+                    else
+                        container[_key] = {};
+                }
+
+                // Until we're the last item, swap container with it's child
+                if ( i !== lastRun )
+                    container = container[_key];
+
+                key = _key;
+            }
+        }
+        // finally assign the value
+        if (value[1].length || withempty) container[key] = value[1];
+    }
+
+    return postData;
+}
