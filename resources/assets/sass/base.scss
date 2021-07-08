@@ -111,3 +111,7 @@ label.align-top {
 [data-multiple] > .form-row:last-child > div {
     margin-bottom: 0 !important;
 }
+
+.card-header > .row:nth-child(2) .border-top.mt-2 {
+    margin-top: 0.75rem !important;
+}
