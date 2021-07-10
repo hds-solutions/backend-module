@@ -15,6 +15,7 @@
         "ajcastro/eager-load-pivot-relations": "^0.2",
         "hds-solutions/laravel-modules": "dev-develop",
         "spatie/laravel-permission": "^4.0",
+        "staudenmeir/eloquent-has-many-deep": "^1.13",
         "yajra/laravel-datatables": "^1.5"
     },
     "autoload": {
