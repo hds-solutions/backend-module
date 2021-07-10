@@ -67,10 +67,8 @@ final class DocumentEngine implements Document {
             return $this->rejectIt();
         // check if action is completeIt
         if ($action == Document::ACTION_Complete) {
-            // check if document needs to be prepared (current status: Draft or Invalid)
-            if ($this->document->isDrafted() || $this->document->isInvalid())
-                // prepareIt
-                if ($this->prepareIt() !== Document::STATUS_InProgress) return false;
+            // always run prepareIt() for validations
+            if ($this->prepareIt() !== Document::STATUS_InProgress) return false;
             // execute completeIt, new status must be InProgress or Completed
             return in_array($this->completeIt(), [ Document::STATUS_InProgress, Document::STATUS_Completed ]);
         }
