@@ -33,10 +33,15 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
     }
 
     public final function dataTable($query) {
-        // get datatable class for current eloquent model
-        $datatable = datatables()->eloquent( $this->joins($query) )
+        // add custom JOINs
+        $query = $this->joins($query);
+        // add custom global filters
+        $query = $this->filters($query);
+        // get datatable class for current eloquent model query
+        $datatable = datatables()->eloquent( $query )
             // redirect order by
             ->order(fn(Builder $query) => $this->order($query));
+
         // foreach registered columns
         foreach ($this->getColumns() as $column) {
             // get search method name for current column
@@ -46,6 +51,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             // register custom search method for column
             $datatable->filterColumn($column['name'], fn($query, $value) => $this->$searchMethod($query, $value));
         }
+
         // custom filters
         $datatable->filter(function($query) {
             // foreach filters
@@ -112,6 +118,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
     protected abstract function getColumns();
 
     protected function joins(Builder $query):Builder { return $query; }
+
+    protected function filters(Builder $query):Builder { return $query; }
 
     protected final function filename() { return class_basename( $this->resource ).'_' . date('YmdHis'); }
 
