@@ -119,7 +119,7 @@ export function parse(view, object) {
             view = view.replace('#'+key+'#', value);
         }
     }
-    // TODO
+    // TODO:
     return view;
 }
 

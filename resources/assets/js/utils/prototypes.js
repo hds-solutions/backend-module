@@ -30,8 +30,7 @@ if (typeof Element.prototype.empty === 'undefined') {
 |
 | Date.format()
 |   Returns a string of date in the specified format.
-|   Valid options are:
-|     TODO:
+|   Valid options are: (see PHP datetime format)
 |
 */
 if (typeof Date.reset === 'undefined') {
