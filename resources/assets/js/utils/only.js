@@ -20,7 +20,7 @@ export default class Only {
 
     _parse() {
         // foreach fields
-        this.element.dataset.only.split('&').forEach((fieldValuePair, idx) => {
+        this.element.dataset.only.split('&').forEach(fieldValuePair => {
             // create container
             let only = {
                 field: null,

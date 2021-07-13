@@ -59,10 +59,12 @@
         @endforeach
 
         {{-- add empty for adding new --}}
-        @include('backend::components.form.backend.multiple.container', [
-            'selected'  => null,
-            'old'       => null,
-        ])
+        @if ($attributes['editable'] !== 'false')
+            @include('backend::components.form.backend.multiple.container', [
+                'selected'  => null,
+                'old'       => null,
+            ])
+        @endif
     </div>
 
     @include('backend::components.form.helper')

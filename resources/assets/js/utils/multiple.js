@@ -8,7 +8,7 @@ import Foreign from './foreign';
 
 export default class Multiple {
     constructor(container) {
-        //
+        // events
         this._fn = {
             new: element => this._events.new.push( element ),
             removed: element => {},
@@ -16,19 +16,24 @@ export default class Multiple {
         this._events = {
             new: [],
         };
-        //
+        // save main container
         this.container = $(container);
+        // get container type
         this.type = container.dataset.type ?? undefined;
-        this.multiple = this.container.find(this.container.data('multiple')+this.container.data('template'));
-        // find fields with selectpicker plugin
-        this.multiple.find('.selectpicker').each((idx, ele) => {
-            // reset plugin state
-            $(ele).selectpicker('destroy');
-            // keep classList
-            ele.classList.add('selectpicker-init');
-        });
-        // remove template
-        this.multiple.remove();
+        // get container template
+        this.template = this.container.find(this.container.data('multiple')+this.container.data('template'));
+        // check if container template exists
+        if (this.template.length) {
+            // find fields with selectpicker plugin
+            this.template.find('.selectpicker').each((idx, ele) => {
+                // reset plugin state
+                $(ele).selectpicker('destroy');
+                // keep classList
+                ele.classList.add('selectpicker-init');
+            });
+            // remove template
+            this.template.remove();
+        }
         // init existing
         this.init();
         // append new
@@ -58,8 +63,10 @@ export default class Multiple {
             // return object to allow chaining
             return this;
         }
+        // check if container template exists
+        if (!this.template.length) return;
         // clone elmeent
-        let element = new Element( this, this.multiple.clone() );
+        let element = new Element( this, this.template.clone() );
         // append cloned element to container
         this.container.append(element.element);
         // init plugins
