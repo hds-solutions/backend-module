@@ -5,6 +5,7 @@ export default class Filtered {
     constructor(ele, prevent = true) {
         //
         this.element = ele;
+        this.disabled = ele.disabled;
         if (this.element.dataset.filteredInit === 'false' && prevent) return false;
         //
         this.parent = document.querySelector(ele.dataset.filteredBy);
@@ -39,7 +40,7 @@ export default class Filtered {
             // reset selection
             if (enabled == 0 || this.oldValue != this.parent.value) this.element.value = '';
             // disable element if no option was enabled
-            if (enabled == 0 || canAddNew && this.parent.value == '') this.element.setAttribute('disabled', true);
+            if (enabled == 0 || canAddNew && this.parent.value == '' || this.disabled) this.element.setAttribute('disabled', true);
             // enable element
             else this.element.removeAttribute('disabled');
             // update value
