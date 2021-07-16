@@ -106,6 +106,9 @@ import GMap from './utils/gmap';
 //     });
 // });
 
+// disable select if is readonly
+$('select.selectpicker[readonly]').on('shown.bs.select', e => $(e.target).selectpicker('toggle'));
+
 $('#gmap-pin').each((idx, ele) => {
     // get fields
     let latitude = $($(ele).data('latitude')),

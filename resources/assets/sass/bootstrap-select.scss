@@ -40,6 +40,12 @@
     color: #e74a3b;
 }
 
+.bootstrap-select .dropdown-toggle:not(:disabled):not(.disabled).bs-invalid,
+.form-control:invalid {
+    border-color: #e74a3b;
+    color: #e74a3b;
+}
+
 .daterangepicker .bootstrap-select {
     width: unset !important;
 }
@@ -54,4 +60,16 @@
 
 .daterangepicker .bootstrap-select:last-child {
     margin-left: 0.15rem;
+}
+
+// select[readonly]:-moz-read-only, select[readonly]:read-only,
+// select[readonly]:-moz-read-only + button[data-toggle="dropdown"],
+// select[readonly]:read-only + button[data-toggle="dropdown"] {
+//     // pointer-events: none;
+// }
+
+select[readonly]:-moz-read-only + button[data-toggle="dropdown"],
+select[readonly]:read-only + button[data-toggle="dropdown"] {
+    cursor: not-allowed;
+    background-color: #eaecf4 !important;
 }

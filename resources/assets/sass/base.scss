@@ -115,12 +115,3 @@ label.align-top {
 .card-header > .row:nth-child(2) .border-top.mt-2 {
     margin-top: 0.75rem !important;
 }
-
-select[readonly]:-moz-read-only {
-    /* For Firefox */
-    pointer-events: none;
-}
-
-select[readonly]:read-only {
-    pointer-events: none;
-}
