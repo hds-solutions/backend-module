@@ -49,10 +49,8 @@ export default class Filtered {
             if (this.element.classList.contains('selectpicker'))
                 // fire refresh event
                 $(this.element).selectpicker('refresh');
-            // link with preview
-            if (this.element.dataset.preview !== undefined)
-                // fire change event
-                (new Event('change')).fire(this.element);
+            // fire change event
+            (new Event('change')).fire(this.element);
         });
         // fire change event on parent
         (new Event('change')).fire(this.parent);

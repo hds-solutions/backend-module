@@ -19,7 +19,7 @@ abstract class X_Company extends Base\Model {
 
     public function getIsCurrentAttribute():bool {
         // return if this company is the current in use
-        return $this->id == backend()->company()->getKey();
+        return $this->id == backend()->company()?->getKey();
     }
 
 }

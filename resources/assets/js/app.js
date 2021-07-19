@@ -271,3 +271,31 @@ document.querySelectorAll('[type=submit][formaction-append]').forEach(button => 
         button.form.action = url.href;
     });
 });
+
+$('#company-selector').on('show.bs.modal', e => {
+    // destination modal
+    const modal = e.target;
+    // button that triggered the modal
+    const button = e.relatedTarget;
+    // extract info from data-* attributes
+    const company = button.dataset.company
+    // destination field
+    const field = modal.querySelector('[name="company_id"]');
+
+    // replace field value
+    for (let option of field.options) {
+        // unselect by default
+        option.removeAttribute('selected');
+        // check if matches company
+        if (option.value === company)
+            // select option
+            option.setAttribute('selected', true);
+    }
+
+    // link with select picket plugin
+    if (field.classList.contains('selectpicker'))
+        // fire refresh event
+        $(field).selectpicker('refresh');
+    // fire change event on original target
+    (new Event('change')).fire(field);
+});

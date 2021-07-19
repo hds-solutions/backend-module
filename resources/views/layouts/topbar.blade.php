@@ -8,7 +8,7 @@
         <!-- Nav Item - Companies selector -->
         @include('backend::layouts.topbar.companies')
         <!-- Nav Item - Currencies selector -->
-        @include('backend::layouts.topbar.currencies')
+        {{-- @include('backend::layouts.topbar.currencies') --}}
     </ul>
 
     <!-- Topbar Search -->

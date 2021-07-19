@@ -1,12 +1,14 @@
 <?php return [
 
-    'name'              => [
+    'nav'   => 'Company',
+
+    'name'      => [
         'Name',
         '_' => 'Name',
         '?' => 'Name',
     ],
 
-    'logo_id'           => [
+    'logo_id'   => [
         'Logo',
         '_' => 'Logo',
         '?' => 'Logo',

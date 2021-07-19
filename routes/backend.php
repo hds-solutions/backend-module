@@ -33,6 +33,8 @@ Route::group([
     // Backend home
     Route::get('/',             [ BackendController::class, 'index' ])      ->name('backend');
     Route::get('dashboard',     [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
+    Route::get('environment',   [ BackendController::class, 'environment' ])->name('backend.env');
+    Route::post('environment',  [ BackendController::class, 'environment' ]);
 
     Route::resource('roles',        RoleController::class,      $name_prefix)
         ->parameters([ 'roles' => 'resource' ])

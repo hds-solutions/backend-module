@@ -18,11 +18,8 @@ trait BelongsToCompany {
     public static function bootBelongsToCompany() {
         // regiter global scope
         self::addGlobalScope(new CompanyScope);
-        // capture saving event
-        self::saving(function(Model $model) {
-            // set company value
-            $model->company()->associate( backend()->company() );
-        });
+        // set company value when saving model
+        self::saving(fn(Model $model) => $model->company()->associate( backend()->company() ));
     }
 
     public function company() {

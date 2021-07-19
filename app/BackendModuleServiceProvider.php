@@ -14,7 +14,6 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
     ];
 
     protected array $middlewares = [
-        \HDSSolutions\Finpar\Http\Middleware\CompanySelector::class,
         \HDSSolutions\Finpar\Http\Middleware\BackendMenu::class,
         \HDSSolutions\Finpar\Http\Middleware\HideDebugBar::class,
     ];

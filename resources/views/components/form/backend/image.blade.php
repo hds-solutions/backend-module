@@ -10,10 +10,10 @@
                 data-none-selected-text="{{ $placeholder }}"
                 placeholder="{{ $placeholder }}">
 
-                {{-- @if (!$multiple)
+                @if (!$multiple)
                 <option value="" selected
-                    @if ($required) disabled hidden @endif>{{ $label }}</option>
-                @endif --}}
+                    @if ($required) disabled hidden @endif>{{ $placeholder }}</option>
+                @endif
 
                 @foreach($images as $image)
                 <option value="{{ $image->id }}" url="{{ $image->url }}"

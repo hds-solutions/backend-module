@@ -1,14 +1,13 @@
 @if (backend()->currencies()->count() > 0)
-<li class="nav-item dropdown no-arrow mx-1">
-
+<li class="nav-item dropdown no-arrow {{ backend()->currency() ? 'mr-3' : '' }}">
     <a href="#set-currency" type="button" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         class="nav-link dropdown-toggle text-dark px-1" id="currenciesDropdown">
-        <i class="fas fa-coins fa-fw text-primary"></i>
+        <i class="fas fa-coins fa-fw fa-2x text-{{ backend()->currency() ? 'primary' : 'secondary' }}"></i>
         {{-- <span class="badge badge-danger badge-counter">7</span> --}}
 
         {{-- current currency --}}
-        <h5 class="m-0 ml-2">{{ backend()->currency()->name }}</h5>
+        <h5 class="m-0 ml-2">{{ backend()->currency()?->name }}</h5>
     </a>
 
     <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="currenciesDropdown">

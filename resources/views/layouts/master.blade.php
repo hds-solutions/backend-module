@@ -59,6 +59,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    {{-- confirm modal --}}
-    @include('backend::layouts.modal-confirmation')
+    {{-- modals --}}
+    @include('backend::layouts.modals')
 @endsection
