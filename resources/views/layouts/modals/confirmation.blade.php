@@ -11,8 +11,8 @@
                 <p class="m-0 text-dark">Confirm action?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary btn-hover-danger" id="accept">Aceptar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-secondary btn-hover-danger" id="accept">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Cancelar</button>
             </div>
         </div>
     </div>
