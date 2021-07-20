@@ -51,10 +51,13 @@
                     class="text-danger b-0 m-0 cursor-pointer"><i class="fas fa-trash"></i></label>
 
                 <button type="submit" id="delete-:resource:" class="d-none"
+                    data-modal-type="danger"
                     data-confirm="Eliminar {{ $label ?? 'el registro' }}"
                     data-text="Esta seguro de eliminar {{ $label ?? 'el registro' }}?"
+                    data-text-type="danger"
                     data-accept="Si, eliminar"
-                    data-modal-type="danger"></button>
+                    data-accept-class="btn-outline-danger btn-hover-danger"
+                    data-cancel-class="btn-danger"></button>
             </form>
             @break
 

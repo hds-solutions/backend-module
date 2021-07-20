@@ -37,8 +37,10 @@
             <button type="submit"
                 data-confirm="@lang('backend::document.rejectIt._', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])?"
                 data-text="@lang('backend::document.rejectIt.?', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])"
+                data-text-type="danger"
                 data-accept="@lang('backend::document.rejectIt.0')"
-                data-accept-class="btn-outline-secondary btn-hover-danger"
+                data-accept-class="btn-outline-danger btn-hover-danger"
+                data-cancel-class="btn-danger"
                 data-modal-type="danger"
                 class="btn btn-lg btn-outline-primary btn-hover-danger">@lang('backend::document.rejectIt.0')</button>
         </form>

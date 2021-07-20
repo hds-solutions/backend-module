@@ -56,6 +56,7 @@ class Modal {
         title: null,
         body: null,
         type: null,
+        text: null,
     };
     #buttons = {
         accept: {
@@ -82,6 +83,7 @@ class Modal {
         this.#modal.title = this.#element.querySelector('.modal-title').textContent;
         this.#modal.body = this.#element.querySelector('.modal-body>p').textContent;
         this.#modal.type = Array.from(this.#element.querySelector('.modal-header').classList.values()).filter(class_name => class_name.match(/^bg-/)).shift().replace('bg-', '');
+        this.#modal.text = Array.from(this.#element.querySelector('.modal-body>p').classList.values()).filter(class_name => class_name.match(/^text-/)).shift().replace('text-', '');
         // get accept and cancel button
         [ 'accept', 'cancel' ].forEach(button => {
             // register button element
@@ -106,6 +108,7 @@ class Modal {
                 title: this.#modal.title,
                 body: this.#modal.body,
                 type: this.#modal.type,
+                text: this.#modal.text,
                 accept: {
                     text: this.#buttons.accept.text,
                     classes: this.#buttons.accept.classes,
@@ -121,9 +124,6 @@ class Modal {
     }
 
     configure(settings, reset = false) {
-        // configure modal with button settings
-        this.#element.querySelector('.modal-title').textContent = settings.title ?? this.#modal.title;
-        this.#element.querySelector('.modal-body>p').textContent = settings.body ?? this.#modal.body;
         // reset modal type
         Array.from(this.#element.querySelector('.modal-header').classList.values()).forEach(class_name => {
             // ignore class if isn't background
@@ -133,6 +133,17 @@ class Modal {
         });
         // add default bg class
         this.#element.querySelector('.modal-header').classList.add('bg-' + (settings.type ?? this.#modal.type));
+        // configure modal with button settings
+        this.#element.querySelector('.modal-title').textContent = settings.title ?? this.#modal.title;
+        this.#element.querySelector('.modal-body>p').textContent = settings.body ?? this.#modal.body;
+        // reset text type
+        Array.from(this.#element.querySelector('.modal-body>p').classList.values()).forEach(class_name => {
+            // ignore class if isn't background
+            if (!class_name.match(/^text-/)) return;
+            // remove bg class
+            this.#element.querySelector('.modal-body>p').classList.remove(class_name);
+        });
+        this.#element.querySelector('.modal-body>p').classList.add('text-' + (settings.text ?? this.#modal.text));
 
         // configure buttons
         [ 'accept', 'cancel' ].forEach(button => {
@@ -210,6 +221,7 @@ class Button {
         title: null,
         body: null,
         type: null,
+        text: null,
         accept: {
             text: null,
             classes: [],
@@ -260,6 +272,7 @@ class Button {
         this.settings.title = this.#element.dataset.confirm;
         this.settings.body = this.#element.dataset.text ?? this.settings.body;
         this.settings.type = this.#element.dataset.modalType ?? this.settings.type;
+        this.settings.text = this.#element.dataset.textType ?? this.settings.text;
         // accept button
         this.settings.accept.text = this.#element.dataset.accept ?? this.settings.accept.text;
         if (this.#element.dataset.acceptClass) this.settings.accept.classes = this.#element.dataset.acceptClass.split(' ').filter(class_name => class_name.length > 0);

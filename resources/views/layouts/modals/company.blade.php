@@ -4,7 +4,7 @@
             @csrf
 
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="company-selector-title">Modal title</h5>
+                <h5 class="modal-title" id="company-selector-title">Selector de compañía</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,8 +61,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-outline-primary btn-hover-success">Cambiar</button>
+                <button type="reset" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             </div>
 
         </form>
