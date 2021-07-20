@@ -7,8 +7,9 @@
 
         <div class="card-header p-2 {{ match($level ?? 1) {
             1 => 'bg-dark text-white',
-            2 => 'bg-secondary text-white',
-            default => 'bg-light',
+            2 => 'bg-gray-600 text-white',
+            3 => 'bg-gray-400 text-dark',
+            default => 'bg-gray-100',
         } }}">
             <div class="input-group">
                 <div class="input-group-prepend mr-2">
