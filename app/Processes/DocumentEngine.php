@@ -14,7 +14,6 @@ final class DocumentEngine implements Document {
     private static $constants = [];
 
     private Document $document;
-    private string $document_status;
 
     public function __construct(Document $document) {
         // check if document is persisted
@@ -23,8 +22,6 @@ final class DocumentEngine implements Document {
         // save a fresh copy of the document
         $this->document = $document->refresh();
         $this->logger('__construct');
-        // save current document status
-        $this->document_status = $this->document->document_status;
     }
 
     public static function __(string $status, string $type = 'status', $translate = true):string {
@@ -67,8 +64,12 @@ final class DocumentEngine implements Document {
             return $this->rejectIt();
         // check if action is completeIt
         if ($action == Document::ACTION_Complete) {
+            // save approved status
+            $approved = $this->document->isApproved();
             // always run prepareIt() for validations
             if ($this->prepareIt() !== Document::STATUS_InProgress) return false;
+            // check if was already approved
+            if ($approved) $this->document->document_status = Document::STATUS_Approved;
             // execute completeIt, new status must be InProgress or Completed
             return in_array($this->completeIt(), [ Document::STATUS_InProgress, Document::STATUS_Completed ]);
         }
