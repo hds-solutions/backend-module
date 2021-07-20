@@ -299,3 +299,8 @@ $('#company-selector').on('show.bs.modal', e => {
     // fire change event on original target
     (new Event('change')).fire(field);
 });
+
+document.querySelectorAll('form').forEach(form => {
+    const submit_btn = form.querySelector('[type="submit"]');
+    if (submit_btn) submit_btn.addEventListener('click', e => form.classList.add('validated'));
+});
