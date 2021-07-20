@@ -35,7 +35,7 @@ document.querySelectorAll('[thousand]').forEach(element => new Thousand(element)
 // confirmation modal
 import Confirmation from './utils/confirm';
 // link buttons to confirmation modal
-document.querySelectorAll('[data-confirm]').forEach(button => Confirmation.button(button));
+document.querySelectorAll('[data-confirm]').forEach(button => Confirmation.register(button));
 
 // previews
 import Preview from './utils/preview';

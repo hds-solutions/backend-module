@@ -148,7 +148,7 @@ export class Container {
             // enable tooltips
             $(container).find('[data-toggle="tooltip"]').tooltip();
             // capture confirm events
-            container.querySelectorAll('[data-confirm]').forEach(button => Confirmation.button(button));
+            container.querySelectorAll('[data-confirm]').forEach(button => Confirmation.register(button));
             // capture visibility events
             container.querySelectorAll('[data-visibility]').forEach(visible => new Visibility(visible));
         });
