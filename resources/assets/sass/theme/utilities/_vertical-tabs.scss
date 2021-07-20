@@ -19,7 +19,7 @@
     }
 
     &.tabs-left {
-        border-right: 1px solid #ddd;
+        border-right: 1px solid $gray-300;
 
         &>.nav-item {
             margin-right: -1px;
@@ -31,7 +31,7 @@
                 &.active,
                 &.active:hover,
                 &.active:focus {
-                    border-bottom-color: #ddd;
+                    border-bottom-color: $gray-300;
                     border-right-color: transparent;
                 }
             }
@@ -40,7 +40,7 @@
     }
 
     &.tabs-right {
-        border-left: 1px solid #ddd;
+        border-left: 1px solid $gray-300;
 
         &>.nav-item {
             margin-left: -1px;
@@ -52,7 +52,7 @@
                 &.active,
                 &.active:hover,
                 &.active:focus {
-                    border-bottom-color: #ddd;
+                    border-bottom-color: $gray-300;
                     border-left-color: transparent;
                 }
             }
@@ -72,14 +72,14 @@
 
             &>.nav-link {
                 text-align: center;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid $gray-300;
                 border-radius: 0.35rem 0.35rem 0 0;
 
                 &.active,
                 &:hover,
                 &:focus {
-                    border-right-color: #ddd !important;
-                    border-left-color: #ddd !important;
+                    border-right-color: $gray-300 !important;
+                    border-left-color: $gray-300 !important;
                     border-bottom-color: transparent !important;
                 }
             }

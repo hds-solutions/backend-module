@@ -1,22 +1,11 @@
 .bootstrap-select .btn {
-    background-color: unset;
-    border: 1px solid #d1d3e2;
-}
+    border: 1px solid $input-border-color;
 
-.bootstrap-select:focus {
-    color: #6e707e;
-    background-color: #fff;
-    border-color: #bac8f3;
-    outline: 0;
-    -webkit-box-shadow: 0 0 0 .2rem rgba(78,115,223,.25);
-    box-shadow: 0 0 0 .2rem rgba(78,115,223,.25);
+    &:focus {
+        border-color: $input-focus-border-color;
+        box-shadow: $input-focus-box-shadow;
+    }
 }
-
-// .bootstrap-select .btn:not(:disabled):not(.disabled).active,
-// .bootstrap-select .btn:not(:disabled):not(.disabled):active,
-// .show > .btn.dropdown-toggle {
-//     background-color: unset;
-// }
 
 .bootstrap-select > select {
     left: unset !important;
@@ -32,18 +21,8 @@
 
 .bootstrap-select .dropdown-toggle.disabled,
 .bootstrap-select .dropdown-toggle:disabled {
-    background: #eaecf4;
+    background: $gray-200;
     opacity: 1;
-}
-
-.bootstrap-select.is-invalid > .dropdown-toggle.bs-placeholder {
-    color: #e74a3b;
-}
-
-.bootstrap-select .dropdown-toggle:not(:disabled):not(.disabled).bs-invalid,
-.form-control:invalid {
-    border-color: #e74a3b;
-    color: #e74a3b;
 }
 
 .daterangepicker .bootstrap-select {
@@ -71,5 +50,5 @@
 select[readonly]:-moz-read-only + button[data-toggle="dropdown"],
 select[readonly]:read-only + button[data-toggle="dropdown"] {
     cursor: not-allowed;
-    background-color: #eaecf4 !important;
+    background-color: $gray-200 !important;
 }

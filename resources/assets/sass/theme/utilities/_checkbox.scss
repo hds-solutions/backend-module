@@ -20,7 +20,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: $gray-500;
     -webkit-transition: 0.25s;
     transition: 0.25s;
 }
@@ -37,31 +37,52 @@
     transition: 0.25s;
 }
 
-input.default:checked + .slider {
-    background-color: #444;
+input:checked + .slider {
+    background-color: $dark;
 }
 input.primary:checked + .slider {
-    background-color: #2196F3;
+    background-color: $primary;
+}
+input.secondary:checked + .slider {
+    background-color: $secondary;
 }
 input.success:checked + .slider {
-    background-color: #8bc34a;
+    background-color: $success;
 }
 input.info:checked + .slider {
-    background-color: #3de0f5;
+    background-color: $info;
 }
 input.warning:checked + .slider {
-    background-color: #FFC107;
+    background-color: $warning;
 }
 input.danger:checked + .slider {
-    background-color: #f44336;
+    background-color: $danger;
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px $secondary;
 }
 
 input:indeterminate:not(:checked) + .slider {
-    background-color: #acb !important;
+    background-color: lighten(desaturate($dark, 40%), 30%) !important;
+}
+input:indeterminate:not(:checked).primary + .slider {
+    background-color: lighten(desaturate($primary, 40%), 30%) !important;
+}
+input:indeterminate:not(:checked).secondary + .slider {
+    background-color: lighten(desaturate($secondary, 40%), 30%) !important;
+}
+input:indeterminate:not(:checked).success + .slider {
+    background-color: lighten(desaturate($success, 40%), 30%) !important;
+}
+input:indeterminate:not(:checked).info + .slider {
+    background-color: lighten(desaturate($info, 40%), 20%) !important;
+}
+input:indeterminate:not(:checked).warning + .slider {
+    background-color: lighten(desaturate($warning, 40%), 20%) !important;
+}
+input:indeterminate:not(:checked).danger + .slider {
+    background-color: lighten(desaturate($danger, 40%), 20%) !important;
 }
 
 input:indeterminate:not(:checked) + .slider:before {

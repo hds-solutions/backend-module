@@ -1,0 +1,36 @@
+.table-bordered thead {
+    background-color: $light;
+
+    & th,
+    & td {
+        border-bottom: none;
+        border-top: none;
+    }
+}
+
+.dataTables_wrapper {
+    .dataTables_length {
+        padding-top: 3px;
+    }
+
+    .dataTables_filter {
+        padding-top: 3px;
+        padding-right: 3px;
+    }
+
+    :not(.input-group) > .dropdown.bootstrap-select {
+        width: 80px;
+    }
+
+    .page-item {
+        .page-link:hover {
+            background-color: $secondary;
+            border-color: $secondary;
+        }
+
+        &.disabled .page-link {
+            color: $gray-400;
+        }
+    }
+
+}

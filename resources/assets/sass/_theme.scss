@@ -1,0 +1,17 @@
+// load custom theme variables (Overrides default SBAdmin2 variables)
+@import 'theme/variables';
+
+// load SBAdmin2 default theme
+@import '~startbootstrap-sb-admin-2/scss/sb-admin-2';
+
+// local utilities
+@import 'theme/utilities';
+
+// theme base
+@import 'theme/base';
+@import 'theme/colors';
+@import 'theme/login';
+@import 'theme/forms';
+
+// load plugins overrides
+@import 'plugins/overrides';
