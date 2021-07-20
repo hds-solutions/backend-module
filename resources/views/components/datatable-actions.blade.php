@@ -53,7 +53,8 @@
                 <button type="submit" id="delete-:resource:" class="d-none"
                     data-confirm="Eliminar {{ $label ?? 'el registro' }}"
                     data-text="Esta seguro de eliminar {{ $label ?? 'el registro' }}?"
-                    data-accept="Si, eliminar"></button>
+                    data-accept="Si, eliminar"
+                    data-modal-type="danger"></button>
             </form>
             @break
 
