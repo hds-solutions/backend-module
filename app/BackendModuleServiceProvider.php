@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar;
+namespace HDSSolutions\Laravel;
 
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -8,55 +8,55 @@ use Illuminate\Support\Facades\Blade;
 class BackendModuleServiceProvider extends ModuleServiceProvider {
 
     protected array $globalMiddlewares = [
-        \HDSSolutions\Finpar\Http\Middleware\HttpsProtocol::class,
-        \HDSSolutions\Finpar\Http\Middleware\SetLocale::class,
-        \HDSSolutions\Finpar\Http\Middleware\SettingsLoader::class,
+        \HDSSolutions\Laravel\Http\Middleware\HttpsProtocol::class,
+        \HDSSolutions\Laravel\Http\Middleware\SetLocale::class,
+        \HDSSolutions\Laravel\Http\Middleware\SettingsLoader::class,
     ];
 
     protected array $middlewares = [
-        \HDSSolutions\Finpar\Http\Middleware\BackendMenu::class,
-        \HDSSolutions\Finpar\Http\Middleware\HideDebugBar::class,
+        \HDSSolutions\Laravel\Http\Middleware\BackendMenu::class,
+        \HDSSolutions\Laravel\Http\Middleware\HideDebugBar::class,
     ];
 
     private array $commands = [
-        \HDSSolutions\Finpar\Commands\Mix::class,
+        \HDSSolutions\Laravel\Commands\Mix::class,
     ];
 
     private array $components = [
         'form'      => [
-            \HDSSolutions\Finpar\View\Components\Row::class,
-            \HDSSolutions\Finpar\View\Components\RowGroup::class,
-            \HDSSolutions\Finpar\View\Components\InputGroup::class,
-            \HDSSolutions\Finpar\View\Components\Label::class,
-            \HDSSolutions\Finpar\View\Components\Input::class,
-            \HDSSolutions\Finpar\View\Components\TextArea::class,
-            \HDSSolutions\Finpar\View\Components\Boolean::class,
-            \HDSSolutions\Finpar\View\Components\Date::class,
-            \HDSSolutions\Finpar\View\Components\Time::class,
-            \HDSSolutions\Finpar\View\Components\Datetime::class,
-            \HDSSolutions\Finpar\View\Components\Amount::class,
-            \HDSSolutions\Finpar\View\Components\Select::class,
-            \HDSSolutions\Finpar\View\Components\Foreign::class,
-            \HDSSolutions\Finpar\View\Components\Multiple::class,
+            \HDSSolutions\Laravel\View\Components\Row::class,
+            \HDSSolutions\Laravel\View\Components\RowGroup::class,
+            \HDSSolutions\Laravel\View\Components\InputGroup::class,
+            \HDSSolutions\Laravel\View\Components\Label::class,
+            \HDSSolutions\Laravel\View\Components\Input::class,
+            \HDSSolutions\Laravel\View\Components\TextArea::class,
+            \HDSSolutions\Laravel\View\Components\Boolean::class,
+            \HDSSolutions\Laravel\View\Components\Date::class,
+            \HDSSolutions\Laravel\View\Components\Time::class,
+            \HDSSolutions\Laravel\View\Components\Datetime::class,
+            \HDSSolutions\Laravel\View\Components\Amount::class,
+            \HDSSolutions\Laravel\View\Components\Select::class,
+            \HDSSolutions\Laravel\View\Components\Foreign::class,
+            \HDSSolutions\Laravel\View\Components\Multiple::class,
         ],
         'backend'   => [
-            \HDSSolutions\Finpar\View\Components\FormText::class,
-            \HDSSolutions\Finpar\View\Components\FormNumber::class,
-            \HDSSolutions\Finpar\View\Components\FormEmail::class,
-            \HDSSolutions\Finpar\View\Components\FormDate::class,
-            \HDSSolutions\Finpar\View\Components\FormTime::class,
-            \HDSSolutions\Finpar\View\Components\FormDatetime::class,
-            \HDSSolutions\Finpar\View\Components\FormTextarea::class,
-            \HDSSolutions\Finpar\View\Components\FormSelect::class,
-            \HDSSolutions\Finpar\View\Components\FormOptions::class,
-            \HDSSolutions\Finpar\View\Components\FormBoolean::class,
-            \HDSSolutions\Finpar\View\Components\FormForeign::class,
-            \HDSSolutions\Finpar\View\Components\FormHidden::class,
-            \HDSSolutions\Finpar\View\Components\FormImage::class,
-            \HDSSolutions\Finpar\View\Components\FormAmount::class,
-            \HDSSolutions\Finpar\View\Components\FormCoords::class,
-            \HDSSolutions\Finpar\View\Components\FormMultiple::class,
-            \HDSSolutions\Finpar\View\Components\FormControls::class,
+            \HDSSolutions\Laravel\View\Components\FormText::class,
+            \HDSSolutions\Laravel\View\Components\FormNumber::class,
+            \HDSSolutions\Laravel\View\Components\FormEmail::class,
+            \HDSSolutions\Laravel\View\Components\FormDate::class,
+            \HDSSolutions\Laravel\View\Components\FormTime::class,
+            \HDSSolutions\Laravel\View\Components\FormDatetime::class,
+            \HDSSolutions\Laravel\View\Components\FormTextarea::class,
+            \HDSSolutions\Laravel\View\Components\FormSelect::class,
+            \HDSSolutions\Laravel\View\Components\FormOptions::class,
+            \HDSSolutions\Laravel\View\Components\FormBoolean::class,
+            \HDSSolutions\Laravel\View\Components\FormForeign::class,
+            \HDSSolutions\Laravel\View\Components\FormHidden::class,
+            \HDSSolutions\Laravel\View\Components\FormImage::class,
+            \HDSSolutions\Laravel\View\Components\FormAmount::class,
+            \HDSSolutions\Laravel\View\Components\FormCoords::class,
+            \HDSSolutions\Laravel\View\Components\FormMultiple::class,
+            \HDSSolutions\Laravel\View\Components\FormControls::class,
         ],
     ];
 
