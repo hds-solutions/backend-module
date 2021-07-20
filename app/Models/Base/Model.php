@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models\Base;
+namespace HDSSolutions\Laravel\Models\Base;
 
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 
-use HDSSolutions\Finpar\Traits\HasAfterSave;
-use HDSSolutions\Finpar\Traits\HasValidationRules;
-use HDSSolutions\Finpar\Traits\Sortable;
+use HDSSolutions\Laravel\Traits\HasAfterSave;
+use HDSSolutions\Laravel\Traits\HasValidationRules;
+use HDSSolutions\Laravel\Traits\Sortable;
 // use HDSSolutions\Laravel\DynamoDB\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;

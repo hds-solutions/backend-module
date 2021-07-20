@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Middleware;
+namespace HDSSolutions\Laravel\Http\Middleware;
 
 use Closure;
-use HDSSolutions\Finpar\Models\User;
+use HDSSolutions\Laravel\Models\User;
 use Illuminate\Support\Facades\Route;
 
 class BackendMenu extends Base\Menu {

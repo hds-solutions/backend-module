@@ -1,11 +1,11 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\RegionDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Region as Resource;
+use HDSSolutions\Laravel\DataTables\RegionDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Region as Resource;
 
 class RegionController extends Controller {
 

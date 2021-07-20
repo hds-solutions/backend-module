@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 abstract class X_DocumentLog extends Base\Model {
 

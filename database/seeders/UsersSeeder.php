@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Seeders;
+namespace HDSSolutions\Laravel\Seeders;
 
-use HDSSolutions\Finpar\Models\User;
-use HDSSolutions\Finpar\Models\Role;
+use HDSSolutions\Laravel\Models\User;
+use HDSSolutions\Laravel\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Spatie\Permission\PermissionRegistrar;

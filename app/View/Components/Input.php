@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\View\Components;
+namespace HDSSolutions\Laravel\View\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;

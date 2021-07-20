@@ -1,10 +1,10 @@
 <?php
 
-namespace HDSSolutions\Finpar\Processes;
+namespace HDSSolutions\Laravel\Processes;
 
 use Exception;
-use HDSSolutions\Finpar\Interfaces\Document;
-use HDSSolutions\Finpar\Traits\HasDocumentActions;
+use HDSSolutions\Laravel\Interfaces\Document;
+use HDSSolutions\Laravel\Traits\HasDocumentActions;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 

@@ -6,7 +6,7 @@ return [
 
         'permission' => Spatie\Permission\Models\Permission::class,
 
-        'role' => HDSSolutions\Finpar\Models\Role::class,
+        'role' => HDSSolutions\Laravel\Models\Role::class,
 
     ],
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables\Base;
+namespace HDSSolutions\Laravel\DataTables\Base;
 
-use HDSSolutions\Finpar\Processes\DocumentEngine as Document;
+use HDSSolutions\Laravel\Processes\DocumentEngine as Document;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;

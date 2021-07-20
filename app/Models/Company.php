@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
-use HDSSolutions\Finpar\Models\Scopes\CompanyScope;
+use HDSSolutions\Laravel\Models\Scopes\CompanyScope;
 
 class Company extends X_Company {
 

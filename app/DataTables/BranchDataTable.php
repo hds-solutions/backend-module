@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Branch as Resource;
+use HDSSolutions\Laravel\Models\Branch as Resource;
 use Yajra\DataTables\Html\Column;
 
 class BranchDataTable extends Base\DataTable {

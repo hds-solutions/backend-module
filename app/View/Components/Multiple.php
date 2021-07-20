@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\View\Components;
+namespace HDSSolutions\Laravel\View\Components;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;

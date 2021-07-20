@@ -1,6 +1,6 @@
 <?php
 
-use HDSSolutions\Finpar\Blueprints\BaseBlueprint as Blueprint;
+use HDSSolutions\Laravel\Blueprints\BaseBlueprint as Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Seeders;
+namespace HDSSolutions\Laravel\Seeders;
 
-use HDSSolutions\Finpar\Models\City;
-use HDSSolutions\Finpar\Models\Region;
+use HDSSolutions\Laravel\Models\City;
+use HDSSolutions\Laravel\Models\Region;
 use Illuminate\Database\Seeder;
 
 class RegionsCitiesSeeder extends Seeder {

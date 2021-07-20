@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Middleware\Base;
+namespace HDSSolutions\Laravel\Http\Middleware\Base;
 
-use HDSSolutions\Finpar\Models\User;
+use HDSSolutions\Laravel\Models\User;
 
 abstract class Menu {
 

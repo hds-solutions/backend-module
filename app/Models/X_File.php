@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
-use HDSSolutions\Finpar\Traits\BelongsToCompany;
+use HDSSolutions\Laravel\Traits\BelongsToCompany;
 use Illuminate\Support\Facades\Storage;
 
 abstract class X_File extends Base\Model {

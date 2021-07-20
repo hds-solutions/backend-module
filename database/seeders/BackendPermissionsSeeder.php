@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Seeders;
+namespace HDSSolutions\Laravel\Seeders;
 
-use HDSSolutions\Finpar\Models\Role;
+use HDSSolutions\Laravel\Models\Role;
 
 class BackendPermissionsSeeder extends Base\PermissionsSeeder {
 

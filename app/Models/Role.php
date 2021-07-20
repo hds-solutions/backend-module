@@ -1,5 +1,5 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 class Role extends \Spatie\Permission\Models\Role {}

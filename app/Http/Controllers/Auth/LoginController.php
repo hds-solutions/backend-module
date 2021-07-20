@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers\Auth;
+namespace HDSSolutions\Laravel\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;

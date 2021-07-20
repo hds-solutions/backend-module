@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Interfaces;
+namespace HDSSolutions\Laravel\Interfaces;
 
 interface Document {
 

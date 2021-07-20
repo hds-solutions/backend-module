@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\City as Resource;
+use HDSSolutions\Laravel\Models\City as Resource;
 use Yajra\DataTables\Html\Column;
 
 class CityDataTable extends Base\DataTable {

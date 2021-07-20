@@ -1,5 +1,5 @@
 @php
-    use HDSSolutions\Finpar\Models\{ File, CashLine, Product, Line, Type, Family, Brand, Model };
+    use HDSSolutions\Laravel\Models\{ File, CashLine, Product, Line, Type, Family, Brand, Model };
 
     $images = File::images()->get();
     $product = Product::find( request('product', 3) );

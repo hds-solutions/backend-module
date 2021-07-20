@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\View\Components;
+namespace HDSSolutions\Laravel\View\Components;
 
 class FormDate extends FormText {
 

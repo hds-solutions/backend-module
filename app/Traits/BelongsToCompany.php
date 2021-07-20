@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Traits;
+namespace HDSSolutions\Laravel\Traits;
 
-use HDSSolutions\Finpar\Models\Company;
-use HDSSolutions\Finpar\Models\Scopes\CompanyScope;
+use HDSSolutions\Laravel\Models\Company;
+use HDSSolutions\Laravel\Models\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 
 trait BelongsToCompany {

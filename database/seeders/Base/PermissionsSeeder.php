@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Seeders\Base;
+namespace HDSSolutions\Laravel\Seeders\Base;
 
-use HDSSolutions\Finpar\Models\Role;
+use HDSSolutions\Laravel\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;

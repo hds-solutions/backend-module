@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models\Base;
+namespace HDSSolutions\Laravel\Models\Base;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;

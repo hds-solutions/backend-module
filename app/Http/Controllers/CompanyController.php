@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\CompanyDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Company as Resource;
-use HDSSolutions\Finpar\Models\File;
+use HDSSolutions\Laravel\DataTables\CompanyDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Company as Resource;
+use HDSSolutions\Laravel\Models\File;
 
 class CompanyController extends Controller {
 

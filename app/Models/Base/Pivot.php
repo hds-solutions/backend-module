@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models\Base;
+namespace HDSSolutions\Laravel\Models\Base;
 
-use HDSSolutions\Finpar\Traits\HasValidationRules;
-use HDSSolutions\Finpar\Traits\Sortable;
+use HDSSolutions\Laravel\Traits\HasValidationRules;
+use HDSSolutions\Laravel\Traits\Sortable;
 // use HDSSolutions\Laravel\DynamoDB\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
 

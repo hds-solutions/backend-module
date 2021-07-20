@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\CityDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Region;
-use HDSSolutions\Finpar\Models\City as Resource;
+use HDSSolutions\Laravel\DataTables\CityDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Region;
+use HDSSolutions\Laravel\Models\City as Resource;
 
 class CityController extends Controller {
 

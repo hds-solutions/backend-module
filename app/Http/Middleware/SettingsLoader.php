@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Middleware;
+namespace HDSSolutions\Laravel\Http\Middleware;
 
 use Closure;
-use HDSSolutions\Finpar\Models\Setting;
+use HDSSolutions\Laravel\Models\Setting;
 
 class SettingsLoader {
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Helpers;
+namespace HDSSolutions\Laravel\Helpers;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithEvents;

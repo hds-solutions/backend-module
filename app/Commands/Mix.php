@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Commands;
+namespace HDSSolutions\Laravel\Commands;
 
 use Symfony\Component\Process\Process;
 

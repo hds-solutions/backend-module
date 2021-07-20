@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

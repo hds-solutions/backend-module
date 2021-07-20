@@ -1,11 +1,11 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\RoleDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Role as Resource;
+use HDSSolutions\Laravel\DataTables\RoleDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Role as Resource;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 

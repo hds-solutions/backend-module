@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Blueprints;
+namespace HDSSolutions\Laravel\Blueprints;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;

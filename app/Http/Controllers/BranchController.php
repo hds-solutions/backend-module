@@ -1,14 +1,14 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\BranchDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Branch as Resource;
-use HDSSolutions\Finpar\Models\City;
-use HDSSolutions\Finpar\Models\File;
-use HDSSolutions\Finpar\Models\Region;
+use HDSSolutions\Laravel\DataTables\BranchDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Branch as Resource;
+use HDSSolutions\Laravel\Models\City;
+use HDSSolutions\Laravel\Models\File;
+use HDSSolutions\Laravel\Models\Region;
 
 class BranchController extends Controller {
 

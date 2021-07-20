@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Traits;
+namespace HDSSolutions\Laravel\Traits;
 
-use HDSSolutions\Finpar\Models\Base\User;
+use HDSSolutions\Laravel\Models\Base\User;
 use Illuminate\Support\Facades\DB;
 
 trait HasIdentity {

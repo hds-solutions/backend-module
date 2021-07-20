@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 class Branch extends X_Branch {
 

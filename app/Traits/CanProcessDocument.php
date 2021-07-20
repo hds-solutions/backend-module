@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Traits;
+namespace HDSSolutions\Laravel\Traits;
 
-use HDSSolutions\Finpar\Interfaces\Document;
-use HDSSolutions\Finpar\Processes\DocumentEngine;
+use HDSSolutions\Laravel\Interfaces\Document;
+use HDSSolutions\Laravel\Processes\DocumentEngine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;

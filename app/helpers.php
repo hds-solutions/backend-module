@@ -1,6 +1,6 @@
 <?php
 
-use HDSSolutions\Finpar\Backend;
+use HDSSolutions\Laravel\Backend;
 
 if (!function_exists('backend')) {
     function backend():Backend {

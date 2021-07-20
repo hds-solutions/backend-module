@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Region as Resource;
+use HDSSolutions\Laravel\Models\Region as Resource;
 use Yajra\DataTables\Html\Column;
 
 class RegionDataTable extends Base\DataTable {

@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http;
+namespace HDSSolutions\Laravel\Http;
 
 class Request extends \Illuminate\Http\Request {
 

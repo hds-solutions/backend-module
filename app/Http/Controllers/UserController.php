@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\UserDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\User as Resource;
-use HDSSolutions\Finpar\Models\Role;
+use HDSSolutions\Laravel\DataTables\UserDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\User as Resource;
+use HDSSolutions\Laravel\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller {

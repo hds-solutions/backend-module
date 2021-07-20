@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\File as Resource;
+use HDSSolutions\Laravel\Models\File as Resource;
 use Yajra\DataTables\Html\Column;
 
 class FileDataTable extends Base\DataTable {

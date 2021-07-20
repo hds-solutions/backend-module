@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Role as Resource;
+use HDSSolutions\Laravel\Models\Role as Resource;
 use Yajra\DataTables\Html\Column;
 
 class RoleDataTable extends Base\DataTable {

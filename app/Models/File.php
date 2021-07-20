@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 use Illuminate\Http\File as Illuminate_File;
 use Illuminate\Http\Request;

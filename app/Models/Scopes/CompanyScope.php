@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models\Scopes;
+namespace HDSSolutions\Laravel\Models\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

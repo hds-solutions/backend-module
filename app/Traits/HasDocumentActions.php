@@ -1,10 +1,10 @@
 <?php
 
-namespace HDSSolutions\Finpar\Traits;
+namespace HDSSolutions\Laravel\Traits;
 
-use HDSSolutions\Finpar\Interfaces\Document;
-use HDSSolutions\Finpar\Models\DocumentLog;
-use HDSSolutions\Finpar\Processes\DocumentEngine;
+use HDSSolutions\Laravel\Interfaces\Document;
+use HDSSolutions\Laravel\Models\DocumentLog;
+use HDSSolutions\Laravel\Processes\DocumentEngine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator as Validator_Factory;
 
