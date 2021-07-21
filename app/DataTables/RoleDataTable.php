@@ -7,6 +7,10 @@ use Yajra\DataTables\Html\Column;
 
 class RoleDataTable extends Base\DataTable {
 
+    protected array $orderBy = [
+        'name'  => 'asc',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,

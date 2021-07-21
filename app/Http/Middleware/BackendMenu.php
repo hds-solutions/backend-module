@@ -43,12 +43,15 @@ class BackendMenu extends Base\Menu {
 
         return $this
             // append items to submenu
+            ->companies($sub)
+            ->branches($sub)
+
             ->roles($sub)
             ->users($sub)
+
             ->regions($sub)
             ->cities($sub)
-            ->companies($sub)
-            ->branches($sub);
+            ;
     }
 
     private function extra() {
@@ -69,7 +72,7 @@ class BackendMenu extends Base\Menu {
             $menu->add(__('backend::roles.nav'), [
                 // 'header'    => 'Configuraciones',
                 'route'     => 'backend.roles',
-                'icon'      => 'cogs'
+                'icon'      => 'briefcase'
             ]);
 
         return $this;
@@ -80,7 +83,7 @@ class BackendMenu extends Base\Menu {
             $menu->add(__('backend::users.nav'), [
                 // 'header'    => 'Configuraciones',
                 'route'     => 'backend.users',
-                'icon'      => 'cogs'
+                'icon'      => 'users'
             ]);
 
         return $this;
@@ -90,7 +93,7 @@ class BackendMenu extends Base\Menu {
         if (Route::has('backend.regions') && $this->can('regions'))
             $menu->add(__('backend::regions.nav'), [
                 'route'     => 'backend.regions',
-                'icon'      => 'cogs'
+                'icon'      => 'globe-americas'
             ]);
 
         return $this;
@@ -100,7 +103,7 @@ class BackendMenu extends Base\Menu {
         if (Route::has('backend.cities') && $this->can('cities'))
             $menu->add(__('backend::cities.nav'), [
                 'route'     => 'backend.cities',
-                'icon'      => 'cogs'
+                'icon'      => 'city'
             ]);
 
         return $this;
@@ -110,7 +113,7 @@ class BackendMenu extends Base\Menu {
         if (Route::has('backend.companies') && $this->can('companies'))
             $menu->add(__('backend::companies.nav'), [
                 'route'     => 'backend.companies',
-                'icon'      => 'cogs'
+                'icon'      => 'university'
             ]);
 
         return $this;
@@ -120,7 +123,7 @@ class BackendMenu extends Base\Menu {
         if (Route::has('backend.branches') && $this->can('branches'))
             $menu->add(__('backend::branches.nav'), [
                 'route'     => 'backend.branches',
-                'icon'      => 'cogs'
+                'icon'      => 'store'
             ]);
 
         return $this;

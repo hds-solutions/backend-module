@@ -28,7 +28,7 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
         switch (true) {
             case column.name == 'actions':
                 // set class name
-                column.className = 'align-middle w-150px';
+                column.className = 'align-middle w-150px text-center';
                 column.sortable = false;
                 column.searchable = false;
                 // render actions using container

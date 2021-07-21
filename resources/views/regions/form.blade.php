@@ -1,9 +1,9 @@
 @include('backend::components.errors')
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
-    label="{{ __('backend::region.name.0') }}"
-    placeholder="{{ __('backend::region.name._') }}"
-    {{-- helper="{{ __('backend::region.name.?') }}" --}} />
+    label="backend::region.name.0"
+    placeholder="backend::region.name._"
+    {{-- helper="backend::region.name.?" --}} />
 
 <x-backend-form-controls
     submit="backend::regions.save"

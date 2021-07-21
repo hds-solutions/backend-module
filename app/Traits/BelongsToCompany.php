@@ -19,7 +19,12 @@ trait BelongsToCompany {
         // regiter global scope
         self::addGlobalScope(new CompanyScope);
         // set company value when saving model
-        self::saving(fn(Model $model) => $model->company()->associate( backend()->company() ));
+        self::saving(function(Model $model) {
+            // check if model hasn't company and is backend is companyScoped
+            if ($model->company_id === null && backend()->companyScoped())
+                // set copmany from backend
+                $model->company()->associate( backend()->company() );
+        });
     }
 
     public function company() {

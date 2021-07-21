@@ -133,6 +133,11 @@ class Backend {
         );
     }
 
+    public function companyScoped():bool {
+        // return if a company is set
+        return session('backend.company') !== null;
+    }
+
     public function company():?Company {
         // return current company
         return $this->company ??= $this->loadCompany();
@@ -146,6 +151,11 @@ class Backend {
     public function branches():Collection {
         // TODO: return only branches that user has access to
         return $this->companies()->pluck('branches')->flatten();
+    }
+
+    public function branchScoped():bool {
+        // return if a branch is set
+        return session('backend.branch') !== null;
     }
 
     public function branch():?Branch {

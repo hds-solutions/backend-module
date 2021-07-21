@@ -1,16 +1,17 @@
 @include('backend::components.errors')
 
 <x-backend-form-foreign :resource="$resource ?? null" name="region_id" required
-    foreign="regions" :values="$regions" foreign-add-label="{{ __('backend::regions.add') }}"
+    foreign="regions" :values="$regions" foreign-add-label="backend::regions.add"
+    data-live-search="true"
 
-    label="{{ __('backend::city.region_id.0') }}"
-    placeholder="{{ __('backend::city.region_id._') }}"
-    {{-- helper="{{ __('backend::city.region_id.?') }}" --}} />
+    label="backend::city.region_id.0"
+    placeholder="backend::city.region_id._"
+    {{-- helper="backend::city.region_id.?" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
-    label="{{ __('backend::city.name.0') }}"
-    placeholder="{{ __('backend::city.name._') }}"
-    {{-- helper="{{ __('backend::city.name.?') }}" --}} />
+    label="backend::city.name.0"
+    placeholder="backend::city.name._"
+    {{-- helper="backend::city.name.?" --}} />
 
 <x-backend-form-controls
     submit="backend::cities.save"

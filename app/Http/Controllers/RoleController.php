@@ -7,6 +7,7 @@ use HDSSolutions\Laravel\DataTables\RoleDataTable as DataTable;
 use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\Role as Resource;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller {
@@ -16,11 +17,6 @@ class RoleController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -34,12 +30,7 @@ class RoleController extends Controller {
         return $dataTable->render('backend::roles.index', [ 'count' => Resource::count() ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
         // load permissions
         $permissions = Permission::all();
 
@@ -50,22 +41,24 @@ class RoleController extends Controller {
         return view('backend::roles.create', compact('groups', 'permissions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
+        // start a transaction
+        DB::beginTransaction();
+
         // create resource
         $resource = new Resource( $request->input() );
 
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
+
+        // update Role permissions
+        $resource->syncPermissions( $request->input('permissions') );
+
+        // commit changes to database
+        DB::commit();
 
         // check return type
         return $request->has('only-form') ?
@@ -75,24 +68,12 @@ class RoleController extends Controller {
             redirect()->route('backend.roles');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.roles');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load permissions
         $permissions = Permission::all();
 
@@ -103,52 +84,42 @@ class RoleController extends Controller {
         return view('backend::roles.edit', compact('groups', 'permissions', 'resource'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function update(Request $request, Resource $resource) {
         // root role cant be modified
         if ($resource->id === 0)
             // return back with errors
             return back()->withErrors('Root role can\'t be modified');
 
+        // start a transaction
+        DB::beginTransaction();
+
         // save resource
         if (!$resource->update( $request->input() ))
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // update Role permissions
         $resource->syncPermissions( $request->input('permissions') );
+
+        // commit changes to database
+        DB::commit();
 
         // redirect to list
         return redirect()->route('backend.roles');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // reject if role is root
         if ($resource->id === 0)
             // return back with error message
             return back()->withErrors('Root role can\'t be removed');
+
         // delete resource
         if (!$resource->delete())
             // redirect with errors
             return back()->withErrors($resource->errors());
+
         // redirect to list
         return redirect()->route('backend.roles');
     }

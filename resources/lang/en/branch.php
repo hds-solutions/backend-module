@@ -18,6 +18,7 @@
         'Code',
         '_' => 'Code',
         '?' => 'Code',
+        'optional' => '(optional) Code',
     ],
 
     'region_id'         => [
@@ -38,6 +39,7 @@
         'District',
         '_' => 'District',
         '?' => 'District',
+        'optional' => '(optional) District',
     ],
 
     'address'           => [
@@ -50,6 +52,7 @@
         'Phone',
         '_' => 'Phone',
         '?' => 'Phone',
+        'optional' => '(optional) Phone',
     ],
 
 ];

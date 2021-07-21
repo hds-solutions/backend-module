@@ -272,6 +272,7 @@ document.querySelectorAll('[type=submit][formaction-append]').forEach(button => 
     });
 });
 
+$('.modal.show').modal('show');
 $('#company-selector').on('show.bs.modal', e => {
     // destination modal
     const modal = e.target;

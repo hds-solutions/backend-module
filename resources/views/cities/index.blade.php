@@ -8,14 +8,34 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
-                <i class="fas fa-table"></i>
+            <div class="col-6 d-flex align-items-center cursor-pointer"
+                data-toggle="collapse" data-target="#filters">
+                <i class="fas fa-table mr-2"></i>
                 @lang('backend::cities.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.cities.create') }}"
-                    class="btn btn-sm btn-primary">@lang('backend::cities.create')</a>
+                    class="btn btn-sm btn-outline-primary">@lang('backend::cities.create')</a>
             </div>
+        </div>
+        <div class="row collapse @if (request()->has('filters')) show @endif" id="filters">
+            <form action="{{ route('backend.cities') }}"
+                class="col mt-2 pt-3 pb-2 border-top">
+
+                <x-backend-form-foreign name="filters[region]"
+                    :values="$regions" show="name" default="{{ request('filters.region') }}"
+                    data-live-search="true"
+
+                    label="backend::city.region_id.0"
+                    placeholder="backend::city.region_id._"
+                    {{-- helper="backend::city.region_id.?" --}} />
+
+                <button type="submit"
+                    class="btn btn-sm btn-outline-primary">Filtrar</button>
+
+                <button type="reset"
+                    class="btn btn-sm btn-outline-secondary btn-hover-danger">Limpiar filtros</button>
+            </form>
         </div>
     </div>
     <div class="card-body">

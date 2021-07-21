@@ -8,7 +8,7 @@ use Yajra\DataTables\Html\Column;
 class FileDataTable extends Base\DataTable {
 
     protected array $orderBy = [
-        'created_at',
+        'created_at'    => 'desc',
     ];
 
     public function __construct() {
@@ -33,7 +33,7 @@ class FileDataTable extends Base\DataTable {
 
             Column::computed('created_at')
                 ->title( __('backend::file.created_at.0') )
-                ->hidden(),
+                ->renderRaw('datetime:created_at;F j, Y H:i'),
 
             Column::computed('actions'),
         ];

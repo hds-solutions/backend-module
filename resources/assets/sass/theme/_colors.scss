@@ -9,3 +9,14 @@
         @include button-outline-variant($value, $color, transparent);
     }
 }
+
+.btn-default {
+    color: $white;
+    border-color: $input-border-color;
+    background-color: $input-border-color;
+}
+
+.btn-outline-default {
+    border-color: $input-border-color;
+    color: $input-border-color;
+}

@@ -8,13 +8,13 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
-                <i class="fas fa-table"></i>
+            <div class="col-6 d-flex align-items-center">
+                <i class="fas fa-table mr-2"></i>
                 @lang('backend::files.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.files.create') }}"
-                    class="btn btn-sm btn-primary">@lang('backend::files.create')</a>
+                    class="btn btn-sm btn-outline-primary">@lang('backend::files.create')</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,8 @@
             <div class="table-responsive">
                 {{ $dataTable->table() }}
                 @include('backend::components.datatable-actions', [
-                    'actions'   => [ 'delete' ]
+                    'actions'   => [ 'delete' ],
+                    'label'     => '{resource.name}'
                 ])
             </div>
         @else

@@ -11,6 +11,10 @@ class CompanyDataTable extends Base\DataTable {
         'logo',
     ];
 
+    protected array $orderBy = [
+        'name'  => 'asc',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,

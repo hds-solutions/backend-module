@@ -1,10 +1,9 @@
 @include('backend::components.errors')
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
-    label="{{ __('backend::role.name.0') }}"
-    placeholder="{{ __('backend::role.name._') }}"
-    {{-- helper="{{ __('backend::role.name.?') }}" --}} />
-
+    label="backend::role.name.0"
+    placeholder="backend::role.name._"
+    {{-- helper="backend::role.name.?" --}} />
 
 <x-form-row>
     <x-form-label text="backend::role.permissions.0" form-label class="align-top" />

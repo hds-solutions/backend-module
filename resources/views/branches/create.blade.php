@@ -7,7 +7,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 d-flex align-items-center">
                 <i class="fas fa-company-plus"></i>
                 @lang('backend::branches.create')
             </div>

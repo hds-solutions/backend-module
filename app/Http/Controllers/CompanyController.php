@@ -15,11 +15,6 @@ class CompanyController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -33,24 +28,14 @@ class CompanyController extends Controller {
         return $dataTable->render('backend::companies.index', [ 'count' => Resource::count() ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
         // load images
         $images = File::images()->get();
+
         // show create form
         return view('backend::companies.create', compact('images'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // create resource
         $resource = new Resource( $request->input() );
@@ -62,9 +47,9 @@ class CompanyController extends Controller {
             // save resource
             if (!$image->save())
                 // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
+                return back()->withInput()
+                    ->withErrors( $image->errors() );
+
             // set uploaded image into resource
             $resource->logo_id = $image->id;
         }
@@ -72,9 +57,8 @@ class CompanyController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -84,37 +68,19 @@ class CompanyController extends Controller {
             redirect()->route('backend.companies');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.companies');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load images
         $images = File::images()->get();
+
         // show edit form
         return view('backend::companies.edit', compact('resource', 'images'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Resource $resource) {
         // update resource with request data
         $resource->fill( $request->input() );
@@ -126,9 +92,9 @@ class CompanyController extends Controller {
             // save resource
             if (!$image->save())
                 // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
+                return back()->withInput()
+                    ->withErrors( $image->errors() );
+
             // set uploaded image into resource
             $resource->logo_id = $image->id;
         }
@@ -136,28 +102,20 @@ class CompanyController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.companies');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
             return back()
-                ->withErrors($resource->errors());
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.companies');
     }

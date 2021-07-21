@@ -7,8 +7,8 @@ use HDSSolutions\Laravel\DataTables\BranchDataTable as DataTable;
 use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\Branch as Resource;
 use HDSSolutions\Laravel\Models\City;
-use HDSSolutions\Laravel\Models\File;
 use HDSSolutions\Laravel\Models\Region;
+use HDSSolutions\Laravel\Models\Scopes\CompanyScope;
 
 class BranchController extends Controller {
 
@@ -17,11 +17,6 @@ class BranchController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -32,31 +27,34 @@ class BranchController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
 
         // return view with dataTable
-        return $dataTable->render('backend::branches.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('backend::branches.index', [
+            // check if we are scoped to a company
+            'count' => backend()->companyScoped() ?
+                // load resource scoped count
+                Resource::count() :
+                // load resource count without scope
+                Resource::withoutGlobalScope(new CompanyScope)->count(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
         // load companies
         $companies = backend()->companies();
         // load Regions
         $regions = Region::with([
             'cities',
-        ])->get();
+        ])->get()->transform(fn($region) => $region
+            // override loaded cities, add relation to parent manually
+            ->setRelation('cities', $region->cities->transform(fn($city) => $city
+                // set City.region relation manually to avoid more queries
+                ->setRelation('region', $region)
+            ))
+        );
+
         // show create form
         return view('backend::branches.create', compact('regions', 'companies'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // create resource
         $resource = new Resource;
@@ -70,9 +68,8 @@ class BranchController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -82,44 +79,43 @@ class BranchController extends Controller {
             redirect()->route('backend.branches');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.branches');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, int $resource) {
+        // load resource manually
+        $resource = backend()->companyScoped() ?
+            // load resource keeping company scope
+            Resource::findOrFail($resource) :
+            // remove company scope since we are on global scope
+            Resource::withoutGlobalScope(new CompanyScope)->findOrFail($resource);
+
         // load companies
         $companies = backend()->companies();
         // load Regions
         $regions = Region::with([
             'cities',
-        ])->get();
+        ])->get()->transform(fn($region) => $region
+            // override loaded cities, add relation to parent manually
+            ->setRelation('cities', $region->cities->transform(fn($city) => $city
+                // set City.region relation manually to avoid more queries
+                ->setRelation('region', $region)
+            ))
+        );
+
         // show edit form
         return view('backend::branches.edit', compact('resource', 'regions', 'companies'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function update(Request $request, int $resource) {
+        // load resource manually
+        $resource = backend()->companyScoped() ?
+            // load resource keeping company scope
+            Resource::findOrFail($resource) :
+            // remove company scope since we are on global scope
+            Resource::withoutGlobalScope(new CompanyScope)->findOrFail($resource);
 
         // fill resource with request data
         $resource->fill( $request->input() );
@@ -127,29 +123,29 @@ class BranchController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.branches');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Resource $resource) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, int $resource) {
+        // load resource manually
+        $resource = backend()->companyScoped() ?
+            // load resource keeping company scope
+            Resource::findOrFail($resource) :
+            // remove company scope since we are on global scope
+            Resource::withoutGlobalScope(new CompanyScope)->findOrFail($resource);
+
         // delete resource
         if (!$resource->delete())
             // redirect with errors
             return back()
-                ->withErrors($resource->errors());
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.branches');
     }
+
 }

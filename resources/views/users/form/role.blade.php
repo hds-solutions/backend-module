@@ -1,5 +1,5 @@
-<div class="row role-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif>
-    <div class="col-12 d-flex">
+{{-- <div class="row role-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif> --}}
+    <div class="col-12 d-flex mb-1">
         <x-form-foreign name="roles[]"
             :values="$roles"
             default="{{ $selected->id ?? null }}"
@@ -31,4 +31,4 @@
             data-accept="Si, eliminar"
             @endif>X</button>
     </div>
-</div>
+{{-- </div> --}}

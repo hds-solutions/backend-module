@@ -26,6 +26,7 @@
         .page-link:hover {
             background-color: $secondary;
             border-color: $secondary;
+            color: color-yiq($secondary);
         }
 
         &.disabled .page-link {

@@ -7,7 +7,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 d-flex align-items-center">
                 <i class="fas fa-model-plus"></i>
                 @lang('backend::cities.edit')
             </div>
@@ -19,8 +19,8 @@
     </div>
     <div class="card-body">
         <form method="POST" action="{{ route('backend.cities.update', $resource) }}" enctype="multipart/form-data">
-            @method('PUT')
             @csrf
+            @method('PUT')
             @include('backend::cities.form')
         </form>
     </div>

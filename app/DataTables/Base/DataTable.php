@@ -14,6 +14,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
 
     protected array $with = [];
 
+    protected array $withoutScopes = [];
+
     protected array $orderBy = [];
 
     private array $filters = [];
@@ -33,6 +35,10 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
     }
 
     public final function dataTable($query) {
+        // disable scopes
+        foreach ($this->withoutScopes as $scope)
+            // remove global scope
+            $query = $query->withoutGlobalScope(new $scope);
         // add custom JOINs
         $query = $this->joins($query);
         // add custom global filters

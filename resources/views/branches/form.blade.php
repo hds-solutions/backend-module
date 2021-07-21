@@ -1,58 +1,60 @@
 @include('backend::components.errors')
 
 <x-backend-form-foreign :resource="$resource ?? null" name="company_id" required
-    foreign="companies" :values="$companies" foreign-add-label="{{ __('backend::companies.add') }}"
+    foreign="companies" :values="$companies" foreign-add-label="backend::companies.add"
+    :default="backend()->company()?->id"
 
-    label="{{ __('backend::branch.company_id.0') }}"
-    placeholder="{{ __('backend::branch.company_id._') }}"
-    {{-- helper="{{ __('backend::branch.company_id.?') }}" --}} />
+    label="backend::branch.company_id.0"
+    placeholder="backend::branch.company_id._"
+    {{-- helper="backend::branch.company_id.?" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
-    label="{{ __('backend::branch.name.0') }}"
-    placeholder="{{ __('backend::branch.name._') }}"
-    {{-- helper="{{ __('backend::branch.name.?') }}" --}} />
+    label="backend::branch.name.0"
+    placeholder="backend::branch.name._"
+    {{-- helper="backend::branch.name.?" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="code"
-    label="{{ __('backend::branch.code.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('backend::branch.code._') }}"
-    {{-- helper="{{ __('backend::branch.code.?') }}" --}} />
+    label="backend::branch.code.0"
+    placeholder="backend::branch.code.optional"
+    {{-- helper="backend::branch.code.?" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="phone"
-    label="{{ __('backend::branch.phone.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('backend::branch.phone._') }}"
-    {{-- helper="{{ __('backend::branch.phone.?') }}" --}} />
+    label="backend::branch.phone.0"
+    placeholder="backend::branch.phone.optional"
+    {{-- helper="backend::branch.phone.?" --}} />
 
 <x-backend-form-foreign :resource="$resource ?? null" name="region_id" required
-    foreign="regions" :values="$regions" foreign-add-label="{{ __('backend::regions.add') }}"
+    foreign="regions" :values="$regions" foreign-add-label="backend::regions.add"
+    data-live-search="true"
 
     label="{{ __('backend::branch.region_id.0') }} / {{ __('backend::branch.city_id.0') }}"
-    placeholder="{{ __('backend::branch.region_id.optional') }}"
-    {{-- helper="{{ __('backend::branch.region_id.?') }}" --}}>
+    placeholder="backend::branch.region_id._"
+    {{-- helper="backend::branch.region_id.?" --}}>
 
     <x-backend-form-foreign :resource="$resource ?? null" name="city_id" secondary required
-        filtered-by="[name=region_id]" filtered-using="region"
-        foreign="cities" :values="$regions->pluck('cities')->flatten()" foreign-add-label="{{ __('backend::cities.add') }}"
+        foreign="cities" :values="$regions->pluck('cities')->flatten()" foreign-add-label="backend::cities.add"
+        data-live-search="true" filtered-by="[name=region_id]" filtered-using="region"
 
-        label="{{ __('backend::branch.city_id.0') }}"
-        placeholder="{{ __('backend::branch.city_id.optional') }}"
-        {{-- helper="{{ __('backend::branch.city_id.?') }}" --}} />
+        label="backend::branch.city_id.0"
+        placeholder="backend::branch.city_id._"
+        {{-- helper="backend::branch.city_id.?" --}} />
 
 </x-backend-form-foreign>
 
 <x-backend-form-text :resource="$resource ?? null" name="district"
-    label="{{ __('backend::branch.district.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('backend::branch.district._') }}"
-    {{-- helper="{{ __('backend::branch.district.?') }}" --}} />
+    label="backend::branch.district.0"
+    placeholder="backend::branch.district.optional"
+    {{-- helper="backend::branch.district.?" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="address" required
-    label="{{ __('backend::branch.address.0') }}"
-    placeholder="{{ __('backend::branch.address._') }}"
-    {{-- helper="{{ __('backend::branch.address.?') }}" --}} />
+    label="backend::branch.address.0"
+    placeholder="backend::branch.address._"
+    {{-- helper="backend::branch.address.?" --}} />
 
 <x-backend-form-coords :resource="$resource ?? null"
-    {{-- label="{{ __('backend::branch.coords.0') }}" --}}
-    {{-- placeholder="{{ __('backend::branch.coords._') }}" --}}
-    {{-- helper="{{ __('backend::branch.coords.?') }}" --}} />
+    {{-- label="backend::branch.coords.0" --}}
+    {{-- placeholder="backend::branch.coords._" --}}
+    {{-- helper="backend::branch.coords.?" --}} />
 
 <x-backend-form-controls
     submit="backend::branches.save"

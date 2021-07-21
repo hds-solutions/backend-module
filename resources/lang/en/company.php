@@ -12,6 +12,7 @@
         'Logo',
         '_' => 'Logo',
         '?' => 'Logo',
+        'optional' => '(optional) Logo',
     ],
 
 ];

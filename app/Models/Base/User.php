@@ -16,7 +16,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 use Illuminate\Notifications\Notifiable;
 
-class User extends Base\Model implements
+class User extends Model implements
     AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract,
@@ -67,7 +67,7 @@ class User extends Base\Model implements
     protected static $rules = [
         'firstname' => [ 'sometimes', 'min:2' ],
         'lastname'  => [ 'sometimes', 'nullable', 'min:2' ],
-        'email'     => [ 'sometimes', 'email', 'confirmed', 'unique:'.self::class.',email,{id}' ],
+        'email'     => [ 'sometimes', 'email', 'confirmed', 'unique:users,email,{id}' ],
         'password'  => [ 'sometimes', 'string', 'confirmed', 'min:6' ],
         'type'      => [ 'sometimes' ],
         'status'    => [ 'sometimes' ],

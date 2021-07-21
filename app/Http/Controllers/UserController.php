@@ -16,11 +16,6 @@ class UserController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -34,12 +29,7 @@ class UserController extends Controller {
         return $dataTable->render('backend::users.index', [ 'count' => Resource::count() ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
         // load roles
         $roles = Role::all();
 
@@ -47,12 +37,6 @@ class UserController extends Controller {
         return view('backend::users.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // start a transaction
         DB::beginTransaction();
@@ -66,9 +50,8 @@ class UserController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // hash password
         $resource->update([
@@ -95,24 +78,12 @@ class UserController extends Controller {
             redirect()->route('backend.users');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.users');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load roles
         $roles = Role::all();
 
@@ -120,13 +91,6 @@ class UserController extends Controller {
         return view('backend::users.edit', compact('roles', 'resource'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Resource $resource) {
         // start a transaction
         DB::beginTransaction();
@@ -145,9 +109,8 @@ class UserController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check password change
         if ($request->has('password')) $resource->update([
@@ -171,16 +134,7 @@ class UserController extends Controller {
         return redirect()->route('backend.users');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
-
+    public function destroy(Request $request, Resource $resource) {
         // check current user or root account
         if (auth()->user()->id == $resource->id || $resource->id == 1) return back();
 
@@ -188,7 +142,8 @@ class UserController extends Controller {
         if (!$resource->delete())
             // redirect with errors
             return back()
-                ->withErrors($resource->errors());
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.users');
     }

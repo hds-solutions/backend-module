@@ -14,11 +14,6 @@ class FileController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -32,22 +27,11 @@ class FileController extends Controller {
         return $dataTable->render('backend::files.index', [ 'count' => Resource::count() ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
         // show create form
         return view('backend::files.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // validate request
         $this->validate($request, Resource::$uploadRules);
@@ -58,9 +42,8 @@ class FileController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($resource->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -70,61 +53,37 @@ class FileController extends Controller {
             redirect()->route('backend.files');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $image) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.files');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $image) {
+    public function edit(Request $request, Resource $resource) {
         // redirect to images
         return redirect()->route('backend.files');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Resource $image) {
-        // update object
-        if (!$image->update($request->only( Resource::updateRules($image->id, true) )))
+    public function update(Request $request, Resource $resource) {
+        // fill resource with request data
+        $resource->fill( $request->input() );
+
+        // save resource
+        if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors($image->errors())
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.files');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
             return back()
-                ->withErrors($resource->errors());
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.files');
     }
