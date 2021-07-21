@@ -79,6 +79,8 @@ class Modal {
     constructor() {
         // load modal
         this.#element = document.querySelector(modal);
+        // check if modal exists
+        if (!this.#element) return;
         // save default text content
         this.#modal.title = this.#element.querySelector('.modal-title').textContent;
         this.#modal.body = this.#element.querySelector('.modal-body>p').textContent;
