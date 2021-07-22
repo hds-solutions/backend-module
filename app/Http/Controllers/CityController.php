@@ -46,9 +46,8 @@ class CityController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -87,7 +86,7 @@ class CityController extends Controller {
         if (!$resource->delete())
             // redirect with errors
             return back()
-                ->withErrors($resource->errors());
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.cities');

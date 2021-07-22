@@ -2,7 +2,6 @@
 
 namespace HDSSolutions\Laravel\DataTables\Base;
 
-use HDSSolutions\Laravel\Processes\DocumentEngine as Document;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
@@ -40,9 +39,9 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             // remove global scope
             $query = $query->withoutGlobalScope(new $scope);
         // add custom JOINs
-        $query = $this->joins($query);
+        if (method_exists($this, 'joins')) $query = $this->joins($query);
         // add custom global filters
-        $query = $this->filters($query);
+        if (method_exists($this, 'filters')) $query = $this->filters($query);
         // get datatable class for current eloquent model query
         $datatable = datatables()->eloquent( $query )
             // redirect order by
@@ -123,53 +122,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
 
     protected abstract function getColumns();
 
-    protected function joins(Builder $query):Builder { return $query; }
-
-    protected function filters(Builder $query):Builder { return $query; }
-
     protected final function filename() { return class_basename( $this->resource ).'_' . date('YmdHis'); }
-
-    protected final function orderDocumentStatus(Builder $query, string $order):Builder {
-        // build a raw ORDER BY query
-        $orderByRaw = '';
-        // invert order, ASC goes from Draft to Completed
-        $order = $order == 'asc' ? 'desc' : 'asc';
-        // append Document.statuses with index as order value
-        foreach (Document::STATUSES as $idx => $status)
-            //
-            $orderByRaw .= "CASE WHEN document_status = '$status' THEN $idx END $order, ";
-
-        // return query with custom order
-        return $query->orderByRaw( rtrim($orderByRaw, ', ') );
-    }
-
-    protected final function orderDocumentStatusPretty(Builder $query, string $order):Builder {
-        // alias to document_status order
-        return $this->orderDocumentStatus($query, $order);
-    }
-
-    protected final function searchDocumentStatus(Builder $query, string $value):Builder {
-        $matches = [];
-        // check if value matches some document status string
-        foreach (Document::STATUSES as $status)
-            // check if status code or status translation matches
-            if ( stripos($status, $value) !== false || stripos(Document::__($status), $value) !== false )
-                // add status to matches
-                $matches[] = $status;
-
-        // filter query with matched statuses
-        return count($matches) ? $query->whereIn('document_status', $matches) : $query;
-    }
-
-    protected final function searchDocumentStatusPretty(Builder $query, string $value):Builder {
-        // alias to document_status search
-        return $this->searchDocumentStatus($query, $value);
-    }
-
-    protected final function filterDocumentStatus(Builder $query, $status):Builder {
-        // filter only with document status
-        return $query->where('document_status', $status);
-    }
 
     private function getRequestOrder():array {
         // get registered columns
