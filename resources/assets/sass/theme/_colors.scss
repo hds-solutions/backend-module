@@ -11,12 +11,28 @@
 }
 
 .btn-default {
-    color: $white;
-    border-color: $input-border-color;
-    background-color: $input-border-color;
+    @include button-variant($gray-500, $gray-500);
 }
 
 .btn-outline-default {
-    border-color: $input-border-color;
-    color: $input-border-color;
+    @include button-outline-variant($gray-500, $gray-500);
+
+    &:hover {
+        color: $white;
+    }
+}
+
+.btn-gray {
+    @include button-variant($input-group-addon-bg, $input-border-color);
+    color: $gray-700;
+}
+
+.btn-outline-gray {
+    @include button-outline-variant($gray-400);
+    color: $gray-700;
+    background-color: $white;
+
+    &:hover {
+        background-color: $input-group-addon-bg;
+    }
 }
