@@ -36,7 +36,7 @@ class CityDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('backend::city.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 
