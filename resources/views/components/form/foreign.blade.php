@@ -12,7 +12,7 @@
 
     @if ($foreign)
     data-foreign="{{ Str::snake($foreign) }}"
-    data-form="{{ route('backend.'.Str::snake($foreign).'.create', [ 'only-form' ]) }}"
+    data-form="{{ route('backend.'.Str::snake($foreign).'.create', [ 'only-form' => 'true' ]) }}"
     data-fetch="{{ route('backend.'.Str::snake($foreign)) }}"
     @endif>
 
