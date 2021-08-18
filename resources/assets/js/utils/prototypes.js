@@ -120,3 +120,28 @@ if (typeof Array.empty === 'undefined') {
         while(this.length) this.pop();
     }
 }
+if (typeof Array.first === 'undefined') {
+    Array.prototype.first = function() {
+        return this.length > 0 ? this[0] : null;
+    }
+}
+if (typeof Array.last === 'undefined') {
+    Array.prototype.last = function() {
+        return this.length > 0 ? this[ this.length - 1 ] : null;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| HTMLOptionsCollection prototypes
+|--------------------------------------------------------------------------
+|
+| HTMLOptionsCollection.empty()
+|   Removes all elements from current array
+|
+*/
+if (typeof HTMLOptionsCollection.forEach === 'undefined') {
+    HTMLOptionsCollection.prototype.forEach = function(callable) {
+        Array.prototype.forEach.call(this, callable);
+    }
+}

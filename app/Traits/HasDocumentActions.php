@@ -47,7 +47,7 @@ trait HasDocumentActions {
 
     public final function getDocumentStatusAttribute():string {
         // return current document status
-        return in_array($this->attributes['document_status'], Document::STATUSES) ? $this->attributes['document_status'] : Document::STATUS_Unknown;
+        return isset($this->attributes['document_status']) && in_array($this->attributes['document_status'], Document::STATUSES) ? $this->attributes['document_status'] : Document::STATUS_Unknown;
     }
 
     public final function getDocumentStatusPrettyAttribute():string {

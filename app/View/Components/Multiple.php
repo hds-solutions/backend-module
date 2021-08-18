@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 class Multiple extends Component {
 
     public Collection $values;
+    public Collection $extra;
     public Collection $selecteds;
 
     public function __construct(
@@ -25,6 +26,7 @@ class Multiple extends Component {
         public ?string $card = null,
     ) {
         $this->values = $values instanceof Collection ? $values : collect($values);
+        $this->extra = $extra instanceof Collection ? $extra : collect($extra);
         $this->selecteds = $selecteds instanceof Collection ? $selecteds : collect($selecteds);
     }
 

@@ -27,8 +27,7 @@ trait CanProcessDocument {
         // check if resource is instance of Document
         if (!$resource instanceof Document)
             // return with errors
-            return back()
-                ->withInput()
+            return back()->withInput()
                 ->withErrors([ 'Invalid request' ]);
 
         // build permission

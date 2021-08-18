@@ -200,7 +200,17 @@ class Backend {
 
     public function cashBooks():Collection {
         // return cashBooks
-        return $this->cashBooks ??= CashBook::withoutGlobalScope(new CompanyScope)->get();
+        return $this->cashBooks ??= CashBook::all()->transform(fn($cashBook) => $cashBook
+            // set CashBook.company relation manually to avoid more queries
+            ->setRelation('company', $this->companies()->firstWhere('id', $cashBook->company_id))
+        );
+
+        // return cashBooks
+        return $this->cashBooks ??= CashBook::withoutGlobalScope(new CompanyScope)
+            ->get()->transform(fn($cashBook) => $cashBook
+                // set CashBook.company relation manually to avoid more queries
+                ->setRelation('company', $this->companies()->firstWhere('id', $cashBook->company_id))
+            );
     }
 
     public function cashBook():?CashBook {

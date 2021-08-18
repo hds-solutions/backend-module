@@ -7,6 +7,8 @@ require('datatables.net-select-bs4');
 // require('datatables.net-buttons/js/buttons.flash.min.js');
 require('datatables.net-buttons-bs4');
 
+import Event from './utils/consoleevent';
+
 import { Container, byString } from './utils/datatables';
 
 import { reduce, parse } from './utils/utilities';
@@ -128,6 +130,10 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
                 Array.from(filter.options).forEach(option => option.removeAttribute('selected'));
                 // fire change if selectpicker
                 if (filter.classList.contains('selectpicker')) $(filter).selectpicker('refresh');
+                // check if has filtered plugin
+                if (filter.dataset.filteredBy)
+                    // fire change event on parent
+                    (new Event('change')).fire( document.querySelector(filter.dataset.filteredBy) )
             }
         });
         // execite ajax to refresh data

@@ -1,3 +1,5 @@
+import Event from './consoleevent';
+
 class MessageListener {
 
     constructor() {
@@ -5,6 +7,9 @@ class MessageListener {
         this._instances = {};
         // capture messages
         window.addEventListener('message', message => {
+            // capture modal content ready message
+            if (message.data.ready) return Modal.adjust();
+
             // check if message comes from a registered namespace
             if (!message.data.namespace || this._instances[message.data.namespace] === undefined) return;
             // redirect message to registered namespace
@@ -19,8 +24,149 @@ class MessageListener {
 
 }
 
+class ForeignModal {
+
+    #modal;
+    #iframe;
+    #fn = {
+        show: e => {},
+        hide: e => {},
+    };
+    #startX = 0;
+    #startY = 0;
+    #x = 0;
+    #y = 0;
+
+    constructor(modal = null) {
+        this.#modal = modal ?? document.querySelector('.modal#foreign-modal');
+        this.#iframe = this.modal.querySelector('iframe');
+        // init events
+        this._init();
+    }
+
+    _init() {
+        // capture modal events and redirect to registered functions
+        $(this.#modal).on('show.bs.modal', e => this.show(e));
+        $(this.#modal).on('hide.bs.modal', e => this.hide(e));
+        // capture modal hiden event
+        $(this.#modal).on('hidden.bs.modal', e => {
+            // reset modal to original state
+            this.#iframe.src = '';
+            this.#modal.querySelector('.modal-body').style.height = '250px';
+            this.#modal.classList.remove('maximized');
+        });
+        // init modal buttons
+        this.#modal.querySelector('[data-maximize]').addEventListener('click', e => {
+            this.#modal.classList.add('maximized');
+            // get modal content container
+            let content = this.#modal.querySelector('.modal-content');
+            content.style.top = '0px';
+            content.style.left = '0px';
+        });
+        this.#modal.querySelector('[data-restore]').addEventListener('click', e => {
+            this.#modal.classList.remove('maximized');
+            // get modal content container
+            let content = this.#modal.querySelector('.modal-content');
+            content.style.top = this.#y + 'px';
+            content.style.left = this.#x + 'px';
+        });
+        // init modal drag
+        let header = this.#modal.querySelector('.modal-header');
+        header.addEventListener('mousedown', e => this.drag(e, header));
+        // header.addEventListener('mouseleave', e => this.stop(e, header));
+    }
+
+    get modal() { return this.#modal; }
+    get iframe() { return this.#iframe; }
+
+    title(title = null) {
+        this.#modal.querySelector('#foreign-modal-title').textContent = title;
+        return this;
+    }
+
+    open(url) {
+        this.iframe.src = url;
+        return this;
+    }
+
+    adjust() {
+        this.#modal.querySelector('.modal-body').style.height = (this.iframe.contentWindow.document.body.scrollHeight+20)+'px';
+    }
+
+    show(event = true) {
+        if (typeof event == 'function') {
+            // register event function
+            this.#fn.show = event;
+            // return object to allow chaining
+            return this;
+        }
+
+        // redirect to jQuery modal
+        if (event === true) return $(this.#modal).modal('show');
+
+        // execute registered function for event
+        this.#fn.show( event );
+    }
+
+    hide(event = true) {
+        if (typeof event == 'function') {
+            // register event function
+            this.#fn.hide = event;
+            // return object to allow chaining
+            return this;
+        }
+
+        // redirect to jQuery modal
+        if (event === true) return $(this.#modal).modal('hide');
+
+        // execute registered function for event
+        this.#fn.hide( event );
+    }
+
+    drag(e, header) {
+        // prevent default dragging of selected content
+        e.preventDefault();
+
+        // check if state is maximized
+        if (this.#modal.classList.contains('maximized')) return;
+
+        // get modal content container
+        let content = this.#modal.querySelector('.modal-content');
+
+        // save start positions
+        this.#startX = e.pageX - this.#x;
+        this.#startY = e.pageY - this.#y;
+
+        // set dragging class
+        content.classList.add('dragging');
+
+        // capture mouse move
+        $(document).on('mousemove', event => {
+            this.#y = event.pageY - this.#startY;
+            this.#x = event.pageX - this.#startX;
+            content.style.top = this.#y + 'px';
+            content.style.left = this.#x + 'px';
+        });
+        // cancel events
+        $(document).on('mouseup', e => this.stop(e, header));
+    }
+
+    stop(e, header) {
+        // get modal content container
+        let content = this.#modal.querySelector('.modal-content');
+        // remove dragging class
+        content.classList.remove('dragging');
+
+        // disable events
+        $(document).off('mousemove');
+        $(document).off('mouseup');
+    }
+
+}
+
 // register a singleton
 const Listener = new MessageListener;
+const Modal = new ForeignModal;
 
 export default class Foreign {
 
@@ -33,8 +179,6 @@ export default class Foreign {
         this._element.addEventListener('change', e => this._onChange(e));
         // register message listener
         Listener.register(this._element.dataset.foreign, message => this._onMessage(message));
-        // popup placeholder
-        this._popup = null;
     }
 
     _onChange(e) {
@@ -45,27 +189,18 @@ export default class Foreign {
             // select empty value
             this.selectEmpty();
 
-            // open popup for resource creation
-            this._popup = popupCenter({
-                url: this._element.dataset.filteredUsing ?
-                    appendQueryParameter(
-                        this._element.dataset.form,
-                        this._element.dataset.filteredUsing,
-                        document.querySelector(this._element.dataset.filteredBy).value
-                    ) : this._element.dataset.form,
-                title: this._element.dataset.foreign+'.create',
-            });
+            // build URL
+            let url = this._element.dataset.filteredUsing ?
+                appendQueryParameter(
+                    this._element.dataset.form,
+                    this._element.dataset.filteredUsing,
+                    document.querySelector(this._element.dataset.filteredBy).value
+                ) : this._element.dataset.form;
 
-            // // capture popup close
-            // popup.onload = e => {
-            //     popup.onbeforeunload = e => {
-            //         // TODO: update select values
-            //         console.debug('popup closed');
-            //     }
-            // }
-
-            // cancel for loop (prevents multiple popups)
-            break;
+            // open modal with url
+            return Modal.open(url)
+                // set title and show modal
+                .title(this._element.dataset.foreign+'.create').show();
         }
     }
 
@@ -74,6 +209,8 @@ export default class Foreign {
         this._element.value = '';
         // select empty option
         for (let empty of this._element.options) empty.selected = empty.value == '';
+        // fire change event
+        (new Event('change')).fire( this._element );
     }
 
     _onMessage(data) {
@@ -81,8 +218,8 @@ export default class Foreign {
         let resource = data.resource,
             toKeep = [];
 
-        // close popup
-        this._popup.close();
+        // close modal
+        Modal.hide();
         // validate if resource was created
         if (!data.saved) return;
 
@@ -116,6 +253,8 @@ export default class Foreign {
             this._element.value = resource.id;
             // refresh selectpicker
             $(this._element).selectpicker('refresh');
+            // fire change event
+            (new Event('change')).fire( this._element );
         });
     }
 

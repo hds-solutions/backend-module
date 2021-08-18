@@ -17,6 +17,13 @@ class Application {
         return this.instances[name] ?? null;
     }
 
+    alias(name, instance) {
+        this._instances[name] = instance;
+    }
+
+    get $() { return this.jQuery; }
+    get jQuery() { return this._instances['jQuery'] ?? null; }
+
 }
 
 window.Application = window.Application || new Application;

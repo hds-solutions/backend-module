@@ -1,3 +1,20 @@
 @import 'fonts';
 @import 'plugins';
 @import 'theme';
+
+
+// FIXME
+.card-input-element + .card {
+    color: $primary;
+    border: 2px solid $light;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.card-input-element:checked + .card {
+    border-color: $primary;
+    -webkit-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+}

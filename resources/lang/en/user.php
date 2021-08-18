@@ -16,6 +16,9 @@
         'Email',
         '_' => 'Email',
         '?' => 'Email',
+
+        'confirm'   => 'Email confirmation',
+        'confirm_'  => 'Email confirmation',
     ],
 
     'password'          => [

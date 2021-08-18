@@ -13,6 +13,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
 
     protected array $with = [];
 
+    protected array $withCount = [];
+
     protected array $withoutScopes = [];
 
     protected array $orderBy = [];
@@ -84,6 +86,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             ->select("{$resource->getTable()}.*");
         // append with's to query builder
         if (count($this->with) > 0) $query->with( $this->with );
+        // append withCount's to query builder
+        if (count($this->withCount) > 0) $query->withCount( $this->withCount );
         // return query
         return $query;
     }

@@ -10,4 +10,12 @@ class User extends BaseUser {
     use HasFactory;
     use HasRoles;
 
+    public function getFullNameAttribute():string {
+        return ($this->lastname !== null ? $this->lastname.', ' : '').$this->firstname;
+    }
+
+    public function employees() {
+        return $this->hasMany(Employee::class);
+    }
+
 }

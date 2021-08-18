@@ -104,7 +104,10 @@ class UserController extends Controller {
         $resource->fill( $request->input() );
 
         // bypass email confirmation
-        $resource->fill([ 'email_confirmation' => $resource->email ]);
+        $resource->fill([
+            'email_confirmation'    => $resource->email,
+            'password_confirmation' => $resource->password,
+        ]);
 
         // save resource
         if (!$resource->save())
@@ -114,6 +117,8 @@ class UserController extends Controller {
 
         // check password change
         if ($request->has('password')) $resource->update([
+            // bypass email confirmation
+            'email_confirmation'    => $resource->email,
             // hash password
             'password'              => $hashed = bcrypt($resource->password),
             // bypass confirmation validation

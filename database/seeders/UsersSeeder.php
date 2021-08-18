@@ -16,12 +16,14 @@ class UsersSeeder extends Seeder {
 
         // create user
         if (!($resource = User::create([
-            'firstname'         => 'Administrator',
-            'email'             => $email = 'root@project.com.py',
-            'password'          => $passwd = bcrypt($password),
-        ]))) {
+            'firstname'             => 'Administrator',
+            'email'                 => $email = 'root@project.com.py',
+            'email_confirmation'    => $email,
+            'password'              => $passwd = bcrypt($password),
+            'password_confirmation' => $passwd,
+        ]))->exists) {
             // show error message
-            $this->command->error($resource->errors());
+            $this->command->error( $resource->errors() );
             // exit execution
             return;
         }

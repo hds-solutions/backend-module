@@ -10,8 +10,9 @@
 // theme base
 @import 'theme/base';
 @import 'theme/colors';
-@import 'theme/login';
 @import 'theme/forms';
+@import 'theme/login';
+@import 'theme/tables';
 
 // load plugins overrides
 @import 'plugins/overrides';

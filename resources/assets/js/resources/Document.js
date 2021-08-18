@@ -1,4 +1,4 @@
-import Event from '..//utils/consoleevent';
+import Event from '../utils/consoleevent';
 
 export default class Document {
 
@@ -39,11 +39,21 @@ export default class Document {
         // remove container from list
         delete this.#lines[instance.id];
         // fire destructor
-        instance.destructor();
+        instance._destructor();
     }
 
     _getContainerInstance(container) {
         throw new Error('Method _getContainerInstance(container) must be implemented');
+    }
+
+    undecimalize(amount, decimals = 0) {
+        // parse amount and return it without decimals
+        return parseInt(amount.replace(/[^0-9\.]/g,'') * Math.pow(10, decimals));
+    }
+
+    decimalize(amount, decimals = 0) {
+        // return amount with decimals
+        return amount / Math.pow(10, decimals);
     }
 
 }

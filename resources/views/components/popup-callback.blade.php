@@ -5,11 +5,11 @@
 </head>
 <body>
     <script type="text/javascript">
-        window.opener.postMessage({
+        window.parent.postMessage({
             namespace: '{{ Str::snake( Str::pluralStudly( class_basename($resource) ) ) }}',
-            resource: {!! json_encode($resource) !!},
+            resource: { id: {{ $resource->getKey() ?? 'null' }} },
             saved: {{ $resource->exists ? 'true' : 'false' }},
-        }, window.opener.location);
+        }, window.parent.location);
     </script>
 </body>
 </html>

@@ -1,18 +1,18 @@
 <?php return [
 
-    'url'          => [
+    'url'       => [
         'URL',
         '_' => 'URL',
         '?' => 'URL',
     ],
 
-    'name'          => [
+    'name'      => [
         'File name',
         '_' => 'File name',
         '?' => 'File name',
     ],
 
-    'file'             => [
+    'file'      => [
         'File',
         '_' => 'Select file to upload',
         '?' => 'Select file to upload',

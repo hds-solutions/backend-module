@@ -1,0 +1,9 @@
+table.dataTable.table-sm > thead > tr > .text-right {
+
+    &.sorting,
+    &.sorting_asc,
+    &.sorting_desc {
+        padding-right: 30px;
+    }
+
+}

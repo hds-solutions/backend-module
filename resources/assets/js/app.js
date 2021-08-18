@@ -7,8 +7,6 @@ require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
 //
 require('./utils/prototypes');
 require('./datatables');
-require('./utils/only');
-// init TinyMCE
 require('./tinymce');
 
 $(_ => { $('body>.loader').fadeOut(150); });
@@ -20,9 +18,13 @@ $.ajaxSetup({
 });
 
 import Application from './resources/Application';
+Application.alias('jQuery', $);
 
 import DateRangePicker from './utils/daterangepicker';
 document.querySelectorAll('[daterangepicker]').forEach(element => new DateRangePicker(element));
+
+import Only from './utils/only';
+document.querySelectorAll('[data-only]').forEach(element => new Only(element));
 
 import Event from './utils/consoleevent';
 

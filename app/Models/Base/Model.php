@@ -11,11 +11,14 @@ use HDSSolutions\Laravel\Traits\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships as HasExtendedRelationships;
+// use HDSSolutions\Laravel\Traits\HasBelongsToManyThrough;
+
 
 // abstract class Model extends \HDSSolutions\Laravel\DynamoDB\Eloquent\Model {
 abstract class Model extends \Illuminate\Database\Eloquent\Model {
     use EagerLoadPivotTrait;
     use HasExtendedRelationships;
+    // use HasBelongsToManyThrough;
 
     use HasValidationRules;
     use HasAfterSave;
