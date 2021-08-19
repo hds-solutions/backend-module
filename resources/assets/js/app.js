@@ -1,10 +1,9 @@
-//
+// template
 require('bootstrap');
 require('bootstrap-daterangepicker');
 require('bootstrap-select/js/bootstrap-select.js');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.js');
-
-//
+// local plugins
 require('./utils/prototypes');
 require('./datatables');
 require('./tinymce');

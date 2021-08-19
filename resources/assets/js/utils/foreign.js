@@ -39,6 +39,7 @@ class ForeignModal {
 
     constructor(modal = null) {
         this.#modal = modal ?? document.querySelector('.modal#foreign-modal');
+        if (!this.#modal) return;
         this.#iframe = this.modal.querySelector('iframe');
         // init events
         this._init();
