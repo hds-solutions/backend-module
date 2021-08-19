@@ -17,7 +17,7 @@
         "spatie/laravel-permission": "^4.0",
         "staudenmeir/eloquent-has-many-deep": "^1.13",
         "yajra/laravel-datatables": "^1.5",
-        "barryvdh/laravel-dompdf": "1.0.x-dev"
+        "barryvdh/laravel-snappy": "0.4.x-dev"
     },
     "autoload": {
         "psr-4": {
