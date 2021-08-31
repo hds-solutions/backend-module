@@ -38,6 +38,10 @@ import Confirmation from './utils/confirm';
 // link buttons to confirmation modal
 document.querySelectorAll('[data-confirm]').forEach(button => Confirmation.register(button));
 
+// printables modal
+import Printables from './utils/printables';
+document.querySelectorAll('[data-printable]').forEach(button => Printables.register(button));
+
 // previews
 import Preview from './utils/preview';
 $('[data-preview]').each((idx, ele) => {
@@ -56,14 +60,13 @@ document.querySelectorAll('[data-multiple]').forEach(ele => {
     let multiple = new Multiple( ele );
 
     // capture element deletion
-    multiple.removed(lineContainer =>
+    multiple.removed(lineContainer => Application.instance(multiple.type) &&
         // register line deletion
-        Application.instance(multiple.type) && Application.instance(multiple.type).unregister( lineContainer ));
+        Application.instance(multiple.type).unregister( lineContainer ));
     // capture element creation
-    multiple.new(lineContainer => {
+    multiple.new(lineContainer => Application.instance(multiple.type) &&
         // register line creation
-        if (Application.instance(multiple.type)) Application.instance(multiple.type).register( lineContainer );
-    });
+        Application.instance(multiple.type).register( lineContainer ));
 });
 
 //
