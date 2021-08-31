@@ -114,10 +114,10 @@ class Backend {
 
     public function companies():Collection {
         // TODO: return only companies that user has access to
-        return $this->companies ??= Company::with([
+        return $this->companies ??= Company::ordered()->with([
             'logo',
-            'branches'  => fn($branch) => $branch->withoutGlobalScope(new CompanyScope)->with([
-                'warehouses' => fn($warehouse) => $warehouse->withoutGlobalScope(new CompanyScope),
+            'branches'  => fn($branch) => $branch->ordered()->withoutGlobalScope(new CompanyScope)->with([
+                'warehouses' => fn($warehouse) => $warehouse->ordered()->withoutGlobalScope(new CompanyScope),
             ]),
         ])->get()->transform(fn($company) => $company
             // override loaded branches, add relation to parent manually
@@ -185,7 +185,7 @@ class Backend {
 
     public function currencies():Collection {
         // return currencies
-        return $this->currencies ??= Currency::all();
+        return $this->currencies ??= Currency::ordered()->get();
     }
 
     public function currency():?Currency {
@@ -200,7 +200,7 @@ class Backend {
 
     public function cashBooks():Collection {
         // return cashBooks
-        return $this->cashBooks ??= CashBook::all()->transform(fn($cashBook) => $cashBook
+        return $this->cashBooks ??= CashBook::ordered()->get()->transform(fn($cashBook) => $cashBook
             // set CashBook.company relation manually to avoid more queries
             ->setRelation('company', $this->companies()->firstWhere('id', $cashBook->company_id))
         );
