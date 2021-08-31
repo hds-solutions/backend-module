@@ -4,6 +4,10 @@ namespace HDSSolutions\Laravel\Models;
 
 abstract class X_Company extends Base\Model {
 
+    protected $orderBy = [
+        'name'  => 'ASC',
+    ];
+
     protected $fillable = [
         'name',
         'logo_id',
