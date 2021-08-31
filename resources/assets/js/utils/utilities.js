@@ -64,11 +64,11 @@ export function parse(view, object) {
     // foreach reduced values
     for (let key in object) {
         // get value
-        let value = object[key];
+        let value = object[key], matches;
         // check if value is array
         if (Array.isArray(value)) {
             // find {object.key} container
-            let matches = view.match( new RegExp('({'+key+'})(.+?)({\/'+key+'})', 's') );
+            matches = view.match( new RegExp('({'+key+'})(.+?)({\/'+key+'})', 's') );
             // check if matches were found
             if (matches !== null && matches.length == 4) {
                 // parsed sub-views
@@ -112,6 +112,27 @@ export function parse(view, object) {
                     view = view.replace(currencies[0], symbol_val + amount_val);
                 }
             }
+
+            // find optional fields
+            if (matches = view.match(/\{[\w.]*\}((\?\?)\{[\w.]*\})*(\?\?)\{[\w.]*\}/g))
+                // replace optionals
+                for (let i=0; i<matches.length; i++) {
+                    //
+                    let match = matches[i],
+                        found = false;
+                    // split match
+                    match.split('??').map(m => m.replace('{', '').replace('}', '')).forEach(field => {
+                        // check flag
+                        if (found) return;
+                        // check if field exists and has value
+                        if (object[field] !== undefined && object[field] !== null) {
+                            // replace match with value
+                            view = view.replaceAll(match, object[field]);
+                            // change flag
+                            found = true;
+                        }
+                    });
+                }
 
             // replace {object.key} with value
             view = view.replace('{'+key+'}', value);
