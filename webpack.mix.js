@@ -44,8 +44,9 @@ mix
     /** ****************** **
      ** Backend components **
      ** ****************** **/
-    .js('resources/assets/js/app.js',       'backend-module/assets/js')
-    .sass('resources/assets/sass/app.scss', 'backend-module/assets/css')
+    .js('resources/assets/js/app.js',               'backend-module/assets/js')
+    .sass('resources/assets/sass/app.scss',         'backend-module/assets/css')
+    .sass('resources/assets/sass/printables.scss',  'backend-module/assets/css')
 
     .copy('node_modules/pdfmake/build/vfs_fonts.js',        public+'/backend-module/vendor/pdfmake/')
     .copy('node_modules/tinymce/themes',                    public+'/backend-module/vendor/tinymce/themes')
