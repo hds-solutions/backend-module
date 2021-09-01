@@ -306,6 +306,6 @@ $('#company-selector').on('show.bs.modal', e => {
 });
 
 document.querySelectorAll('form').forEach(form => {
-    const submit_btn = form.querySelector('[type="submit"]');
-    if (submit_btn) submit_btn.addEventListener('click', e => form.classList.add('validated'));
+    const submit_btn = form.querySelectorAll('[type="submit"]');
+    if (submit_btn.length) submit_btn.forEach(button => button.addEventListener('click', e => form.classList.add('validated')));
 });
