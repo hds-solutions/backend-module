@@ -11,6 +11,7 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         \HDSSolutions\Laravel\Http\Middleware\HttpsProtocol::class,
         \HDSSolutions\Laravel\Http\Middleware\SetLocale::class,
         \HDSSolutions\Laravel\Http\Middleware\SettingsLoader::class,
+        \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class,
     ];
 
     protected array $middlewares = [
