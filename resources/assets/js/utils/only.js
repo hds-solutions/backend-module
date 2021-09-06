@@ -9,7 +9,7 @@ export default class Only {
         this.parent = parent ?? document.body;
         // save original display classes
         this.display = [];
-        this.element.classList.forEach(className => className.match(/^d-/) ? this.display.push(className) : null);
+        this.element.classList.forEach(className => className.match(/^d-/) && className !== 'd-none' ? this.display.push(className) : null);
         // only when params matches
         this.only = [];
         // parse data-only
@@ -75,7 +75,7 @@ export default class Only {
             // show element
             this.element.classList.remove('d-none');
             // append original class names
-            this.display.forEach(className => { this.element.classList.add(className); });
+            this.display.forEach(className => this.element.classList.add(className));
         }
     }
 
