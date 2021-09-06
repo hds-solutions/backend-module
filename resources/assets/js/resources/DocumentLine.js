@@ -60,7 +60,7 @@ export default class DocumentLine {
         return this;
     }
 
-    fire(event, element) {
+    static fire(event, element) {
         // redirect event to POS.fire
         this.document.fire(event, element);
     }

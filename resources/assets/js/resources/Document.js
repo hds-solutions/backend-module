@@ -2,8 +2,9 @@ import Event from '../utils/consoleevent';
 
 export default class Document {
 
+    static events = {};
+
     #token = document.querySelector('[name="csrf-token"]').getAttribute('content');
-    #events = {};
     #lines = {};
 
     constructor() {
@@ -19,11 +20,11 @@ export default class Document {
         return lines;
     }
 
-    fire(event, element) {
+    static fire(event, element) {
         // create event if not exists
-        if (this.#events[event] === undefined) this.#events[event] = new Event(event);
+        if (this.events[event] === undefined) this.events[event] = new Event(event);
         // fire event on element
-        this.#events[event].fire( element );
+        this.events[event].fire( element );
     }
 
     register(container) {

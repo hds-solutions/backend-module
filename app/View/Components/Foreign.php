@@ -23,6 +23,7 @@ class Foreign extends Select {
 
         public string $show = 'name',
         public ?string $title = null,
+        public ?string $subtext = null,
 
         public ?string $filteredBy = null,
         public ?string $filteredUsing = null,
