@@ -1,3 +1,4 @@
+import Document from './Document';
 import uuid from 'uuid/v4';
 
 export default class DocumentLine {
@@ -61,8 +62,8 @@ export default class DocumentLine {
     }
 
     static fire(event, element) {
-        // redirect event to POS.fire
-        this.document.fire(event, element);
+        // redirect event to Document.fire
+        Document.fire(event, element);
     }
 
     undecimalize(amount, decimals = 0) {
