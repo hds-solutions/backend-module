@@ -2,7 +2,7 @@
 
 <x-backend-form-foreign :resource="$resource ?? null" name="company_id" required
     foreign="companies" :values="$companies" foreign-add-label="backend::companies.add"
-    :default="backend()->company()?->id"
+    :default="backend()->company()?->id" :readonly="backend()->branchScoped()"
 
     label="backend::branch.company_id.0"
     placeholder="backend::branch.company_id._"
