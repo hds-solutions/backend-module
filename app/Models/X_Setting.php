@@ -24,7 +24,7 @@ abstract class X_Setting extends Base\Model {
                 // cast value to boolean
                 $value = $value == 'true';
         }
-        // save
+        // save to model attributes
         $this->attributes['value'] = $value;
     }
 
