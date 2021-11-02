@@ -12,6 +12,7 @@ abstract class X_Branch extends Base\Model {
     ];
 
     protected $fillable = [
+        'company_id',
         'name',
         'code',
         'region_id',
