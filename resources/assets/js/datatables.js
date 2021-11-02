@@ -8,6 +8,7 @@ require('datatables.net-select-bs4');
 require('datatables.net-buttons-bs4');
 
 import Event from './utils/consoleevent';
+import SearchModal from './resources/SearchModal';
 
 import { Container, byString } from './utils/datatables';
 
@@ -143,6 +144,8 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal]').forEach(tab
         // execute ajax to refresh data
         datatable.ajax.reload();
     });
+    // extra modal events
+    if (filters && filters.dataset.modal) new SearchModal(filters.dataset.modal, table, filters, datatable);
 });
 
 /**
