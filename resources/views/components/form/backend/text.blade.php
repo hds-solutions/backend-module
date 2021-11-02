@@ -1,4 +1,4 @@
-<x-form-row>
+<x-form-row class="{{ $attributes->get('row-class') }}">
     <x-form-label text="{{ $attributes->get('label') }}" form-label />
 
     <x-form-row-group>

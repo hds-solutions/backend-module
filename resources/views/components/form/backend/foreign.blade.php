@@ -2,7 +2,7 @@
     @include('backend::components.form.backend.foreign.select')
 
 @else
-    <x-form-row>
+    <x-form-row class="{{ $attributes->get('row-class') }}">
         <x-form-label text="{{ $attributes->get('label') }}" form-label />
 
         <x-form-row-group count="{{ $slot->isNotEmpty() ? 2 : 1 }}">
