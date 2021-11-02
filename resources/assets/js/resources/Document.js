@@ -27,6 +27,10 @@ export default class Document {
         this.events[event].fire( element );
     }
 
+    multiple(multiple) {
+        this.multiple = multiple;
+    }
+
     register(container) {
         // get container instance
         let instance = this._getContainerInstance(container);

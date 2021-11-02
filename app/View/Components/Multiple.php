@@ -24,10 +24,12 @@ class Multiple extends Component {
         public ?string $helper = null,
 
         public ?string $card = null,
+        public bool|string $autoAddLines = true,
     ) {
         $this->values = $values instanceof Collection ? $values : collect($values);
         $this->extra = $extra instanceof Collection ? $extra : collect($extra);
         $this->selecteds = $selecteds instanceof Collection ? $selecteds : collect($selecteds);
+        $this->autoAddLines = filter_var($this->autoAddLines, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function render() {

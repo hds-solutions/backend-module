@@ -58,6 +58,9 @@ $('[data-filtered-by]').each((idx, ele) => {
 import Multiple from './utils/multiple';
 document.querySelectorAll('[data-multiple]').forEach(ele => {
     let multiple = new Multiple( ele );
+    let instance;
+    if (instance = Application.instance(multiple.type))
+        instance.multiple( multiple );
 
     // capture element deletion
     multiple.removed(lineContainer => Application.instance(multiple.type) &&
