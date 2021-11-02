@@ -145,3 +145,34 @@ label.align-top {
 .card-header > .row:nth-child(2) .border-top.mt-2 {
     margin-top: 0.75rem !important;
 }
+
+.btn-no-action {
+    cursor: auto !important;
+    opacity: 1 !important;
+}
+
+.bg-cover {
+    background-size: cover;
+}
+
+.bg-contain {
+    background-size: contain;
+}
+
+.bg-no-repeat {
+    background-repeat: no-repeat;
+}
+
+@include media-breakpoint-up(xl) {
+    .bg-xl-cover {
+        background-size: cover !important;
+    }
+
+    .bg-xl-contain {
+        background-size: contain !important;
+    }
+}
+
+.bg-center {
+    background-position: center center;
+}

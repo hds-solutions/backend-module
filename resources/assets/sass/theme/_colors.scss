@@ -2,11 +2,15 @@
     .btn-hover-#{$color}:hover {
         @include button-variant($value, $value);
     }
-}
 
-@each $color, $value in $theme-colors {
     .btn-hover-outline-#{$color}:hover {
         @include button-outline-variant($value, $color, transparent);
+    }
+}
+
+@each $color, $value in $grays {
+    .border-gray-#{$color} {
+        border-color: $value !important;
     }
 }
 

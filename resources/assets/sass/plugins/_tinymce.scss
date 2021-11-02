@@ -1,0 +1,43 @@
+.tox {
+    .tox-tbtn {
+    }
+
+    .tox-tbtn:focus,
+    .tox-tbtn:focus:not(.tox-tbtn--disabled),
+    .tox-tbtn:hover {
+        background-color: $primary;
+        color: #fff;
+
+        svg {
+            fill: #fff;
+        }
+    }
+
+    .tox-tbtn--enabled,
+    .tox-tbtn--enabled:hover {
+        background-color: $secondary;
+    }
+
+    .tox-mbtn:focus:not(:disabled),
+    .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active) {
+        background-color: $primary;
+        color: #fff;
+    }
+    .tox-mbtn--active {
+        background-color: $primary;
+        color: #fff;
+    }
+
+    .tox-collection--list {
+        .tox-collection__item--active {
+            background-color: $primary;
+
+            &:not(.tox-collection__item--state-disabled) {
+                color: #fff;
+            }
+            .tox-collection__item-caret svg {
+                fill: #fff;
+            }
+        }
+    }
+}

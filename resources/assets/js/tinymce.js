@@ -1,9 +1,8 @@
 // TinyMCE
 require('tinymce');
 
-// theme
+// theme icons
 require('tinymce/icons/default');
-require('tinymce/themes/silver');
 
 // plugins
 require('tinymce/plugins/advlist');
@@ -32,14 +31,14 @@ require('tinymce/plugins/table');
 require('tinymce/plugins/contextmenu');
 require('tinymce/plugins/directionality');
 // require('tinymce/plugins/emoticons');
-require('tinymce/plugins/template');
+// require('tinymce/plugins/template');
 require('tinymce/plugins/paste');
 require('tinymce/plugins/textcolor');
 
 // init
 tinymce.init({
     skin: false,
-    skin_url: '/vendor/tinymce/skins/ui/oxide',
+    content_css: document.querySelector('meta[name="assets-path"]').content + 'backend-module/vendor/tinymce/skins/content/default/content.min.css',
 
     selector: 'textarea.wysiwyg',
     height: 250,
@@ -47,7 +46,7 @@ tinymce.init({
     plugins: [
         "advlist autolink link image lists charmap preview hr anchor pagebreak spellchecker",
         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-        "table contextmenu directionality template paste textcolor"
+        "table contextmenu directionality paste textcolor"
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | forecolor backcolor",
     resize: false,

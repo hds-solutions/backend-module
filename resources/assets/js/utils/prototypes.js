@@ -55,6 +55,27 @@ if (typeof Date.addDays === 'undefined') {
     }
 }
 
+if (typeof Date.months === 'undefined') {
+    Object.defineProperty(Date, 'months', {
+        enumerable: true,
+        writable: false,
+        value: {
+            'Ene': 'Enero',
+            'Feb': 'Febrero',
+            'Mar': 'Marzo',
+            'Abr': 'Abril',
+            'May': 'Mayo',
+            'Jun': 'Junio',
+            'Jul': 'Julio',
+            'Ago': 'Agosto',
+            'Sep': 'Septiembre',
+            'Oct': 'Octubre',
+            'Nov': 'Noviembre',
+            'Dic': 'Diciembre',
+        }
+    });
+}
+
 if (typeof Date.format === 'undefined') {
     const sdf = new SimpleDateFormat;
     Date.prototype.format = function(format) {

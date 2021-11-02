@@ -1,0 +1,7 @@
+@each $y-position in [ 'top', 'bottom' ] {
+  @each $x-position in [ 'left', 'right' ] {
+    .border-#{$y-position}-#{$x-position}-0 {
+      border-#{$y-position}-#{$x-position}-radius: 0 !important;
+    }
+  }
+}
