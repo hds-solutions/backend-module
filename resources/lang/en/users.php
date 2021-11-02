@@ -12,7 +12,6 @@
     'edit'          => 'Edit User',
 
     'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
     'cancel'        => 'Cancel',
 
 ];

@@ -30,4 +30,10 @@
         'confirm_'  => 'Password confirmation',
     ],
 
+    'roles'          => [
+        'Roles',
+        '_' => 'Roles',
+        '?' => 'Roles',
+    ] + include('role.php'),
+
 ];
