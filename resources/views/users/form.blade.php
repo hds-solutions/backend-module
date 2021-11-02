@@ -52,7 +52,7 @@
     :values="$roles" :selecteds="isset($resource) ? $resource->roles : []"
     contents-view="backend::users.form.role"
 
-    label="backend::users.roles.0" />
+    label="backend::user.roles.0" />
 
 <x-backend-form-controls
     submit="backend::users.save"
