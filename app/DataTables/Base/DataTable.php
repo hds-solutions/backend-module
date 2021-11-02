@@ -45,7 +45,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         // add custom global filters
         if (method_exists($this, 'filters')) $query = $this->filters($query);
         // get datatable class for current eloquent model query
-        $datatable = datatables()->eloquent( $query )
+        $datatable = datatables()->of( $query )
             // redirect order by
             ->order(fn(Builder $query) => $this->order($query));
 
@@ -80,10 +80,8 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
     }
 
     public final function query():Builder {
-        // return new query for current eloquent model
-        $query = ($resource = new $this->resource)->newQuery()
-            // select only resource table data (custom joins breaks data)
-            ->select("{$resource->getTable()}.*");
+        // get query builder
+        $query = $this->newQuery();
         // append with's to query builder
         if (count($this->with) > 0) $query->with( $this->with );
         // append withCount's to query builder
@@ -92,15 +90,32 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         return $query;
     }
 
+    protected function newQuery():Builder {
+        // return new query for current eloquent model
+        return ($resource = new $this->resource)->newQuery()
+            // select only resource table data (custom joins breaks data)
+            ->select("{$resource->getTable()}.*");
+    }
+
+    protected function getTableId():string {
+        return class_basename($this->resource).'-datatable';
+    }
+
+    protected function parameters():array {
+        return [];
+    }
+
     public final function html() {
         // get builder for current DataTable
         $builder = $this->builder()
-            ->setTableId( class_basename($this->resource).'-datatable')
+            ->setTableId( $this->getTableId() )
             ->autoWidth(false)
             ->addTableClass('table-bordered table-sm table-hover')
             ->columns( $this->getColumns() )
             ->minifiedAjax( $this->route )
             ->searchDelay(150);
+        // custom parameters
+        $builder->parameters( $this->parameters() );
 
         // load registered columns
         $columns = collect($this->getColumns());

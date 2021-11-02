@@ -16,7 +16,7 @@ import { reduce, parse } from './utils/utilities';
 let assetBasePath = document.querySelector('meta[name="assets-path"]').content ?? '';
 function asset(url) { return assetBasePath + url; }
 
-document.querySelectorAll('table[id$=-datatable]').forEach(table => {
+document.querySelectorAll('table[id$=-datatable],table[id$=-modal]').forEach(table => {
     // check if datatables config exists
     if (window.datatables === undefined) return;
     // get datatable configuration
@@ -51,13 +51,17 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
                         column.render = data => '<b>'+data+'</b>';
                         break;
                     case 'image':
+                        // get datetime configuration
+                        let image_config = type.shift().split(';'),
+                            col = image_config.shift(),
+                            className = image_config.shift() || 'mh-75px';
                         // set size
                         column.className = 'text-center align-middle w-200px';
-                        // get column
-                        let col = type.shift();
+                        // // get column
+                        // let col = type.shift();
                         // render image
                         column.render = (data, type, row, meta) => {
-                            return '<td><img src="' + (byString(row, col) ?? asset('backend-module/assets/images/default.jpg')) + '" class="mh-75px"></td>';
+                            return '<td><img src="' + (byString(row, col) ?? asset('backend-module/assets/images/default.jpg')) + '" class="'+className+'"></td>';
                         }
                         break;
                     case 'boolean':
@@ -100,7 +104,7 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
     // capture draw callback to register events
     config.drawCallback = e => container.events();
     // get filters form
-    const filters = document.querySelector('#filters form');
+    const filters = document.querySelector('[data-filters-for="#'+table.id+'"]') ?? document.querySelector('#filters form') ?? false;
     // add filters from form to ajax request
     if (filters) config.ajax.data = data => ({...data, ...getFormValues( filters, false ) });
     // init datatable
@@ -136,11 +140,10 @@ document.querySelectorAll('table[id$=-datatable]').forEach(table => {
                     (new Event('change')).fire( document.querySelector(filter.dataset.filteredBy) )
             }
         });
-        // execite ajax to refresh data
+        // execute ajax to refresh data
         datatable.ajax.reload();
     });
 });
-
 
 /**
  * Get the values from a form
