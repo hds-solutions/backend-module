@@ -22,9 +22,9 @@ abstract class BaseJob extends Job {
 
     public function __construct() {
         // save user that dispatched the job
-        $this->user = auth()->user()->fresh();
+        $this->user = auth()->user()?->fresh();
         // save company where we are working
-        $this->company = backend()->company()->fresh();
+        $this->company = backend()->company()?->fresh();
     }
 
     protected final function notify(string $eventClass, ...$params) {
