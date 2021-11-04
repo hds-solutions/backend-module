@@ -33,3 +33,17 @@ if (!function_exists('str_increment')) {
         return substr(++$value, 2);
     }
 }
+
+if (! function_exists('warn')) {
+    function warn($message = null, array $context = []) {
+        if (is_null($message)) return app('log');
+        return app('log')->warning($message, $context);
+    }
+}
+
+if (! function_exists('error')) {
+    function error($message = null, array $context = []) {
+        if (is_null($message)) return app('log');
+        return app('log')->error($message, $context);
+    }
+}
