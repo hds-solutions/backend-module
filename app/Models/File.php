@@ -35,7 +35,7 @@ class File extends X_File {
         parent::delete();
     }
 
-    public static function upload(Request $request, UploadedFile $file, Controller $controller):?File {
+    public static function upload(Request $request, UploadedFile $file, Controller $controller, bool $public = true):?File {
         // default type to pdf
         $type = 'pdf';
         // validate
@@ -47,6 +47,10 @@ class File extends X_File {
         }
         // save original name
         $originalName = $file->getClientOriginalName();
+        // get public / private disk
+        $disk_type = config($public ? 'filesystems.uploads' : 'filesystems.default');
+        info("Uploading file {$originalName} to disk {$disk_type}");
+        $disk = Storage::disk( $disk_type );
         // check if is image
         if (preg_match('/^image\/.*/', $file->getMimeType())) {
             // change type to image
@@ -77,17 +81,18 @@ class File extends X_File {
             // create path name
             $path = File::IMAGES_DIRECTORY.'/'.$hashName;
             // save to storage
-            Storage::disk( config('filesystems.uploads') )->put($path, $file);
+            $disk->put($path, $file);
         } else {
             // check file type
             $type = preg_match('/excel/', $file->getMimeType()) ? 'spreadsheet' : $type;
             // save file
-            $path = Storage::disk( config('filesystems.uploads') )->putFile(File::STORAGE_DIRECTORY, $file);
+            $path = $disk->putFile(File::STORAGE_DIRECTORY, $file);
         }
         // create resource
         return new File([
             'name'  => $originalName,
             'type'  => $type,
+            'disk'  => $disk_type,
             'url'   => $path,
         ]);
     }

@@ -23,6 +23,7 @@ class CreateFilesTable extends Migration {
             $table->foreignTo('Company')->nullable();
             $table->string('name');
             $table->enum('type', [ 'image', 'pdf', 'spreadsheet' ]);
+            $table->string('disk');
             $table->string('url');
         });
     }
