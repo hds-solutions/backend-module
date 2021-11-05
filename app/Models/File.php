@@ -12,6 +12,8 @@ use Intervention\Image\Facades\Image;
 class File extends X_File {
 
     private ?Illuminate_File $instance = null;
+    private bool $is_local_fs;
+    private $temp_file;
 
     public function scopeImages($query) {
         return $query->where('type', '=', 'image');
@@ -19,9 +21,24 @@ class File extends X_File {
 
     public function file():?Illuminate_File {
         // checl if instance exists
-        if ($this->instance === null)
+        if ($this->instance === null) {
+            // get file path
+            $path = $this->path;
+            // get disk config
+            $disk_config = config( "filesystems.disks.{$this->disk}" );
+            // check if disk isn't local
+            if ($this->is_local_fs = $disk_config['driver'] !== 'local') {
+                // make a temporal file
+                $this->temp_file = tempnam(sys_get_temp_dir(), "{$this->name}_");
+                // move extension to end
+                preg_match('/((\.\w+)+)\_/', $this->temp_file, $matches);
+                $this->temp_file = str_replace($matches[1], '', $this->temp_file).$matches[1];
+                // put contents from external disk
+                file_put_contents($path = $this->temp_file, Storage::disk( $this->disk )->get( $this->url_raw ));
+            }
             // load instance
-            $this->instance = new Illuminate_File( $this->path );
+            $this->instance = new Illuminate_File( $path );
+        }
         // return file instance
         return $this->instance;
     }
