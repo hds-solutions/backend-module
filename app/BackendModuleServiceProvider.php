@@ -4,6 +4,7 @@ namespace HDSSolutions\Laravel;
 
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 
 class BackendModuleServiceProvider extends ModuleServiceProvider {
 
@@ -84,6 +85,14 @@ class BackendModuleServiceProvider extends ModuleServiceProvider {
         // register blade directives
         Blade::directive('onlyform', fn($exp) => "<?php if (request()->has('only-form')): ?><input type=\"hidden\" name=\"only-form\" value=\"true\" /><?php endif; ?>");
         Blade::directive('gmap', fn($exp) => "<script src=\"https://maps.googleapis.com/maps/api/js?v=3&key=".config('services.google.maps.key')."&ftype=.js\"></script>");
+
+        // get Lambda flag
+        $isRunningInLambda = isset($_SERVER['LAMBDA_TASK_ROOT']);
+        // The rest below is specific to AWS Lambda
+        if (!$isRunningInLambda) return;
+
+        // update Laravel Excel temporary path
+        Config::set('excel.temporary_files.local_path', '/tmp/storage/framework/laravel-excel');
     }
 
     public function register() {
