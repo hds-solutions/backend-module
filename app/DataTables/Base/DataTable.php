@@ -115,7 +115,10 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             ->minifiedAjax( $this->route )
             ->searchDelay(150);
         // custom parameters
-        $builder->parameters( $this->parameters() );
+        $builder->parameters( $this->parameters() + [
+            // load datatables translations
+            'language' => __('backend::datatables')
+        ] );
 
         // load registered columns
         $columns = collect($this->getColumns());
