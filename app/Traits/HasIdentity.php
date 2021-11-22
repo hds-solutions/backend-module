@@ -16,7 +16,8 @@ trait HasIdentity {
 
     public final function identity() {
         // link with identity class
-        return $this->hasOne(self::$identityClazz, (new self::$identityClazz)->getKeyName());
+        return $this->hasOne(self::$identityClazz, (new self::$identityClazz)->getKeyName())
+            ->withTrashed();
     }
 
     public final function getIdentityAttribute() {
