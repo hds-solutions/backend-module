@@ -103,6 +103,7 @@ class BaseBlueprint extends Blueprint {
         $this->timestamp('document_rejected_at')->nullable();
         $this->timestamp('document_completed_at')->nullable();
         $this->timestamp('document_closed_at')->nullable();
+        $this->timestamp('document_voided_at')->nullable();
     }
 
     public function morphable($name = null) {

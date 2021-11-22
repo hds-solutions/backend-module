@@ -81,6 +81,10 @@ final class DocumentEngine implements Document {
         if ($action == Document::ACTION_ReOpen)
             // execute reOpenIt
             return $this->reOpenIt();
+        // check if action is voidIt
+        if ($action == Document::ACTION_Void)
+            // execute voidIt
+            return $this->voidIt();
         // invalid action, return false
         return $this->documentError( 'Unknown action: '.$action ) && false;
     }
@@ -135,6 +139,12 @@ final class DocumentEngine implements Document {
         if ($this->document->isClosed())
             // enable reOpenIt action
             $actions->push( Document::ACTION_ReOpen );
+        // valid statuses for voidIt
+        if ($this->document->isDrafted() || $this->document->isInProgress() ||
+            $this->document->isApproved() || $this->document->isRejected() ||
+            $this->document->isCompleted() || $this->document->isInvalid())
+            // enable voidIt action
+            $actions->push( Document::ACTION_Void );
         // return available actions
         return $actions;
     }
@@ -216,6 +226,20 @@ final class DocumentEngine implements Document {
             $this->logDocumentStatusChange( __FUNCTION__, from_from: Document::STATUS_Closed, to_status: $this->document->document_status );
         // return process status
         return $opened;
+    }
+
+    protected function voidIt():bool { $this->logger( __FUNCTION__ );
+        // void document
+        if ($voided = $this->document->voidIt()) {
+            // register document status change
+            $this->logDocumentStatusChange( __FUNCTION__, Document::STATUS_Voided );
+            // update status
+            $this->document->document_status = Document::STATUS_Voided;
+            // set voided timestamp
+            $this->document->document_voided_at = now();
+        }
+        // return status
+        return $voided;
     }
 
     private function logDocumentStatusChange(string $action, ?string $to_status = null, ?string $from_status = null) {

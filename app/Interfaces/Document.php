@@ -10,6 +10,7 @@ interface Document {
     const STATUS_Rejected   = 'RE';
     const STATUS_Completed  = 'CO';
     const STATUS_Closed     = 'CL';
+    const STATUS_Voided     = 'VO';
     const STATUS_Invalid    = 'IN';
     const STATUS_Unknown    = '??';
     const STATUSES = [
@@ -19,6 +20,7 @@ interface Document {
         self::STATUS_Rejected,
         self::STATUS_Completed,
         self::STATUS_Closed,
+        self::STATUS_Voided,
     ];
 
     const ACTION_Prepare    = 'PR';
@@ -27,6 +29,7 @@ interface Document {
     const ACTION_Reject     = 'RE';
     const ACTION_Close      = 'CL';
     const ACTION_ReOpen     = 'RO';
+    const ACTION_Void       = 'VO';
     const ACTIONS = [
         self::ACTION_Prepare,
         self::ACTION_Approve,
@@ -34,6 +37,7 @@ interface Document {
         self::ACTION_Reject,
         self::ACTION_Close,
         self::ACTION_ReOpen,
+        self::ACTION_Void,
     ];
 
     public function getDocumentStatusAttribute():string;
@@ -57,5 +61,7 @@ interface Document {
     // public function closeIt():?string;
 
     // public function reOpenIt():bool;
+
+    // public function voidIt():?string;
 
 }

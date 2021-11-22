@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator as Validator_Factory;
 trait HasDocumentActions {
 
     protected bool $document_enableCloseIt = false;
+    protected bool $document_enableVoidIt = false;
 
     private ?string $document_error;
 
@@ -37,13 +38,15 @@ trait HasDocumentActions {
 
     public abstract function completeIt():?string;
 
+    public final function canCloseIt():bool { return $this->document_enableCloseIt; }
+
     public function closeIt():?string { $this->documentError('This document can\'t be closed'); return null; }
 
     public function reOpenIt():bool { return false; }
 
-    public final function canCloseIt():bool {
-        return $this->document_enableCloseIt;
-    }
+    public final function canVoidIt():bool { return $this->document_enableVoidIt; }
+
+    public function voidIt():bool { return $this->documentError('This document can\'t be voided') == null; }
 
     public final function getDocumentStatusAttribute():string {
         // return current document status
@@ -238,6 +241,16 @@ trait HasDocumentActions {
         return $this->isCompleted();
     }
 
+    public final function wasCompleted():bool {
+        // return if document has completed_at
+        return $this->document_completed_at !== null;
+    }
+
+    public final function getWasCompletedAttribute():bool {
+        // return method result
+        return $this->wasCompleted();
+    }
+
     public final function scopeClosed(Builder $query, bool $matches = true) {
         // filter documents
         return $this->scopeStatus($query,
@@ -255,6 +268,25 @@ trait HasDocumentActions {
     public final function getIsClosedAttribute():bool {
         // return method result
         return $this->isClosed();
+    }
+
+    public final function scopeVoided(Builder $query, bool $matches = true) {
+        // filter documents
+        return $this->scopeStatus($query,
+            // where status matches
+            Document::STATUS_Voided,
+            // redirect whereIn flag
+            whereIn: $matches);
+    }
+
+    public final function isVoided():bool {
+        // return if document is Voided
+        return $this->document_status == Document::STATUS_Voided;
+    }
+
+    public final function getIsVoidedAttribute():bool {
+        // return method result
+        return $this->isVoided();
     }
 
     public function scopeOpen(Builder $query) {

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-5">
     <div class="col text-right">
 
     @if ($resource->isDrafted() || $resource->isInvalid())
@@ -37,8 +37,8 @@
             <button type="submit"
                 data-confirm="@lang('backend::document.rejectIt._', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])?"
                 data-text="@lang('backend::document.rejectIt.?', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])"
-                data-text-type="danger"
                 data-accept="@lang('backend::document.rejectIt.0')"
+                data-text-type="danger"
                 data-accept-class="btn-outline-danger btn-hover-danger"
                 data-cancel-class="btn-danger"
                 data-modal-type="danger"
@@ -83,6 +83,23 @@
                 data-text="@lang('backend::document.reOpenIt.?', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])"
                 data-accept="@lang('backend::document.reOpenIt.0')"
                 class="btn btn-lg btn-outline-primary">@lang('backend::document.reOpenIt.0')</button>
+        </form>
+    @endif
+
+    @if (($resource->isCompleted() || $resource->isRejected()) && $resource->canVoidIt())
+        <form method="POST" action="{{ route($route, $resource) }}"
+            enctype="multipart/form-data" class="d-inline">
+            @csrf
+            <input type="hidden" name="action" value="{{ Document::ACTION_Void }}">
+            <button type="submit"
+                data-confirm="@lang('backend::document.voidIt._', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])?"
+                data-text="@lang('backend::document.voidIt.?', [ 'document' => $resource->name ?? $resource->description ?? $title ?? 'document' ])"
+                data-accept="@lang('backend::document.voidIt.0')"
+                data-text-type="danger"
+                data-accept-class="btn-outline-danger btn-hover-danger"
+                data-cancel-class="btn-danger"
+                data-modal-type="danger"
+                class="btn btn-lg btn-outline-primary btn-hover-danger">@lang('backend::document.voidIt.0')</button>
         </form>
     @endif
 
