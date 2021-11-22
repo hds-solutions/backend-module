@@ -3,7 +3,7 @@
     'nav'           => 'Ciudades',
 
     'title'         => 'Ciudades',
-    'description'   => 'Descripción de Ciudades',
+    'description'   => '',
 
     'index'         => 'Listado de Ciudades',
     'create'        => 'Crear nueva Ciudad',

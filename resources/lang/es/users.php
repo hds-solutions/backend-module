@@ -3,7 +3,7 @@
     'nav'           => 'Usuarios',
 
     'title'         => 'Usuarios',
-    'description'   => 'Descripción de Usuarios',
+    'description'   => '',
 
     'index'         => 'Listado de Usuarios',
     'create'        => 'Crear nuevo Usuario',

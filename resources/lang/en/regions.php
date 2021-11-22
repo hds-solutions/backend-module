@@ -3,7 +3,7 @@
     'nav'           => 'Regions',
 
     'title'         => 'Regions',
-    'description'   => 'Regions description',
+    'description'   => '',
 
     'index'         => 'Regions list',
     'create'        => 'Create new Region',
@@ -12,7 +12,6 @@
     'edit'          => 'Edit Region',
 
     'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
     'cancel'        => 'Cancel',
 
 ];

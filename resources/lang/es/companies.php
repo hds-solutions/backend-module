@@ -3,10 +3,10 @@
     'nav'           => 'Compañías',
 
     'title'         => 'Compañías',
-    'description'   => 'Descripción de Compañías',
+    'description'   => '',
 
     'index'         => 'Listado de Compañías',
-    'create'        => 'Creaar nueva Compañía',
+    'create'        => 'Crear nueva Compañía',
     'add'           => 'Agregar nueva Compañía',
     'show'          => 'Detalles de la Compañía',
     'edit'          => 'Editar Compañía',

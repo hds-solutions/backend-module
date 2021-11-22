@@ -1,7 +1,5 @@
 <?php return [
 
-    'nav'   => 'Branch',
-
     'company_id'        => [
         'Company',
         '_' => 'Company',

@@ -1,11 +1,15 @@
 <?php return [
 
-    'nav'   => 'Compañia',
-
     'name'      => [
         'Nombre',
         '_' => 'Nombre',
         '?' => 'Nombre',
+    ],
+
+    'ftid'      => [
+        'RUC',
+        '_' => 'RUC',
+        '?' => 'RUC',
     ],
 
     'logo_id'   => [
@@ -13,6 +17,11 @@
         '_' => 'Logo',
         '?' => 'Logo',
         'optional' => '(opcional) Logo',
+    ],
+
+    'branches'  => [
+        'Sucursales',
+        'count' => 'sucursales',
     ],
 
 ];

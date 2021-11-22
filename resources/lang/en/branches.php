@@ -3,7 +3,7 @@
     'nav'           => 'Branches',
 
     'title'         => 'Branches',
-    'description'   => 'Branches description',
+    'description'   => '',
 
     'index'         => 'Branches list',
     'create'        => 'Create new Branch',

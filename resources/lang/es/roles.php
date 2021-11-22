@@ -3,7 +3,7 @@
     'nav'           => 'Perfiles',
 
     'title'         => 'Perfiles',
-    'description'   => 'Descripción de Perfiles',
+    'description'   => '',
 
     'index'         => 'Listado de Perfiles',
     'create'        => 'Crear nuevo Perfil',

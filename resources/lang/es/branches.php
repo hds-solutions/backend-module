@@ -3,7 +3,7 @@
     'nav'           => 'Sucursales',
 
     'title'         => 'Sucursales',
-    'description'   => 'Descripción de Sucursales',
+    'description'   => '',
 
     'index'         => 'Listado de Sucursales',
     'create'        => 'Crear nueva Sucursal',

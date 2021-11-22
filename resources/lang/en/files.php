@@ -3,16 +3,15 @@
     'nav'           => 'Files',
 
     'title'         => 'Files',
-    'description'   => 'Files description',
+    'description'   => '',
 
     'index'         => 'Files list',
-    'create'        => 'Create new File',
+    'create'        => 'Upload new File',
     'add'           => 'Add new File',
     'show'          => 'File Details',
     'edit'          => 'Edit File',
 
-    'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
+    'save'          => 'Upload',
     'cancel'        => 'Cancel',
 
 ];

@@ -3,7 +3,7 @@
     'nav'           => 'Roles',
 
     'title'         => 'Roles',
-    'description'   => 'Roles description',
+    'description'   => '',
 
     'index'         => 'Roles list',
     'create'        => 'Create new Role',

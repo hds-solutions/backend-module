@@ -1,7 +1,5 @@
 <?php return [
 
-    'nav'   => 'Sucursal',
-
     'company_id'        => [
         'Compañía',
         '_' => 'Compañía',
@@ -25,14 +23,14 @@
         'Región',
         '_' => 'Región',
         '?' => 'Región',
-        'optional' => 'Without Región',
+        'optional' => 'Sin Región',
     ],
 
     'city_id'           => [
         'Ciudad',
         '_' => 'Ciudad',
         '?' => 'Ciudad',
-        'optional' => 'Without Ciudad',
+        'optional' => 'Sin Ciudad',
     ],
 
     'district'          => [

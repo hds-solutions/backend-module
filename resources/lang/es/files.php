@@ -3,15 +3,15 @@
     'nav'           => 'Archivos',
 
     'title'         => 'Archivos',
-    'description'   => 'Descripción de Archivos',
+    'description'   => '',
 
     'index'         => 'Listado de Archivos',
-    'create'        => 'Crear nuevo Archivo',
+    'create'        => 'Subir nuevo Archivo',
     'add'           => 'Agregar nuevo Archivo',
     'show'          => 'Detalles del Archivo',
     'edit'          => 'Editar Archivo',
 
-    'save'          => 'Guardar',
+    'save'          => 'Subir',
     'cancel'        => 'Cancelar',
 
 ];

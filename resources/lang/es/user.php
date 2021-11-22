@@ -32,8 +32,8 @@
 
     'roles'          => [
         'Perfiles',
-        '_' => 'Perfiles',
+        '_' => 'Seleccionar Perfil',
         '?' => 'Perfiles',
-    ] + include('role.php'),
+    ] + __('backend::role'),
 
 ];

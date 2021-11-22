@@ -3,7 +3,7 @@
     'nav'           => 'Companies',
 
     'title'         => 'Companies',
-    'description'   => 'Companies description',
+    'description'   => '',
 
     'index'         => 'Companies list',
     'create'        => 'Create new Company',
@@ -12,7 +12,6 @@
     'edit'          => 'Edit Company',
 
     'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
     'cancel'        => 'Cancel',
 
 ];

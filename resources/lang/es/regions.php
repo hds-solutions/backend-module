@@ -3,7 +3,7 @@
     'nav'           => 'Regiones',
 
     'title'         => 'Regiones',
-    'description'   => 'Descripción de Regiones',
+    'description'   => '',
 
     'index'         => 'Listado de Regiones',
     'create'        => 'Crear nueva Región',

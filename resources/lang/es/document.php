@@ -1,11 +1,13 @@
 <?php return [
-    'status'    => [
+
+    'status'        => [
         'Draft'         => 'Borrador',
         'InProgress'    => 'En Proceso',
         'Approved'      => 'Aprobado',
         'Completed'     => 'Completado',
         'Rejected'      => 'Rechazado',
         'Closed'        => 'Cerrado',
+        'Voided'        => 'Anulado',
         'Invalid'       => 'Inválido',
         'Unknown'       => 'Desconocido',
     ],
@@ -15,19 +17,35 @@
         '_' => 'Validar :document',
         '?' => 'Estas a punto de validar el documento :document',
     ],
+
     'approveIt'     => [
         'Aprobar',
         '_' => 'Aprobar :document',
         '?' => 'Estas a punto de aprobar el documento :document',
     ],
+
     'rejectIt'      => [
         'Rechazar',
         '_' => 'Rechazar :document',
         '?' => 'Estas a punto de rechazar el documento :document',
     ],
+
     'completeIt'    => [
         'Completar',
         '_' => 'Completar :document',
         '?' => 'Estas a punto de completar el documento :document',
     ],
+
+    'closeIt'       => [
+        'Cerrar',
+        '_' => 'Cerrar :document',
+        '?' => 'Estas a punto de cerrar el documento :document',
+    ],
+
+    'voidIt'        => [
+        'Anular',
+        '_' => 'Anular :document',
+        '?' => 'Estas a punto de anular el documento :document',
+    ],
+
 ];

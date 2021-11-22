@@ -3,7 +3,7 @@
     'nav'           => 'Users',
 
     'title'         => 'Users',
-    'description'   => 'Users description',
+    'description'   => '',
 
     'index'         => 'Users list',
     'create'        => 'Create new User',

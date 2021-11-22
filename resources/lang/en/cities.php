@@ -3,7 +3,7 @@
     'nav'           => 'Cities',
 
     'title'         => 'Cities',
-    'description'   => 'Cities description',
+    'description'   => '',
 
     'index'         => 'Cities list',
     'create'        => 'Create new City',

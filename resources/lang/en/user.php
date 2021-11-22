@@ -1,18 +1,18 @@
 <?php return [
 
-    'firstname'          => [
+    'firstname'     => [
         'Firstname',
         '_' => 'Firstname',
         '?' => 'Firstname',
     ],
 
-    'lastname'          => [
+    'lastname'      => [
         'Lastname',
         '_' => 'Lastname',
         '?' => 'Lastname',
     ],
 
-    'email'             => [
+    'email'         => [
         'Email',
         '_' => 'Email',
         '?' => 'Email',
@@ -21,7 +21,7 @@
         'confirm_'  => 'Email confirmation',
     ],
 
-    'password'          => [
+    'password'      => [
         'Password',
         '_' => 'Password',
         '?' => 'Password',
@@ -30,10 +30,10 @@
         'confirm_'  => 'Password confirmation',
     ],
 
-    'roles'          => [
+    'roles'         => [
         'Roles',
-        '_' => 'Roles',
+        '_' => 'Select Role',
         '?' => 'Roles',
-    ] + include('role.php'),
+    ] + __('backend::role'),
 
 ];
