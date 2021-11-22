@@ -4,6 +4,8 @@
 
 @section('content')
 
-    @include('backend::layouts.examples')
+    @if (config('app.debug'))
+        @include('backend::layouts.examples')
+    @endif
 
 @endsection
