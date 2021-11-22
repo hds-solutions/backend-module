@@ -28,9 +28,9 @@ if (!function_exists('module_path')) {
 }
 
 if (!function_exists('str_increment')) {
-    function str_increment($value):string {
+    function str_increment($value):?string {
         $value = 'A_'.$value;
-        return substr(++$value, 2);
+        return ($next = substr(++$value, 2)) !== '' ? $next : null;
     }
 }
 
