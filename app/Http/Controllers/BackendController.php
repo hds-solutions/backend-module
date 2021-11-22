@@ -17,6 +17,10 @@ class BackendController extends Controller {
         return view('backend::dashboard.index');
     }
 
+    public function keepAlive(Request $request) {
+        return response()->json(true);
+    }
+
     public function environment(Request $request) {
         foreach ([
             'company_id'    => 'setCompany',
