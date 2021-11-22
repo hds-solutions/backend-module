@@ -23,7 +23,8 @@ abstract class PermissionsSeeder extends Seeder {
             ->transform(fn($description, $permission) => [
                 'name'          => is_integer($permission) ? $description : $permission,
                 'description'   => is_integer($permission) ? null : $description,
-                'guard_name'    => config('auth.defaults.guard')
+                'guard_name'    => config('auth.defaults.guard'),
+                'created_at'    => now(),
             ])
             // convert to array
             ->toArray()
@@ -53,28 +54,28 @@ abstract class PermissionsSeeder extends Seeder {
     protected function afterRun():void {}
 
     protected final function resource(string $resource):array {
-        $title = __(($this->namespace ? "{$this->namespace}::" : '').$resource.'.title');
+        $title = ($this->namespace ? "{$this->namespace}::" : '').$resource;
         return [
-            "$resource.*"           => "Full $title access",
-            "$resource.crud.*"      => "All $title crud actions",
-            "$resource.crud.index"  => "$title listing",
-            "$resource.crud.create" => "$title creation",
-            "$resource.crud.show"   => "$title detail",
-            "$resource.crud.update" => "$title modification",
-            "$resource.crud.destroy"=> "$title deletion",
+            "$resource.*"           => "$title.permissions.*",
+            "$resource.crud.*"      => "$title.permissions.crud.*",
+            "$resource.crud.index"  => "$title.permissions.crud.index",
+            "$resource.crud.create" => "$title.permissions.crud.create",
+            "$resource.crud.show"   => "$title.permissions.crud.show",
+            "$resource.crud.update" => "$title.permissions.crud.update",
+            "$resource.crud.destroy"=> "$title.permissions.crud.destroy",
         ];
     }
 
     protected final function document(string $resource):array {
-        $title = __(($this->namespace ? "{$this->namespace}::" : '').$resource.'.title');
+        $title = ($this->namespace ? "{$this->namespace}::" : '').$resource;
         return [
-            "$resource.document.*"          => "Full $title document actions",
-            "$resource.document.prepareIt"  => "$title document preparation",
-            "$resource.document.approveIt"  => "$title document approving",
-            "$resource.document.rejectIt"   => "$title document rejection",
-            "$resource.document.completeIt" => "$title document completition",
-            "$resource.document.closeIt"    => "$title document closing",
-            "$resource.document.reOpenIt"   => "$title document re-opening",
+            "$resource.document.*"          => "$title.permissions.document.*",
+            "$resource.document.prepareIt"  => "$title.permissions.document.prepareIt",
+            "$resource.document.approveIt"  => "$title.permissions.document.approveIt",
+            "$resource.document.rejectIt"   => "$title.permissions.document.rejectIt",
+            "$resource.document.completeIt" => "$title.permissions.document.completeIt",
+            "$resource.document.closeIt"    => "$title.permissions.document.closeIt",
+            "$resource.document.reOpenIt"   => "$title.permissions.document.reOpenIt",
         ];
     }
 
