@@ -68,7 +68,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function roles(&$menu) {
-        if (Route::has('backend.roles') && $this->can('roles'))
+        if (Route::has('backend.roles') && $this->can('roles.crud.index'))
             $menu->add(__('backend::roles.nav'), [
                 // 'header'    => 'Configuraciones',
                 'route'     => 'backend.roles',
@@ -79,7 +79,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function users(&$menu) {
-        if (Route::has('backend.users') && $this->can('users'))
+        if (Route::has('backend.users') && $this->can('users.crud.index'))
             $menu->add(__('backend::users.nav'), [
                 // 'header'    => 'Configuraciones',
                 'route'     => 'backend.users',
@@ -90,7 +90,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function regions(&$menu) {
-        if (Route::has('backend.regions') && $this->can('regions'))
+        if (Route::has('backend.regions') && $this->can('regions.crud.index'))
             $menu->add(__('backend::regions.nav'), [
                 'route'     => 'backend.regions',
                 'icon'      => 'globe-americas'
@@ -100,7 +100,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function cities(&$menu) {
-        if (Route::has('backend.cities') && $this->can('cities'))
+        if (Route::has('backend.cities') && $this->can('cities.crud.index'))
             $menu->add(__('backend::cities.nav'), [
                 'route'     => 'backend.cities',
                 'icon'      => 'city'
@@ -110,7 +110,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function companies(&$menu) {
-        if (Route::has('backend.companies') && $this->can('companies'))
+        if (Route::has('backend.companies') && $this->can('companies.crud.index'))
             $menu->add(__('backend::companies.nav'), [
                 'route'     => 'backend.companies',
                 'icon'      => 'university'
@@ -120,7 +120,7 @@ class BackendMenu extends Base\Menu {
     }
 
     private function branches(&$menu) {
-        if (Route::has('backend.branches') && $this->can('branches'))
+        if (Route::has('backend.branches') && $this->can('branches.crud.index'))
             $menu->add(__('backend::branches.nav'), [
                 'route'     => 'backend.branches',
                 'icon'      => 'store'
@@ -130,10 +130,10 @@ class BackendMenu extends Base\Menu {
     }
 
     private function files(&$menu) {
-        if (Route::has('backend.files') && $this->can('files'))
+        if (Route::has('backend.files') && $this->can('files.crud.index'))
             $menu->add(__('backend::files.nav'), [
                 'route'     => 'backend.files',
-                'icon'      => 'files'
+                'icon'      => 'folder-open'
             ]);
 
         return $this;
