@@ -8,17 +8,12 @@ use Illuminate\Database\Eloquent\Builder;
 trait DatatableAsDocument {
 
     protected final function orderDocumentStatus(Builder $query, string $order):Builder {
-        // build a raw ORDER BY query
-        $orderByRaw = '';
-        // invert order, ASC goes from Draft to Completed
-        $order = $order == 'asc' ? 'desc' : 'asc';
-        // append Document.statuses with index as order value
-        foreach (Document::STATUSES as $idx => $status)
-            //
-            $orderByRaw .= "CASE WHEN {$this->getDocumentStatusColumnName()} = '$status' THEN $idx END $order, ";
-
-        // return query with custom order
-        return $query->orderByRaw( rtrim($orderByRaw, ', ') );
+        // get an array of available Document.statuses
+        $statuses = Document::STATUSES;
+        // check if order is inverted
+        if ($order === 'desc') $statuses = array_reverse($statuses);
+        // set custom order for Document.status
+        return $query->orderByRaw('FIELD('.$this->getDocumentStatusColumnName().', "'.implode('", "', $statuses).'")');
     }
 
     protected final function orderDocumentStatusPretty(Builder $query, string $order):Builder {
