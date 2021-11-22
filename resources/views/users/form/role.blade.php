@@ -4,9 +4,9 @@
 
         foreign="roles" foreign-add-label="backend::roles.add"
 
-        label="backend::user.roles.nav.0"
-        placeholder="backend::user.roles.nav._"
-        {{-- helper="backend::user.roles.nav.?" --}} />
+        label="backend::user.roles.0"
+        placeholder="backend::user.roles._"
+        {{-- helper="backend::user.roles.?" --}} />
 
     <button type="button" class="btn btn-danger ml-2"
         data-action="delete"

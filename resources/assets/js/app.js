@@ -312,3 +312,8 @@ document.querySelectorAll('form').forEach(form => {
     const submit_btn = form.querySelectorAll('[type="submit"]');
     if (submit_btn.length) submit_btn.forEach(button => button.addEventListener('click', e => form.classList.add('validated')));
 });
+
+document.querySelectorAll('input[type="checkbox"][onchange]').forEach(boolean => {
+    // redirect change event to previous element
+    boolean.addEventListener('change', e => (new Event('change')).fire(boolean.previousElementSibling));
+});

@@ -10,6 +10,7 @@ abstract class X_Company extends Base\Model {
 
     protected $fillable = [
         'name',
+        'ftid',
         'logo_id',
     ];
 
@@ -18,6 +19,7 @@ abstract class X_Company extends Base\Model {
 
     protected static $rules = [
         'name'      => [ 'required' ],
+        'ftid'      => [ 'required' ],
         'logo_id'   => [ 'sometimes', 'nullable' ],
     ];
 

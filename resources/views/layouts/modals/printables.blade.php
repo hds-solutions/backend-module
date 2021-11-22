@@ -3,7 +3,7 @@
     data-backdrop="static" data-keyboard="false">
 
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content mh-85vh">
+        <div class="modal-content vmin-h-85">
 
             <div class="modal-header align-items-center">
                 <h5 class="modal-title flex-grow-1" id="printables-modal-title">Print document</h5>

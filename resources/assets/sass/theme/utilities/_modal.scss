@@ -88,3 +88,33 @@
 
 }
 
+#printables-modal .modal-dialog {
+    max-width: 75mm;
+}
+
+.modal-backdrop + .modal-backdrop {
+    display: none;
+}
+
+.modal .modal::before {
+    content: '';
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+
+.modal .modal.show::before {
+    opacity: 0.5;
+}
+
+.modal#confirmation-modal {
+    z-index: 5000;
+}
+
+.modal#alert-modal {
+    z-index: 5020;
+}

@@ -12,7 +12,8 @@
         @if (backend()->company())
         <div class="lh-1rem">
             <h5 class="text-primary m-0">{{ backend()->company()->name }}</h5>
-            <div class="text-dark small">{{ ($branch = backend()->branch())?->name .($branch !== null ? ' · ' : null) . backend()->warehouse()?->name }}</div>
+            {{-- <div class="text-dark small">{{ ($branch = backend()->branch())?->name .($branch !== null ? ' · ' : null) . backend()->warehouse()?->name }}</div> --}}
+            <div class="text-dark small">{{ backend()->branch()?->name }}</div>
         </div>
         @endif
     </a>

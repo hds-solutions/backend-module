@@ -1,5 +1,10 @@
 @include('backend::components.errors')
 
+<x-backend-form-text :resource="$resource ?? null" name="ftid" required
+    label="backend::company.ftid.0"
+    placeholder="backend::company.ftid._"
+    {{-- helper="backend::company.ftid.?" --}} />
+
 <x-backend-form-text :resource="$resource ?? null" name="name" required
     label="backend::company.name.0"
     placeholder="backend::company.name._"

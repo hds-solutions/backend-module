@@ -20,6 +20,7 @@ class CreateCompaniesTable extends Migration {
         // create table
         $schema->create('companies', function(Blueprint $table) {
             $table->id();
+            $table->string('ftid');
             $table->string('name');
         });
     }

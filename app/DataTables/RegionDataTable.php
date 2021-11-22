@@ -8,6 +8,10 @@ use Yajra\DataTables\Html\Column;
 
 class RegionDataTable extends Base\DataTable {
 
+    protected array $withCount = [
+        'cities',
+    ];
+
     protected array $orderBy = [
         'name'  => 'asc',
     ];
@@ -27,6 +31,12 @@ class RegionDataTable extends Base\DataTable {
 
             Column::make('name')
                 ->title( __('backend::region.name.0') ),
+
+            Column::computed('cities')
+                ->title( __('backend::region.cities.0') )
+                ->renderRaw('view:region')
+                ->data( view('backend::regions.datatable.cities')->render() )
+                ->class('w-150px'),
 
             Column::computed('actions'),
         ];

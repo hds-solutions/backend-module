@@ -22,6 +22,8 @@ class Alert {
         });
     }
 
+    error(title, message = null) { return this.danger(title, message); }
+
     primary(title, message = null) { return this.#type('primary', title, message); }
     secondary(title, message = null) { return this.#type('secondary', title, message); }
     success(title, message = null) { return this.#type('success', title, message); }
@@ -128,7 +130,7 @@ class Modal {
         this.#element.querySelector('.modal-header').classList.add('bg-' + (settings.type ?? this.#modal.type));
         // configure modal with button settings
         this.#element.querySelector('.modal-title').textContent = settings.title ?? this.#modal.title;
-        this.#element.querySelector('.modal-body>p').textContent = settings.body ?? this.#modal.body;
+        this.#element.querySelector('.modal-body>p').innerHTML = settings.body ?? this.#modal.body;
         // reset text type
         Array.from(this.#element.querySelector('.modal-body>p').classList.values()).forEach(class_name => {
             // ignore class if isn't background

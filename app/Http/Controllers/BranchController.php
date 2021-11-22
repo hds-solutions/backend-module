@@ -34,10 +34,15 @@ class BranchController extends Controller {
                 Resource::count() :
                 // load resource count without scope
                 Resource::withoutGlobalScope(new CompanyScope)->count(),
+            // ask to select company
+            'show_company_selector' => !backend()->companyScoped(),
         ]);
     }
 
     public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // load companies
         $companies = backend()->companies();
         // load Regions

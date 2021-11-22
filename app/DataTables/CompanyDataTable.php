@@ -7,6 +7,10 @@ use Yajra\DataTables\Html\Column;
 
 class CompanyDataTable extends Base\DataTable {
 
+    protected array $withCount = [
+        'branches',
+    ];
+
     protected array $with = [
         'logo',
     ];
@@ -32,8 +36,17 @@ class CompanyDataTable extends Base\DataTable {
                 ->title( __('backend::company.logo_id.0') )
                 ->renderRaw('image:logo.url'),
 
+            Column::make('ftid')
+                ->title( __('backend::company.ftid.0') ),
+
             Column::make('name')
                 ->title( __('backend::company.name.0') ),
+
+            // Column::computed('branches')
+            //     ->title( __('backend::company.branches.0') )
+            //     ->renderRaw('view:company')
+            //     ->data( view('backend::companies.datatable.branches')->render() )
+            //     ->class('w-150px'),
 
             Column::computed('actions'),
         ];

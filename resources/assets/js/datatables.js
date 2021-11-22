@@ -1,23 +1,21 @@
 require('datatables.net-bs4');
 require('datatables.net-select-bs4');
 // require('datatables.net-buttons/js/buttons.colVis.min.js');
-// require('datatables.net-buttons/js/buttons.html5.min.js');
-// require('datatables.net-buttons/js/buttons.print.min.js');
-// require('pdfmake');
+require('datatables.net-buttons/js/buttons.html5.min.js');
+require('datatables.net-buttons/js/buttons.print.min.js');
+require('pdfmake');
 // require('datatables.net-buttons/js/buttons.flash.min.js');
 require('datatables.net-buttons-bs4');
 
 import Event from './utils/consoleevent';
 import SearchModal from './resources/SearchModal';
-
 import { Container, byString } from './utils/datatables';
-
 import { reduce, parse } from './utils/utilities';
 
 let assetBasePath = document.querySelector('meta[name="assets-path"]').content ?? '';
 function asset(url) { return assetBasePath + url; }
 
-document.querySelectorAll('table[id$=-datatable],table[id$=-modal]').forEach(table => {
+document.querySelectorAll('table[id$=-datatable],table[id$=-modal],table[id$=-report]').forEach(table => {
     // check if datatables config exists
     if (window.datatables === undefined) return;
     // get datatable configuration
@@ -108,8 +106,19 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal]').forEach(tab
     const filters = document.querySelector('[data-filters-for="#'+table.id+'"]') ?? document.querySelector('#filters form') ?? false;
     // add filters from form to ajax request
     if (filters) config.ajax.data = data => ({...data, ...getFormValues( filters, false ) });
+    // add download buttons
+    if (table.id.match(/-report$/)) {
+        config.dom = 'Bfrtip';
+        config.buttons = [
+            { text: 'CSV', extend: 'csv', className: 'btn btn-sm btn-info' },
+            { text: 'Excel', extend: 'excel', className: 'btn btn-sm btn-info' },
+            { text: 'PDF', extend: 'pdf', className: 'btn btn-sm btn-info' }
+        ];
+    }
     // init datatable
     const datatable = $(table).DataTable(config);
+    // move report buttons to container
+    if (table.id.match(/-report$/)) datatable.buttons().container().appendTo( document.querySelector('#report-buttons') );
     // find selects to apply styling
     document.querySelectorAll('#'+table.id+'_wrapper select').forEach(select => {
         // set class

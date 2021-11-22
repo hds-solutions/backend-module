@@ -12,7 +12,7 @@ class BackendPermissionsSeeder extends Base\PermissionsSeeder {
 
     protected function permissions():array {
         return [
-            '*' => 'Full platform access',
+            '*' => 'backend::permissions.*',
             $this->resource('roles'),
             $this->resource('users'),
             $this->resource('regions'),
@@ -20,6 +20,8 @@ class BackendPermissionsSeeder extends Base\PermissionsSeeder {
             $this->resource('companies'),
             $this->resource('branches'),
             $this->resource('files'),
+
+            'reports.*' => 'backend::permissions.reports.*',
         ];
     }
 

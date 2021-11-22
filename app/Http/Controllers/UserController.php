@@ -55,6 +55,9 @@ class UserController extends Controller {
 
         // hash password
         $resource->update([
+            // bypass email confirmation
+            'email_confirmation'    => $resource->email,
+            // hash password
             'password'              => $hashed = bcrypt($resource->password),
             // bypass confirmation validation
             'password_confirmation' => $hashed,

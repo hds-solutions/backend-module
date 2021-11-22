@@ -28,7 +28,7 @@
                     for="permission-{{ $permission->id }}"
                     @endif
                     class="col p-0 form-check-label text-decoration-none cursor-pointer collapsed">
-                    {{ $permission->description }} <i class="state float-right"></i>
+                    @lang($permission->description) <i class="state float-right"></i>
                 </label>
             </div>
         </div>

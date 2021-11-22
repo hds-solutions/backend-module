@@ -35,6 +35,7 @@ Route::group([
     Route::get('dashboard',     [ BackendController::class, 'dashboard' ])  ->name('backend.dashboard');
     Route::get('environment',   [ BackendController::class, 'environment' ])->name('backend.env');
     Route::post('environment',  [ BackendController::class, 'environment' ]);
+    Route::get('keep-alive',    [ BackendController::class, 'keepAlive' ])  ->name('backend.keep-alive');
 
     Route::resource('roles',        RoleController::class,      $name_prefix)
         ->parameters([ 'roles' => 'resource' ])

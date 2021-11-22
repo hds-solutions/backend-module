@@ -19,7 +19,7 @@
 
                 <div class="row mb-2">
                     <div class="col">
-                        <x-form-label text="backend::company.nav" class="mt-2 mb-0" />
+                        <x-form-label text="backend::companies.nav" class="mt-2 mb-0" />
                     </div>
                     <div class="col-8">
                         <x-form-foreign name="company_id" required
@@ -29,7 +29,7 @@
 
                 <div class="row mb-2">
                     <div class="col">
-                        <x-form-label text="backend::branch.nav" class="mt-2 mb-0" />
+                        <x-form-label text="backend::branches.nav" class="mt-2 mb-0" />
                     </div>
                     <div class="col-8">
                         <x-form-foreign name="branch_id" required
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="row mb-2">
+                {{-- <div class="row mb-2">
                     <div class="col">
                         <x-form-label text="inventory::warehouse.nav" class="mt-2 mb-0" />
                     </div>
@@ -49,9 +49,9 @@
 
                             filtered-by="#company-selector [name=branch_id]" filtered-using="branch" />
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col">
                         <x-form-label text="cash::cash_book.nav" class="mt-2 mb-0" />
                     </div>
@@ -61,7 +61,7 @@
 
                             filtered-by="#company-selector [name=company_id]" filtered-using="company" />
                     </div>
-                </div>
+                </div> --}}
 
             </div>
 
