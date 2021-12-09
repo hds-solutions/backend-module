@@ -11,20 +11,27 @@ export default class DateRangePicker {
 
     _init() {
         // build plugin options
-        let options = {
-            showDropdowns: true,
-            autoUpdateInput: false,
-            autoApply: true,
-            alwaysShowCalendars: true,
-            singleDatePicker: (this.element.getAttribute('range') ?? 'false') == 'false',
-            cancelButtonClasses: this.element.hasAttribute('required') ? 'd-none' : null,
-            applyButtonClasses: !this.type.match(/time/) ? 'd-none' : null,
-            startDate: this.element.value.length ? new Date(this.element.value) : new Date,
-            locale: {
-                cancelLabel: 'Clear',
-                format: 'DD MMMM, YYYY',
-            },
-        };
+        let value = this.element.value.split(' - '),
+            options = {
+                showDropdowns: true,
+                autoUpdateInput: false,
+                autoApply: true,
+                alwaysShowCalendars: true,
+                singleDatePicker: (this.element.getAttribute('range') ?? 'false') == 'false',
+                cancelButtonClasses: this.element.hasAttribute('required') ? 'd-none' : null,
+                applyButtonClasses: !this.type.match(/time/) ? 'd-none' : null,
+                // startDate: this.element.value.length ? new Date(this.element.value) : new Date,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'DD MMMM, YYYY',
+                },
+                // startDate: value[0] && value[0].length ? new Date(value[0]) : null,
+                // endDate: value[1] && value[1].length ? new Date(value[1]) : null,
+            };
+        // preload dates set on field
+        if (value[0] !== undefined && value[0].length > 0) options.startDate = new Date(value[0]);
+        if (value[1] !== undefined && value[1].length > 0) options.endDate = new Date(value[1]);
+
         // check if has range
         if (this.element.hasAttribute('range'))
             options.ranges = {
@@ -42,17 +49,36 @@ export default class DateRangePicker {
             options.timePickerSeconds = this.element.hasAttribute('seconds');
             options.locale.format += ' HH:mm';
         }
+
         // init jQuery plugin with options
         $(this.element).daterangepicker(options)
             .on('show.daterangepicker', e => this._onShow())
-            .on('apply.daterangepicker', e => e.target.value = this.picker.startDate.format( this.picker.locale.format ) + (!this.picker.singleDatePicker ? ' - '+this.picker.endDate.format( this.picker.locale.format ) : ''))
-            .on('cancel.daterangepicker', e => e.target.value = null);
-        // save picker
+            .on('apply.daterangepicker', e => this._format())
+            .on('cancel.daterangepicker', e => this.element.value = null);
+        // save picker instance
         this.picker = $(this.element).data('daterangepicker');
-        // render input value
-        if (this.element.value.length) this.element.value = this.picker.startDate.format( this.picker.locale.format );
+
         // format as ISO on form submit
-        this.element.form.addEventListener('submit', e => this.element.value = this.picker.startDate.format( moment.HTML5_FMT.DATE+' '+moment.HTML5_FMT.TIME ));
+        this.element.form.addEventListener('submit', e => {
+            // check if input has value
+            if (!this.element.value) return;
+            // get start date on ISO format
+            this.element.value = this.picker.startDate.format( moment.HTML5_FMT.DATE+' '+moment.HTML5_FMT.TIME );
+            // check if is range
+            if (!this.picker.singleDatePicker)
+                // add end date on ISO format
+                this.element.value += ' - ' + this.picker.endDate.format( moment.HTML5_FMT.DATE+' '+moment.HTML5_FMT.TIME );
+            // render custom format after form submit
+            setTimeout(_ => this._format(), 10);
+        });
+        // render input value
+        if (options.startDate) setTimeout(_ => this._format(), 10);
+    }
+
+    _format() {
+        this.element.value = this.picker.startDate.format( this.picker.locale.format );
+        if (!this.picker.singleDatePicker && this.picker.endDate._isValid)
+            this.element.value += ' - ' + this.picker.endDate.format( this.picker.locale.format );
     }
 
     _onShow() {
