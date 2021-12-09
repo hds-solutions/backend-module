@@ -3,7 +3,6 @@ import Preview from './preview';
 
 export default class Filtered {
     constructor(ele, prevent = true) {
-        //
         this.element = ele;
         this.disabled = ele.disabled;
         if (this.element.dataset.filteredInit === 'false' && prevent) return false;

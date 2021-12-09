@@ -179,7 +179,7 @@ export default class Foreign {
         // capture element change
         this._element.addEventListener('change', e => this._onChange(e));
         // register message listener
-        Listener.register(this._element.dataset.foreign, message => this._onMessage(message));
+        Listener.register(this._element.dataset.foreignReturn ?? this._element.dataset.foreign, message => this._onMessage(message));
     }
 
     _onChange(e) {
@@ -243,7 +243,7 @@ export default class Foreign {
                 // add option to select
                 this._element.add(
                     // create new <option> element
-                    new Option(new_resource.name, new_resource.id,
+                    new Option(new_resource[this._element.dataset.show ?? 'name'], new_resource.id,
                         new_resource.id == resource.id,
                         new_resource.id == resource.id,
                     ),

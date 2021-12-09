@@ -31,7 +31,7 @@ export function amount(amount, decimals = 0, fixed = false) {
     // convert to string
     if (typeof amount == 'number') amount = amount.toFixed(decimals);
     // get current value
-    amount = amount.replace(/[^0-9\.]/g,'');
+    amount = amount !== null ? amount.replace(/[^0-9\.]/g,'') : '';
     // validate empty value
     if (amount != '') {
         // convert value

@@ -1,6 +1,6 @@
 <x-form-row class="{{ $attributes->get('row-class') }}">
     <x-form-label text="{{ $attributes->get('label') }}" form-label />
-    <div class="col">
+    <div class="{{ $attributes->get('main-col-class', 'col') }}">
 
     @if ($card !== null)
     <div class="card {{ $card }}">

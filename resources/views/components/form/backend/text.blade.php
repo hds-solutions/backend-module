@@ -1,19 +1,22 @@
-<x-form-row class="{{ $attributes->get('row-class') }}">
-    <x-form-label text="{{ $attributes->get('label') }}" form-label />
+@if ($secondary)
+    @include('backend::components.form.backend.text.input')
 
-    <x-form-row-group>
+@else
+    <x-form-row class="{{ $attributes->get('row-class') }}">
+        <x-form-label text="{{ $attributes->get('label') }}" form-label />
 
-        <x-form-input-group {{ $attributes->only('prepend') }}>
+        <x-form-row-group count="{{ $slot->isNotEmpty() ? 2 : 1 }}">
+            @include('backend::components.form.backend.text.input')
+        </x-form-row-group>
 
-            <x-form-input name="{{ $name }}" type="{{ $type ?? 'text' }}"
-                value="{{ old($name, $resource->{$field} ?? $default ?? null) }}"
-                @if ($errors->has($name)) error="{{ $errors->first($name) }}" @endif
-                {{ $attributes->except([ 'type', 'prepend' ]) }} />
+        @if ($slot->isNotEmpty())
+        <x-form-row-group count="2" class="offset-md-3 offset-lg-2 offset-xl-0 mt-2 mt-xl-0">
+            {{ $slot }}
+        </x-form-row-group>
+        @endif
 
-        </x-form-input-group>
+        @include('backend::components.form.helper')
 
-    </x-form-row-group>
+    </x-form-row>
 
-    @include('backend::components.form.helper')
-
-</x-form-row>
+@endif
