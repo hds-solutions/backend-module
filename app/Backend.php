@@ -7,6 +7,7 @@ use HDSSolutions\Laravel\Models\Branch;
 use HDSSolutions\Laravel\Models\Warehouse;
 use HDSSolutions\Laravel\Models\Currency;
 use HDSSolutions\Laravel\Models\CashBook;
+use HDSSolutions\Laravel\Models\Employee;
 use HDSSolutions\Laravel\Models\Scopes\CompanyScope;
 use Illuminate\Support\Collection;
 use Lavary\Menu\Builder as MenuBuilder;
@@ -24,6 +25,8 @@ class Backend {
 
     private Collection $currencies;
     private ?Currency $currency;
+
+    private ?Employee $employee;
 
     public function menu():MenuBuilder {
         // check instance
@@ -221,6 +224,16 @@ class Backend {
     private function loadCashBook():?CashBook {
         // load cash_book from session
         return $this->cash_book = $this->cashBooks()->firstWhere('id', session('backend.cash_book') );
+    }
+
+    public function employee():?Employee {
+        // return current employee
+        return $this->employee ??= $this->loadEmployee();
+    }
+
+    private function loadEmployee():?Employee {
+        // load employee from session
+        return $this->employee = auth()->user()->employees->first();
     }
 
 }
