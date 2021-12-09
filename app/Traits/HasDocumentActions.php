@@ -270,6 +270,16 @@ trait HasDocumentActions {
         return $this->isClosed();
     }
 
+    public final function wasClosed():bool {
+        // return if document has closed_at
+        return $this->document_closed_at !== null;
+    }
+
+    public final function getWasClosedAttribute():bool {
+        // return method result
+        return $this->wasClosed();
+    }
+
     public final function scopeVoided(Builder $query, bool $matches = true) {
         // filter documents
         return $this->scopeStatus($query,
@@ -287,6 +297,16 @@ trait HasDocumentActions {
     public final function getIsVoidedAttribute():bool {
         // return method result
         return $this->isVoided();
+    }
+
+    public final function wasVoided():bool {
+        // return if document has voided_at
+        return $this->document_voided_at !== null;
+    }
+
+    public final function getWasVoidedAttribute():bool {
+        // return method result
+        return $this->wasVoided();
     }
 
     public function scopeOpen(Builder $query) {
@@ -319,12 +339,17 @@ trait HasDocumentActions {
 
     public final function isProcessed():bool {
         // return if document is already processed
-        return $this->isRejected() || $this->isCompleted() || $this->isClosed();
+        return $this->isRejected() || $this->isCompleted() || $this->isClosed() || $this->isVoided();
     }
 
     public final function getIsProcessedAttribute():bool {
         // return method result
         return $this->isProcessed();
+    }
+
+    public final function wasProcessed():bool {
+        // return if document is already processed
+        return $this->wasRejected() || $this->wasCompleted() || $this->wasClosed() || $this->wasVoided();
     }
 
 }
