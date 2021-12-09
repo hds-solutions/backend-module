@@ -17,7 +17,7 @@ trait HasValidationRules {
         // capture creating
         self::creating(function($model) {
             // create a Validator with rules
-            $validator = Validator_Factory::make($model::getAllAttributes($model), $model::rules());
+            $validator = Validator_Factory::make($model::getAllAttributes($model), self::rules($model));
             // check if rules fails
             if ($validator->fails()) {
                 // save errors
@@ -37,7 +37,7 @@ trait HasValidationRules {
         // capture updating
         self::updating(function($model) {
             // create a Validator with updateRules
-            $validator = Validator_Factory::make($model->getAllAttributes($model), $model::rules($model));
+            $validator = Validator_Factory::make($model->getAllAttributes($model), self::rules($model));
             // check if rules fails
             if ($validator->fails()) {
                 // save errors
@@ -144,7 +144,7 @@ trait HasValidationRules {
             // find all enclosed {fields}
             '/\{([\w\.]*)\}/',
             // replace with model value
-            fn($matches) => $model !== null ? object_get($model, $matches[1]) : -1,
+            fn($matches) => $model !== null ? (object_get($model, $matches[1]) ?? -1) : -1,
         $rule);
     }
 
