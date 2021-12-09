@@ -71,7 +71,7 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal],table[id$=-re
                         let datetime_config = type.shift().split(';'),
                             field = datetime_config.shift(),
                             format = datetime_config.shift() || 'F j, Y H:i';
-                        column.render = data => (new Date(data)).format( format );
+                        column.render = data => data !== null ? (new Date(data)).format( format ) : '--';
                         break;
                     case 'concat':
                         // split fields from separator
@@ -102,6 +102,7 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal],table[id$=-re
     });
     // capture draw callback to register events
     config.drawCallback = e => container.events();
+    config.deferLoading = 0;
     // get filters form
     const filters = document.querySelector('[data-filters-for="#'+table.id+'"]') ?? document.querySelector('#filters form') ?? false;
     // add filters from form to ajax request
@@ -128,14 +129,14 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal],table[id$=-re
     });
     // capture form submit
     if (filters) filters.addEventListener('submit', e => { e.preventDefault();
-        // execute ajax to refresh data
-        datatable.ajax.reload();
+        // execute ajax to refresh data (after 1ms to allow plugin formatting)
+        setTimeout(_ => datatable.ajax.reload(), 1);
     });
     if (filters) filters.addEventListener('reset', e => {
         // set all form values to empty
         Array.from(filters.elements).forEach(filter => {
-            // ignore if isn't a filter field
-            if (!filter.name.match(/^filter/)) return;
+            // ignore if isn't a filter field or is mandatory
+            if (!filter.name.match(/^filter/) || filter.required) return;
             // reset filter value
             filter.value = null;
             // reset selected value if is a select
@@ -155,6 +156,8 @@ document.querySelectorAll('table[id$=-datatable],table[id$=-modal],table[id$=-re
     });
     // extra modal events
     if (filters && filters.dataset.modal) new SearchModal(filters.dataset.modal, table, filters, datatable);
+    // render first requet
+    setTimeout(_ => datatable.ajax.reload(), 1);
 });
 
 /**

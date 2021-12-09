@@ -9,7 +9,8 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 
-abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
+abstract class DataTable extends \Yajra\DataTables\Services\DataTable
+    implements DataTableContract {
 
     protected array $with = [];
 
@@ -45,7 +46,7 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         // add custom global filters
         if (method_exists($this, 'filters')) $query = $this->filters($query);
         // get datatable class for current eloquent model query
-        $datatable = datatables()->of( $query )
+        $datatable = datatables()->make( $query )
             // redirect order by
             ->order(fn(Builder $query) => $this->order($query));
 
@@ -74,6 +75,13 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
             return $query;
         // register global filtering
         }, true);
+
+        // add custom data
+        if (method_exists($this, 'append')) $this->response(fn($data) => $this->append($query, $data));
+
+        // custom results processor
+        if (method_exists($datatable, 'resultsCallback'))
+            $datatable->resultsCallback( fn($results) => $this->results($results) );
 
         // return configured datatable
         return $datatable;
@@ -105,12 +113,15 @@ abstract class DataTable extends \Yajra\DataTables\Services\DataTable {
         return [];
     }
 
+    protected function results($results) {
+        return $results;
+    }
+
     public final function html() {
         // get builder for current DataTable
         $builder = $this->builder()
             ->setTableId( $this->getTableId() )
             ->autoWidth(false)
-            ->addTableClass('table-bordered table-sm table-hover')
             ->columns( $this->getColumns() )
             ->minifiedAjax( $this->route )
             ->searchDelay(150);
