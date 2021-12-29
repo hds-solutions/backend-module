@@ -116,8 +116,12 @@ class Backend {
     }
 
     public function companies():Collection {
-        // TODO: return only companies that user has access to
-        return $this->companies ??= Company::ordered()->with([
+        $companies = auth()->user()->has_system_wide_access
+            ? Company::ordered()
+            : auth()->user()->companies()->ordered();
+
+        // return only companies that user has access to
+        return $this->companies ??= $companies->with([
             'logo',
             'branches'  => fn($branch) => $branch->ordered()->withoutGlobalScope(new CompanyScope)->with([
                 'warehouses' => fn($warehouse) => $warehouse->ordered()->withoutGlobalScope(new CompanyScope),
@@ -147,6 +151,15 @@ class Backend {
     }
 
     private function loadCompany():?Company {
+        // check if user doesn't have system wide access
+        if (!auth()->user()->has_system_wide_access &&
+            // is assigned to only one company
+            $this->companies()->count() === 1 &&
+            // and session is empty
+            !session()->has('backend.company'))
+            // set session to assigned company
+            $this->setCompany( $this->companies()->first() );
+
         // load company from session
         return $this->company = $this->companies()->firstWhere('id', session('backend.company'));
     }

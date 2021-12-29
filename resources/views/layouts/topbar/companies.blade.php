@@ -15,12 +15,19 @@
             {{-- <div class="text-dark small">{{ ($branch = backend()->branch())?->name .($branch !== null ? ' · ' : null) . backend()->warehouse()?->name }}</div> --}}
             <div class="text-dark small">{{ backend()->branch()?->name }}</div>
         </div>
+        @else
+        <div class="lh-1rem">
+            <h5 class="text-dark m-0">System wide access</h5>
+            {{-- <div class="text-dark small">{{ ($branch = backend()->branch())?->name .($branch !== null ? ' · ' : null) . backend()->warehouse()?->name }}</div> --}}
+            {{-- <div class="text-dark small">{{ backend()->branch()?->name }}</div> --}}
+        </div>
         @endif
     </a>
 
     <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="companies-dropdown">
         <h6 class="dropdown-header">@lang('Company selector')</h6>
 
+        @if (auth()->user()->has_system_wide_access)
         <a class="dropdown-item d-flex align-items-center" href="{{ route('backend.env', [ 'company_id' => 'null' ]) }}"
             {{-- data-toggle="modal" href="#company-selector" --}}>
             <div class="dropdown-list-image rounded-circle mr-3" style="background-image: url({{ asset('backend-module/assets/images/logo.png') }})">
@@ -33,6 +40,7 @@
                 <div class="small text-gray-500">@lang('System wide access')</div>
             </div>
         </a>
+        @endif
 
         @foreach(backend()->companies() as $company)
             <a class="dropdown-item d-flex align-items-center" {{-- href="{{ Request::fullUrlWithQuery([ 'set-company' => $company->getKey() ]) }}" --}}
