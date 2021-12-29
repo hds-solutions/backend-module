@@ -32,7 +32,7 @@
 
     'has_system_wide_access'    => [
         'Has SystemWide access?',
-        '_' => 'Yes, has SystemWide access?',
+        '_' => 'Yes, has SystemWide access',
         '?' => 'Has SystemWide access helper text',
     ],
 

@@ -30,6 +30,18 @@
         'confirm_'  => 'Confirmacion de Contraseña',
     ],
 
+    'has_system_wide_access'    => [
+        'Acceso completo al sistema?',
+        '_' => 'Si, tiene acceso completo',
+        '?' => 'Has SystemWide access helper text',
+    ],
+
+    'companies'     => [
+        'Compañías',
+        '_' => 'Seleccione Compañía',
+        '?' => 'Compañías',
+    ] + __('backend::company'),
+
     'roles'          => [
         'Perfiles',
         '_' => 'Seleccionar Perfil',
