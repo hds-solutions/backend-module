@@ -139,7 +139,7 @@ class UserController extends Controller {
             'password_confirmation' => $hashed,
         ]);
 
-        // sync product companies
+        // sync user companies
         if ($request->has('companies')) $resource->companies()->sync(
             // get companies as collection
             $companies = collect($request->get('companies'))
