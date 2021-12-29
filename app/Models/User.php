@@ -18,4 +18,10 @@ class User extends BaseUser {
         return $this->hasMany(Employee::class);
     }
 
+    public function companies() {
+        return $this->belongsToMany(Company::class)
+            ->using(UserCompany::class)
+            ->withTimestamps();
+    }
+
 }

@@ -7,6 +7,7 @@ use HDSSolutions\Laravel\DataTables\UserDataTable as DataTable;
 use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\User as Resource;
 use HDSSolutions\Laravel\Models\Role;
+use HDSSolutions\Laravel\Models\Company;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller {
@@ -30,11 +31,13 @@ class UserController extends Controller {
     }
 
     public function create(Request $request) {
+        // load companies
+        $companies = Company::ordered()->get();
         // load roles
         $roles = Role::all();
 
         // show create form
-        return view('backend::users.create', compact('roles'));
+        return view('backend::users.create', compact('companies', 'roles'));
     }
 
     public function store(Request $request) {
@@ -87,16 +90,24 @@ class UserController extends Controller {
     }
 
     public function edit(Request $request, Resource $resource) {
+        // load companies
+        $companies = Company::ordered()->get();
         // load roles
         $roles = Role::all();
 
         // show edit form
-        return view('backend::users.edit', compact('roles', 'resource'));
+        return view('backend::users.edit', compact('resource',
+            'companies',
+            'roles',
+        ));
     }
 
     public function update(Request $request, Resource $resource) {
         // start a transaction
         DB::beginTransaction();
+
+        // cast to boolean
+        if ($request->has('has_system_wide_access'))    $request->merge([ 'has_system_wide_access' => filter_var($request->has_system_wide_access, FILTER_VALIDATE_BOOLEAN) ]);
 
         // check for password change
         if ($request->has('password') && $request->input('password') == null)
@@ -127,6 +138,14 @@ class UserController extends Controller {
             // bypass confirmation validation
             'password_confirmation' => $hashed,
         ]);
+
+        // sync product companies
+        if ($request->has('companies')) $resource->companies()->sync(
+            // get companies as collection
+            $companies = collect($request->get('companies'))
+                // filter empty companies
+                ->filter(fn($company) => $company !== null)
+            );
 
         // sync user roles
         $resource->syncRoles( collect( $request->input('roles') )

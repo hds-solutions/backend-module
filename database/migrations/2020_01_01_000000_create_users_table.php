@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration {
             // $table->enum('type', [ 'admin', 'user', 'client' ]);
             // $table->enum('status', [ 'new', 'validated', 'active' ])->default('new');
             // $table->rememberToken();
+            $table->boolean('has_system_wide_access')->default(false);
         });
     }
 

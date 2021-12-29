@@ -39,10 +39,11 @@ class User extends Model implements
         'email_confirmation',
         'password',
         'password_confirmation',
-        'type',
-        'status',
+        // 'type',
+        // 'status',
         // 'avatar_id',
         // 'city_id',
+        'has_system_wide_access',
     ];
 
     /**
@@ -61,7 +62,8 @@ class User extends Model implements
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at'         => 'datetime',
+        'has_system_wide_access'    => 'boolean',
     ];
 
     protected static $rules = [
@@ -69,12 +71,13 @@ class User extends Model implements
         'lastname'  => [ 'sometimes', 'nullable', 'min:2' ],
         'email'     => [ 'sometimes', 'email', 'confirmed', 'unique:users,email,{id}' ],
         'password'  => [ 'sometimes', 'string', 'confirmed', 'min:6' ],
-        'type'      => [ 'sometimes' ],
-        'status'    => [ 'sometimes' ],
+        // 'type'      => [ 'sometimes' ],
+        // 'status'    => [ 'sometimes' ],
+        'has_system_wide_access'    => [ 'required', 'boolean' ],
     ];
 
-    public final function getIsAdminAttribute() {
-        return in_array($this->type, [ 'admin', 'user' ]);
-    }
+    // public final function getIsAdminAttribute() {
+    //     return in_array($this->type, [ 'admin', 'user' ]);
+    // }
 
 }

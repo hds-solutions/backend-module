@@ -48,6 +48,19 @@
     {{-- <label class="col-12 control-label small">@lang('backend::user.password.confirm?')</label> --}}
 </div>
 
+<x-backend-form-boolean :resource="$resource ?? null"
+    name="has_system_wide_access"
+    label="backend::user.has_system_wide_access.0"
+    placeholder="backend::user.has_system_wide_access._" />
+
+<div class="form-group" data-only="has_system_wide_access=false">
+    <x-backend-form-multiple name="companies"
+        :values="$companies" :selecteds="isset($resource) ? $resource->companies : []"
+        contents-view="backend::users.form.company"
+
+        label="backend::user.companies.0" />
+</div>
+
 <x-backend-form-multiple name="roles"
     :values="$roles" :selecteds="isset($resource) ? $resource->roles : []"
     contents-view="backend::users.form.role"

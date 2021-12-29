@@ -30,6 +30,18 @@
         'confirm_'  => 'Password confirmation',
     ],
 
+    'has_system_wide_access'    => [
+        'Has SystemWide access?',
+        '_' => 'Yes, has SystemWide access?',
+        '?' => 'Has SystemWide access helper text',
+    ],
+
+    'companies'     => [
+        'Companies',
+        '_' => 'Select Company',
+        '?' => 'Companies',
+    ] + __('backend::company'),
+
     'roles'         => [
         'Roles',
         '_' => 'Select Role',
