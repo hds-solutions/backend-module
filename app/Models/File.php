@@ -45,7 +45,7 @@ class File extends X_File {
 
     public function delete() {
         // remove image from storage
-        if (!Storage::disk( config('filesystems.uploads') )->delete($this->attributes['url']))
+        if (!Storage::disk( $this->disk )->delete($this->attributes['url']))
             // return false
             return false;
         // normal delete process
